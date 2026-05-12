@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIOHAZARD — Survival Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  background-color:#050505;
+  background-image:radial-gradient(ellipse at top,#150303 0%,#050505 60%);
+  color:#d4c4a8;
+  font-family:'Crimson Text',Georgia,serif;
+  font-size:18px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);
+  pointer-events:none;z-index:9999;
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#050505}
+::-webkit-scrollbar-thumb{background:#2a0000;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#5a0000}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* SITE HEADER */
+.site-header{text-align:center;padding:44px 20px 24px;position:relative}
+.site-header::after{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:260px;height:1px;
+  background:linear-gradient(90deg,transparent,#5a0000,transparent);
+}
+.site-logo{
+  font-family:'Cinzel',serif;font-size:clamp(22px,5vw,46px);font-weight:900;
+  letter-spacing:.18em;color:#cc2222;text-transform:uppercase;
+  text-shadow:0 0 24px rgba(180,0,0,.5),0 0 50px rgba(139,0,0,.25);
+}
+.site-subtitle{
+  font-family:'Special Elite',cursive;font-size:clamp(9px,1.8vw,12px);
+  letter-spacing:.35em;color:#6a4a4a;margin-top:9px;text-transform:uppercase;
+}
+
+/* HOME */
+.home-intro{text-align:center;padding:32px 20px 8px;max-width:560px;margin:0 auto}
+.home-intro p{font-family:'Crimson Text',serif;font-style:italic;font-size:19px;color:#7a6868}
+
+.games-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:22px;max-width:1160px;margin:0 auto;padding:28px 28px 60px;
+}
+
+/* GAME CARD */
+.game-card{
+  border-radius:3px;overflow:hidden;cursor:pointer;
+  transition:transform .3s ease,box-shadow .3s ease;
+  border:1px solid #1f0505;position:relative;
+}
+.game-card:hover{transform:translateY(-5px);box-shadow:0 10px 36px rgba(139,0,0,.4)}
+.game-card-art{
+  height:190px;position:relative;display:flex;align-items:center;
+  justify-content:center;overflow:hidden;
+}
+.card-glow{
+  position:absolute;width:120px;height:120px;border-radius:50%;
+  filter:blur(40px);opacity:.4;
+}
+.game-card-symbol{
+  position:relative;z-index:2;font-size:72px;
+  text-shadow:0 0 30px currentColor;user-select:none;line-height:1;
+}
+.card-flavor{
+  position:absolute;bottom:10px;left:0;right:0;text-align:center;
+  font-family:'Special Elite',cursive;font-size:9px;letter-spacing:.28em;
+  color:rgba(255,255,255,.25);text-transform:uppercase;z-index:2;
+}
+.game-card-info{padding:14px 18px 18px;background:#080000;border-top:1px solid #1f0505}
+.game-card-year{font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.3em;color:#7a5555;text-transform:uppercase;margin-bottom:4px}
+.game-card-title{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#d4c4a8;line-height:1.2}
+.game-card-subtitle{font-family:'Crimson Text',serif;font-size:13px;color:#aa5555;margin-top:2px;letter-spacing:.08em}
+.game-card-progress{margin-top:14px}
+.progress-label{font-family:'Special Elite',cursive;font-size:9px;letter-spacing:.2em;color:#6a4848;text-transform:uppercase;margin-bottom:6px}
+.progress-bar-outer{height:2px;background:#100000;border-radius:2px;overflow:hidden}
+.progress-bar-inner{height:100%;background:linear-gradient(90deg,#4a0000,#aa2222);border-radius:2px;transition:width .6s ease}
+
+/* RUN TYPE SCREEN */
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Special Elite',cursive;font-size:11px;letter-spacing:.22em;
+  color:#7a5858;text-transform:uppercase;cursor:pointer;padding:18px 28px;
+  background:none;border:none;transition:color .2s;
+}
+.back-btn:hover{color:#cc2222}
+.back-btn::before{content:'← '}
+
+.run-type-header{text-align:center;padding:10px 20px 38px}
+.rt-game-title{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,34px);font-weight:700;color:#d4c4a8;margin-bottom:6px}
+.rt-game-sub{font-family:'Special Elite',cursive;font-size:12px;letter-spacing:.3em;color:#aa5555;text-transform:uppercase}
+.rt-tagline{font-family:'Crimson Text',serif;font-style:italic;font-size:18px;color:#8a7878;margin-top:12px}
+.rt-prompt{font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.35em;color:#6a4848;text-transform:uppercase;margin-top:24px}
+
+.run-types-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:18px;max-width:860px;margin:0 auto;padding:0 28px 60px;
+}
+.run-type-card{
+  background:#060000;border:1px solid #1f0505;border-radius:3px;
+  padding:28px 22px;cursor:pointer;transition:all .25s ease;
+  position:relative;overflow:hidden;
+}
+.run-type-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:#1f0505;transition:background .25s;
+}
+.run-type-card:hover::before{background:#cc2222}
+.run-type-card:hover{border-color:#4a0000;box-shadow:0 0 22px rgba(180,0,0,.18)}
+.rt-card-icon{font-size:34px;margin-bottom:14px;display:block}
+.rt-card-name{font-family:'Cinzel',serif;font-size:19px;font-weight:700;color:#d4c4a8;margin-bottom:7px}
+.rt-card-desc{font-family:'Crimson Text',serif;font-size:16px;color:#9a8888;line-height:1.55}
+.rt-card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+.rt-tag{
+  font-family:'Special Elite',cursive;font-size:9px;letter-spacing:.14em;
+  padding:3px 8px;border:1px solid #2a0a0a;color:#7a5858;text-transform:uppercase;
+}
+
+/* WALKTHROUGH HEADER */
+.wt-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,0,0,.97);backdrop-filter:blur(12px);
+  border-bottom:1px solid #1f0505;padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.wt-header-left{display:flex;align-items:center;gap:12px}
+.wt-game-name{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#d4c4a8;line-height:1.2}
+.wt-run-badge{font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.2em;color:#aa5555;text-transform:uppercase;margin-top:2px}
+.wt-header-right{display:flex;align-items:center;gap:10px}
+.wt-progress-text{font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.12em;color:#7a5858}
+
+.btn{
+  font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;padding:7px 14px;border:1px solid currentColor;
+  background:none;cursor:pointer;transition:all .2s;border-radius:2px;
+}
+.btn-danger{color:#7a4444;border-color:#2a0000}
+.btn-danger:hover{color:#ee3333;border-color:#660000;background:rgba(220,0,0,.1)}
+
+/* OVERALL PROGRESS */
+.overall-progress{padding:18px 28px;border-bottom:1px solid #0d0000}
+.op-label{
+  display:flex;justify-content:space-between;
+  font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.2em;color:#7a5858;
+  text-transform:uppercase;margin-bottom:8px;
+}
+.op-bar{height:3px;background:#0a0000;border-radius:2px;overflow:visible;position:relative}
+.op-fill{
+  height:100%;background:linear-gradient(90deg,#3d0000,#aa1111,#ee2222);
+  border-radius:2px;transition:width .6s ease;position:relative;min-width:0;
+}
+.op-fill::after{
+  content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);
+  width:9px;height:9px;background:#ee2222;border-radius:50%;
+  box-shadow:0 0 8px #ee2222,0 0 16px rgba(220,0,0,.4);
+  display:none;
+}
+.op-fill.has-progress::after{display:block}
+
+/* TIPS SECTION */
+.tips-section{margin:24px 28px 0;background:#060000;border:1px solid #1f0505;border-radius:3px;overflow:hidden}
+.tips-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;cursor:pointer;border-bottom:1px solid #0d0000;transition:background .2s;
+}
+.tips-hdr:hover{background:#0a0000}
+.tips-hdr-title{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:.2em;color:#bb5555;text-transform:uppercase}
+.tips-chevron{font-size:11px;color:#7a5555;transition:transform .3s;display:inline-block}
+.tips-chevron.open{transform:rotate(180deg)}
+.tips-body{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.tips-body.open{padding:16px 18px 18px;max-height:700px}
+.tip-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 0;border-bottom:1px solid #0a0000;font-size:16px;color:#b8a898;
+}
+.tip-item:last-child{border-bottom:none}
+.tip-num{font-family:'Special Elite',cursive;font-size:10px;color:#664444;min-width:22px;padding-top:3px}
+
+/* WALKTHROUGH CONTENT */
+.wt-content{padding:20px 28px 60px}
+
+.wt-section{margin-bottom:36px}
+.sec-hdr{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #150000;
+}
+.sec-num{font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.3em;color:#664444;min-width:38px;text-transform:uppercase}
+.sec-title{font-family:'Cinzel',serif;font-size:17px;font-weight:600;color:#d46858;letter-spacing:.04em}
+.sec-prog{font-family:'Special Elite',cursive;font-size:10px;color:#7a5858;margin-left:auto;white-space:nowrap}
+
+.step-list{list-style:none}
+.step-item{margin-bottom:1px;border-radius:2px}
+
+.step-main{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:12px 14px;border-radius:2px;cursor:pointer;transition:background .15s;
+}
+.step-main:hover{background:#0a0000}
+
+.step-cb{
+  flex-shrink:0;width:18px;height:18px;border:1.5px solid #3d1010;border-radius:2px;
+  margin-top:4px;position:relative;transition:all .2s;
+}
+.step-cb::after{
+  content:'';position:absolute;inset:3px;background:#aa2222;border-radius:1px;
+  opacity:0;transition:opacity .2s;
+}
+.step-item.done .step-cb{border-color:#5a2222}
+.step-item.done .step-cb::after{opacity:1}
+
+.step-txt{
+  font-family:'Crimson Text',serif;font-size:17px;color:#c8b898;
+  line-height:1.7;flex:1;transition:all .25s;
+}
+.step-item.done .step-txt{color:#3a3030;text-decoration:line-through;text-decoration-color:#5a2222;text-decoration-thickness:1px}
+
+/* TROPHY WARNING — shows ABOVE the step */
+.trophy-flag{
+  background:rgba(120,0,0,.15);border-left:3px solid #aa2222;
+  padding:9px 14px 9px 44px;margin-bottom:1px;border-radius:0 2px 2px 0;
+  font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.1em;
+  color:#ee4444;text-transform:uppercase;line-height:1.5;
+}
+
+/* SPEEDRUN NOTE */
+.speedrun-note{
+  background:rgba(0,60,20,.12);border-left:3px solid #005522;
+  padding:7px 14px 7px 44px;
+  font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.08em;
+  color:#22bb66;text-transform:uppercase;margin-bottom:1px;
+}
+
+/* IMAGE PLACEHOLDER */
+.img-toggle{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Special Elite',cursive;font-size:9px;letter-spacing:.15em;
+  color:#5a5530;background:#060600;border:1px solid #2a2a10;border-radius:2px;
+  padding:3px 10px;cursor:pointer;margin:4px 0 4px 46px;transition:all .2s;
+}
+.img-toggle:hover{color:#aaaa60;border-color:#555530}
+.img-placeholder{
+  display:none;margin:6px 14px 10px 46px;
+  border:1px dashed #222210;border-radius:2px;
+  background:#040400;
+}
+.img-placeholder.open{display:block}
+.img-placeholder svg{display:block;width:100%;height:auto}
+.img-placeholder-inner{
+  padding:28px 20px;text-align:center;
+  color:#4a4a28;font-family:'Special Elite',cursive;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+}
+.img-ph-icon{font-size:28px;opacity:.25;margin-bottom:8px;display:block}
+
+/* PROGRESS LOG */
+#progress-log-section{margin:0 28px;display:none}
+.pl-header{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;background:#0f0b07;border:1px solid #3a2a10;border-radius:3px 3px 0 0}
+.pl-title{font-family:'Special Elite',cursive;font-size:10px;letter-spacing:.15em;color:#d4a055;text-transform:uppercase}
+.pl-count{font-size:10px;color:#b08840;font-family:monospace;letter-spacing:.05em}
+.pl-latest{padding:8px 14px 12px;background:#0f0b07;border:1px solid #3a2a10;border-top:none}
+.pl-latest-label{font-size:9px;font-family:monospace;color:#c09050;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.pl-latest-text{font-family:'Crimson Text',serif;font-size:16px;color:#f0e6c8;line-height:1.6}
+.pl-show-more{padding:4px 14px 8px;background:#0f0b07;border:1px solid #3a2a10;border-top:none;font-size:10px;color:#b08840;font-family:monospace;letter-spacing:.08em;cursor:pointer;display:block;user-select:none}
+.pl-show-more:hover{color:#d4b060}
+.pl-history{padding:0 14px 8px;background:#0f0b07;border:1px solid #3a2a10;border-top:none;border-radius:0 0 3px 3px;display:none}
+.pl-history.open{display:block}
+.pl-entry{font-family:'Crimson Text',serif;font-size:14px;color:#c8a878;padding:5px 0;border-bottom:1px solid #2a1e08;line-height:1.5}
+.pl-entry:last-child{border-bottom:none;padding-bottom:0}
+@media(max-width:480px){#progress-log-section{margin-left:14px;margin-right:14px}}
+
+/* SAVE POINT */
+.save-point{margin:6px 0 2px 32px;padding:5px 10px 5px 12px;background:#040a06;border-left:3px solid #2a6a3a;border-radius:0 2px 2px 0;font-family:monospace;font-size:10px;color:#5ab870;letter-spacing:.09em;line-height:1.5}
+.save-point-label{color:#3a8a4a;font-weight:bold;margin-right:6px;letter-spacing:.12em}
+@media(max-width:480px){.save-point{margin-left:18px}}
+
+/* COLLAPSIBLE SECTIONS */
+.sec-hdr{cursor:pointer;user-select:none}
+.sec-chevron{font-size:10px;color:#554444;flex-shrink:0;margin-left:6px;display:inline-block;transition:transform .2s}
+.sec-body.collapsed{display:none}
+.sec-hdr.collapsed .sec-chevron{transform:rotate(-90deg)}
+
+/* INVENTORY CHECK */
+.inv-check{margin:0;padding:8px 14px 10px;background:#08090a;border-bottom:1px solid #1a1a10;border-left:3px solid #554422}
+.inv-label{font-family:'Special Elite',cursive;font-size:9px;letter-spacing:.12em;color:#554422;text-transform:uppercase;margin-bottom:5px}
+.inv-item{font-family:'Crimson Text',serif;font-size:13px;color:#a89868;padding:1px 0 1px 14px;position:relative}
+.inv-item::before{content:'◆';color:#443318;position:absolute;left:0;font-size:7px;top:4px}
+
+/* MAP VIEWER */
+.map-toggle{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Special Elite',cursive;font-size:9px;letter-spacing:.15em;
+  color:#4a6a4a;background:#020802;border:1px solid #102010;border-radius:2px;
+  padding:3px 10px;cursor:pointer;margin:4px 0 4px 46px;transition:all .2s;
+}
+.map-toggle:hover{color:#66cc66;border-color:#336633}
+.map-container{
+  display:none;margin:6px 14px 12px 46px;
+  border:1px solid #102010;border-radius:2px;background:#020802;overflow:hidden;
+}
+.map-container.open{display:block}
+.map-container svg{display:block;width:100%;height:auto}
+.map-caption{
+  padding:7px 12px;font-family:'Special Elite',cursive;font-size:9px;
+  letter-spacing:.15em;color:#3a5a3a;text-transform:uppercase;
+  border-top:1px solid #102010;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .games-grid,.run-types-grid,.wt-content{padding-left:14px;padding-right:14px}
+  .tips-section{margin-left:14px;margin-right:14px}
+  .overall-progress{padding:14px}
+  .wt-header{padding:10px 14px}
+  .back-btn{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- HOME SCREEN -->
+<div id="home-screen" class="screen active">
+  <header class="site-header">
+    <div class="site-logo">Resident Evil</div>
+    <div class="site-subtitle">Survival Guide &mdash; Series Walkthrough Companion</div>
+  </header>
+  <div class="home-intro"><p>Choose your nightmare. Track your progress. Survive.</p></div>
+  <div class="games-grid" id="games-grid"></div>
+</div>
+
+<!-- RUN TYPE SCREEN -->
+<div id="run-type-screen" class="screen">
+  <header class="site-header">
+    <div class="site-logo">Resident Evil</div>
+    <div class="site-subtitle">Survival Guide &mdash; Series Walkthrough Companion</div>
+  </header>
+  <button class="back-btn" onclick="showHome()">All Games</button>
+  <div class="run-type-header">
+    <div class="rt-game-title" id="rt-game-title"></div>
+    <div class="rt-game-sub" id="rt-game-sub"></div>
+    <div class="rt-tagline" id="rt-tagline"></div>
+    <div class="rt-prompt">— Select Your Objective —</div>
+  </div>
+  <div class="run-types-grid">
+    <div class="run-type-card" onclick="showWalkthrough(null,'standard')">
+      <span class="rt-card-icon">☣</span>
+      <div class="rt-card-name">Standard Play</div>
+      <div class="rt-card-desc">Full story walkthrough with item locations, puzzle solutions, and boss strategies.</div>
+      <div class="rt-card-tags">
+        <span class="rt-tag">Story Focus</span><span class="rt-tag">Item Locations</span><span class="rt-tag">Boss Tactics</span>
+      </div>
+    </div>
+    <div class="run-type-card" onclick="showWalkthrough(null,'speedrun')">
+      <span class="rt-card-icon">⏱</span>
+      <div class="rt-card-name">Speedrun</div>
+      <div class="rt-card-desc">Optimized route for speed. Skip non-essentials, key time saves, and routing notes.</div>
+      <div class="rt-card-tags">
+        <span class="rt-tag">Optimized Route</span><span class="rt-tag">Skips</span><span class="rt-tag">Time Saves</span>
+      </div>
+    </div>
+    <div class="run-type-card" onclick="showWalkthrough(null,'completionist')">
+      <span class="rt-card-icon">🏆</span>
+      <div class="rt-card-name">Completionist</div>
+      <div class="rt-card-desc">Every item, file, trophy, and achievement. Missable trophies flagged in red before each relevant step.</div>
+      <div class="rt-card-tags">
+        <span class="rt-tag">All Trophies</span><span class="rt-tag">Missables Flagged</span><span class="rt-tag">100% Completion</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WALKTHROUGH SCREEN -->
+<div id="walkthrough-screen" class="screen">
+  <div class="wt-header">
+    <div class="wt-header-left">
+      <button class="back-btn" onclick="showRunTypeScreen()" style="padding:0">← Back</button>
+      <div>
+        <div class="wt-game-name" id="wt-game-name"></div>
+        <div class="wt-run-badge" id="wt-run-badge"></div>
+      </div>
+    </div>
+    <div class="wt-header-right">
+      <div class="wt-progress-text" id="wt-progress-text">0 / 0</div>
+      <button class="btn btn-danger" onclick="confirmReset()">Reset Progress</button>
+    </div>
+  </div>
+
+  <div class="overall-progress">
+    <div class="op-label"><span>Mission Progress</span><span id="op-pct">0%</span></div>
+    <div class="op-bar"><div class="op-fill" id="op-fill" style="width:0%"></div></div>
+  </div>
+
+  <div id="progress-log-section"></div>
+
+  <div class="tips-section" id="tips-section">
+    <div class="tips-hdr" onclick="toggleTips()">
+      <span class="tips-hdr-title">&#9888; Tips &amp; Tactics</span>
+      <span class="tips-chevron" id="tips-chevron">&#9660;</span>
+    </div>
+    <div class="tips-body" id="tips-body"></div>
+  </div>
+
+  <div class="wt-content" id="wt-content"></div>
+</div>
+
+<script>
+// ===== GAME DEFINITIONS =====
+var GAMES = [
+  {id:'re1',title:'Resident Evil',subtitle:'HD Remaster',year:'1996 / 2015',
+   tagline:'"You are now one of us."',
+   art:'linear-gradient(140deg,#0f0101 0%,#250505 45%,#0f0101 100%)',
+   glow:'#8b0000',symbol:'⌂',flavor:'Spencer Estate',hasContent:true},
+  {id:'re2',title:'Resident Evil 2',subtitle:'Remake',year:'2019',
+   tagline:'"Remember me?"',
+   art:'linear-gradient(140deg,#010510 0%,#030d1e 45%,#010510 100%)',
+   glow:'#0a2d6b',symbol:'✦',flavor:'Raccoon City P.D.',hasContent:false},
+  {id:'re3',title:'Resident Evil 3',subtitle:'Remake',year:'2020',
+   tagline:'"S.T.A.R.S..."',
+   art:'linear-gradient(140deg,#06010d 0%,#100320 45%,#06010d 100%)',
+   glow:'#4a0a6b',symbol:'N',flavor:'Raccoon City — Last Hours',hasContent:false},
+  {id:'re4',title:'Resident Evil 4',subtitle:'Remake',year:'2023',
+   tagline:'"Where\'s everyone going? Bingo?"',
+   art:'linear-gradient(140deg,#090600 0%,#181000 45%,#090600 100%)',
+   glow:'#6b5800',symbol:'✠',flavor:'Pueblo, Spain',hasContent:false},
+  {id:'re7',title:'Resident Evil 7',subtitle:'Biohazard',year:'2017',
+   tagline:'"Welcome to the family, son."',
+   art:'linear-gradient(140deg,#010601 0%,#020e03 45%,#010601 100%)',
+   glow:'#0a4a18',symbol:'⚠',flavor:'Baker Ranch, Louisiana',hasContent:false},
+  {id:'re8',title:'Resident Evil Village',subtitle:'RE8',year:'2021',
+   tagline:'"I will show you the way."',
+   art:'linear-gradient(140deg,#010308 0%,#020514 45%,#010308 100%)',
+   glow:'#1a2f7a',symbol:'♜',flavor:'The Village',hasContent:false},
+];
+
+// ===== RE1 WALKTHROUGH DATA =====
+var RE1 = {
+  standard:{
+    tips:[
+      'Play as Jill Valentine for your first run — she has 8 inventory slots vs. Chris\'s 6. Chris has more HP (1400 vs 960) but Jill\'s extra space makes the game much more manageable.',
+      'Ink Ribbons are required to save at typewriters. There are 30 on Normal difficulty — do not waste them on trivial checkpoints.',
+      'All Item Boxes throughout the game are linked — deposit in one, retrieve from any other. Use them freely.',
+      'Run past zombies whenever possible. Ammo is scarce and zombies cannot open doors or follow you between rooms.',
+      'Knife downed zombies with one or two stabs to make sure they stay dead — a zombie left alone may rise as a faster, harder Crimson Head.',
+      'Herb combos: Green = minor heal, Green+Green = medium, Green+Red = full heal. Blue Herb cures poison — always combine with Green.',
+      'Defense Items (Dagger, Stun Gun, Flashbang) occupy their OWN dedicated defense slot — they do not take inventory space. In Options, set Defense Item mode to Automatic to trigger without input, or Manual to press the L button when grabbed.',
+      'Quick Turn: Press and hold the Down direction and the Run button simultaneously for an instant 180° turn. Check your controller settings if the Run button is unclear — the game has multiple preset control schemes.',
+      'Barry Burton appears at specific scripted story moments only. His interventions depend on game flags and location, not on your health level.',
+      'Jill finds the Grenade Launcher on Forest Speyer\'s body on the 2F East Terrace early in the game. Save Acid Rounds for bosses and Hunters — they are extremely effective.',
+    ],
+    sections:[
+      {title:'Spencer Mansion — Orientation',steps:[
+        {t:'After the opening FMV and zombie encounter cutscene, you gain control. You start with a Handgun, Combat Knife, and Lockpick (Jill\'s exclusive tool). Chris would need keys for doors Jill can just pick.',img:false},
+        {t:'Collect the MANSION MAP (1F) from near the entrance — essential for navigation throughout the game.',img:false,map:'mansion1f'},
+        {t:'Explore the main hall and surrounding rooms to gather early supplies: handgun ammo, green herbs, and any files you find.',img:false,map:'mansion1f'},
+        {t:'Note all crested doors you encounter (Sword, Armor, Shield, Helmet). You will need keys for each.',img:false},
+        {t:'Your first goal is to find the GOLDEN ARROW — a decorative item hidden somewhere in the mansion. Examine it in your inventory to separate the Arrowhead.',img:false,save:'Main Hall Save Room — 1F, small room off the west side of the foyer. Save here before heading to the cemetery. It is the safest moment early on.'},
+      ]},
+      {title:'First Key — Sword Key (Cemetery & Crypt)',inv:['Golden Arrow — examine in your inventory to separate it into the Arrowhead (found somewhere in 1F rooms)'],steps:[
+        {t:'With the ARROWHEAD (made by examining the Golden Arrow), head to the cemetery behind the mansion.',img:false,map:'courtyard'},
+        {t:'Find the stone angel relief or statue in the cemetery. Use the ARROWHEAD on it to open a secret passage down into the CRYPT.',img:'angel-statue'},
+        {t:'Descend into the Crypt (Mansion B1). Inside, find the BOOK OF CURSES on a stone stand.',img:false},
+        {t:'Examine the BOOK OF CURSES in your inventory and turn it over — the SWORD KEY is embedded in the back cover. Remove it.',img:'book-examine',story:'S.T.A.R.S. Alpha Team flew to the Arklay Mountains to find Bravo Team, who had vanished investigating a string of cannibalistic murders near Raccoon City. Their helicopter was attacked by zombie dogs and pilot Brad Vickers abandoned them, forcing the team into the nearest shelter — a vast Victorian estate deep in the forest. Inside, the dead walked. Alpha Team member Joseph Frost was killed in the opening minutes. Jill, Wesker, and Barry made it through the doors. In the cemetery crypt beneath the mansion gardens, a cursed book hid the first key on its back cover.',save:'Main Hall Save Room — 1F. You now have your first key. Save before opening Sword-crested doors and stirring up new areas.'},
+        {t:'The Book of Curses itself contains information about the Death Mask puzzle you will encounter later — keep it until you have read the relevant section.',img:false},
+        {t:'Return to the mansion and use the SWORD KEY on any Sword-crested door to continue exploring.',img:false},
+      ]},
+      {title:'Forest Speyer & The Grenade Launcher',steps:[
+        {t:'Make your way to the 2F East Terrace (the outdoor balcony on the second floor, east side of the mansion).',img:false,map:'mansion2f'},
+        {t:'On the terrace you will find the body of FOREST SPEYER — a fellow S.T.A.R.S. member who did not survive.',img:false},
+        {t:'WARNING: Forest has turned into a zombie. He will attack if you get close. Dispatch him carefully.',img:false},
+        {t:'After dealing with Forest, examine his body to collect the GRENADE LAUNCHER — Jill\'s exclusive heavy weapon.',img:'forest-speyer'},
+        {t:'Barry Burton will later meet Jill at the Eastern Save Room and provide ACID SHELLS and INCENDIARY SHELLS for the Grenade Launcher.',img:false},
+        {t:'Save Acid Rounds for Hunters and bosses — they are the most effective round type against many enemies.',img:false},
+      ]},
+      {title:'Second Key — Armor Key (Dog Whistle Trick)',inv:['Dog Whistle (2F east area — bedroom or nearby room)','Imitation of a Key — obtained by examining the Dog Collar after killing the Cerberus'],steps:[
+        {t:'Find the DOG WHISTLE somewhere in the mansion\'s 2F east area. This is required before you can safely get the Armor Key.',img:false,map:'mansion2f'},
+        {t:'Take the Dog Whistle to the balcony/terrace area. Use it to summon CERBERUS (zombie dogs).',img:false},
+        {t:'Kill the Cerberus dogs that appear. Examine one of the bodies to collect the DOG COLLAR.',img:false},
+        {t:'Examine the DOG COLLAR in your inventory — it transforms into the IMITATION OF A KEY.',img:false},
+        {t:'Go to the Armor Key trap corridor on the mansion 1F. Approach the ARMOR KEY on its pedestal.',img:'armor-corridor',map:'mansion1f'},
+        {t:'Pick up the ARMOR KEY and IMMEDIATELY place the IMITATION OF A KEY into the empty slot before you leave — this prevents the ceiling trap from activating.',img:'armor-swap'},
+        {t:'If you forget to swap and trigger the trap: Barry Burton will rescue Jill in a scripted cutscene ("Jill sandwich") — but only if you have not yet met Barry earlier in this area. If Barry cannot appear, the trap will kill you.',img:false},
+        {t:'You now have the ARMOR KEY. Use it on Armor-crested doors throughout the mansion.',img:false,story:'S.T.A.R.S. Alpha Team was stranded in the Spencer Mansion when their helicopter was attacked and Brad fled. Joseph Frost died in the opening seconds. Jill has two keys now: the Sword Key from a cemetery crypt, and the Armor Key narrowly recovered from a pressure-plate trap using a decoy. Barry Burton keeps appearing at critical moments — providing ammunition, appearing at the right time — but something about him is wrong. He is frightened of something he refuses to name, and it is making him act strangely.',save:'East Wing Save Room — 1F, near the east side of the mansion. Save after the Armor Key — the piano puzzle and Shotgun fetch ahead are both multi-step sequences.'},
+      ]},
+      {title:'The Shotgun — Broken Shotgun Swap',inv:['Broken Shotgun — from the Small Storeroom on 1F east side (pick this up before heading to the Shotgun room)'],steps:[
+        {t:'Find the BROKEN SHOTGUN in a Small Storeroom on 1F. Keep it in your inventory for the next step.',img:false},
+        {t:'Locate the room containing the real SHOTGUN mounted on the wall (1F east area, behind an unlocked or Armor-crested door).',img:false,map:'mansion1f'},
+        {t:'Approach the Shotgun on its wall mount. Take it — and IMMEDIATELY place the BROKEN SHOTGUN onto the wall mount to replace it.',img:'shotgun-swap'},
+        {t:'Swapping the real Shotgun for the Broken Shotgun keeps the pressure plate depressed and prevents the ceiling trap from activating. Jill does this entirely on her own — it is not a Barry scripted event.',img:false},
+        {t:'You now have the real SHOTGUN. Store the Broken Shotgun in an Item Box — you will not need it again.',img:false,story:'Abandoned by their pilot, fighting through a mansion full of the dead, Jill has two keys and now a shotgun. Files scattered through the rooms tell the story of who worked here: researchers whose journals degenerated from clinical notes to desperate scrawls as the T-Virus unmade them. The Spencer Estate is not a home. Umbrella Corporation built it as a facade over an illegal biological research facility buried in the Arklay Mountains. Every locked door, every trap corridor, every body in these halls is evidence of what they were doing beneath the floorboards.',save:'East Wing Save Room — 1F (same room as before). Save now — the Shield Key piano sequence is long and the mansion will become much more dangerous after you complete it.'},
+      ]},
+      {title:'Third Key — Shield Key (Piano & Gold Emblem)',inv:['Musical Score (1F near piano / Bar area)','Missing Music (behind moveable shelf in Bar area — see illustration)','Plain Emblem (Dining Room — on a shelf near the fireplace)','Combine Musical Score + Missing Music in inventory before approaching the piano'],steps:[
+        {t:'Find the MUSICAL SCORE — the first half of Beethoven\'s Moonlight Sonata sheet music, located somewhere in the mansion.',img:false},
+        {t:'Find the MISSING MUSIC — the second half of the score, hidden behind a moveable shelf near the piano Bar area on 1F.',img:'missing-music'},
+        {t:'Combine the MUSICAL SCORE and MISSING MUSIC in your inventory to create the complete MOONLIGHT SONATA sheet music.',img:false},
+        {t:'Go to the PIANO in the Bar area (1F). Use the Moonlight Sonata sheet music at the piano — Jill plays it automatically. A secret door opens in the wall.',img:'piano-play'},
+        {t:'Enter the hidden passage. Inside, find a Beethoven statue with an emblem at its base.',img:false},
+        {t:'IMPORTANT: First pick up the plain EMBLEM from its location in the Dining Room. Bring it with you into the passage.',img:false},
+        {t:'At the Beethoven statue: swap the plain Emblem for the GOLD EMBLEM — place the plain one on the stand and take the Gold Emblem. This prevents you from being locked in.',img:'emblem-swap'},
+        {t:'Return to the Dining Room. Place the GOLD EMBLEM above the fireplace — it fits into the wall mount.',img:false},
+        {t:'The GRANDFATHER CLOCK opens. Examine it and set the hands to 6:00 (six o\'clock).',img:'clock-600'},
+        {t:'Collect the SHIELD KEY from inside the clock.',img:false,story:'Three keys recovered. The Spencer Estate is a puzzle-box — the piano in the bar played Moonlight Sonata and opened a hidden passage; the grandfather clock gave up the Shield Key when set to six o\'clock. The mansion was designed this way deliberately, built by an architect named George Trevor on commission from Umbrella\'s founder, Oswell E. Spencer. Files in the mansion describe the founding of Umbrella: Spencer, Ashford, and Marcus discovered the Progenitor Virus in West Africa and built a pharmaceutical empire to conceal its weaponisation. The T-Virus is its mutagenic derivative. Every corpse in these halls is what the T-Virus makes of people. Barry is still here, still strained, still keeping something back.',save:'CRITICAL SAVE — 2F Save Room, east side of mansion. Hunters replace zombies immediately after a story trigger in this section. Save now — this is the last calm moment in the mansion before combat becomes significantly more lethal.'},
+      ]},
+      {title:'The Hunters Arrive',inv:['Shotgun (1–2 blasts kills a Hunter) or Grenade Launcher with any round type','At least one Green+Red herb combination in reserve','Health at Fine or Good — Hunters can instantly decapitate Jill at Caution or lower'],steps:[
+        {t:'After a key story trigger mid-game, HUNTERS replace most zombies throughout the mansion. These are significantly more dangerous enemies.',img:false,story:'The Shield Key is secured and the mansion has changed. Hunters now patrol in place of zombies — engineered reptilian predators, faster and more lethal than anything upstairs, capable of instant decapitation at low health. The Spencer Estate was always a cover for Umbrella\'s Arklay Research Facility. Three keys in hand, one to go. Barry Burton is still present and still not explaining himself. And now the facility\'s security systems are cycling through contingencies, deploying things the researchers created. Something is still managing this place.'},
+        {t:'Hunters are fast and can DECAPITATE Jill instantly if her health is at Caution or lower. Always maintain Fine or Good health when Hunters are active.',img:false},
+        {t:'Most effective tactics: Shotgun at close range (1–2 blasts), or Grenade Launcher with any round type (1 shot). Do not fight Hunters with only a pistol.',img:false},
+        {t:'Many corridors can still be run through — Hunters are predictable if you know the rooms.',img:false},
+        {t:'Check previously cleared areas after the Hunter trigger. New items may have appeared.',img:false},
+        {t:'Keep at least one Green+Red herb combination in your inventory at all times from this point onward.',img:false},
+      ]},
+      {title:'Reaching the Residence (Guardhouse)',inv:['Shield Key (obtained from the Grandfather Clock in the previous section)'],steps:[
+        {t:'Use the Shield Key on Shield-crested doors to expand your accessible area and reach the courtyard.',img:false,map:'courtyard'},
+        {t:'The courtyard connects the main mansion to the separate RESIDENCE (Guardhouse) building. Zombie dogs patrol outside — sprint through.',img:false,map:'courtyard'},
+        {t:'Enter the Residence building. Pick up the RESIDENCE MAP near the entrance.',img:false,map:'residence',story:'S.T.A.R.S. Alpha came to find Bravo Team and walked into Umbrella\'s most classified installation. The Spencer Mansion hides the Arklay Research Facility — over a decade of T-Virus experimentation and biological weapons development. Hunters patrol the mansion. Barry Burton, evasive and frightened, has been helping Jill survive while clearly operating under some external pressure. The Residence — the researchers\' Guardhouse — is a separate building past the zombie-dog courtyard. Unlike the grand mansion, the Guardhouse is functional and decaying. The people who worked here lived here, and left their stories in the rooms before the virus took them.',save:'Residence Save Room — 1F, close to the entrance. Save immediately on arrival. Stock herbs and deposit anything you do not need before pushing into the Residence.'},
+        {t:'The Residence contains zombies, Cerberus dogs, and Plant Spiders. Conserve ammo where possible.',img:false},
+      ]},
+      {title:'Boss: Neptune — Aqua Ring',inv:['Grenade Launcher or Shotgun (Neptune is not fought directly, but having a weapon out is wise when near the tank)','Residence Map (from near the entrance — pick it up if you have not already)'],steps:[
+        {t:'Navigate to the AQUA RING area in the Residence basement. Do NOT fall into the water — Neptune sharks will kill you instantly.',img:false,map:'residence'},
+        {t:'Your goal is to operate the drainage and electrical systems, not to fight Neptune in the water.',img:false},
+        {t:'Find the CONTROL ROOM. Operate the switches and levers in the correct sequence to drain the water from the Neptune tank.',img:'neptune-controls'},
+        {t:'After the water is drained, the LARGE NEPTUNE is still alive and dangerous on the tank floor. Do NOT enter the drained tank.',img:false},
+        {t:'Find the electrical generator machine near the control area. PUSH IT INTO THE DRAINED TANK.',img:'neptune-generator'},
+        {t:'Restore power — the generator electrocutes the large Neptune, killing it. Draining alone is not enough.',img:false,story:'The Spencer Mansion and the Residence hide Umbrella\'s Arklay Research Facility between them. Jill has worked through both buildings, survived the Hunter escalation, and found the Aqua Ring in the Residence basement — a tank of Neptune sharks bred as aquatic B.O.W.s for military deployment contracts. She drained the tank and electrocuted the last one. The Residence files tell the human side of the story: researchers who were brilliant, ambitious, and eventually trapped. Requests for transfers that were never answered. Journals that ended mid-sentence. Plant 42 is next — a T-Virus specimen whose root system has consumed the entire building from below.',save:'Residence Save Room — 1F. Save after Neptune. The V-JOLT chemistry puzzle and Plant 42 boss fight are coming next — a good checkpoint before the Residence endgame.'},
+        {t:'After Neptune is dead, it is safe to enter the tank and search for any items on the floor.',img:false},
+      ]},
+      {title:'Room 003 Bookcase Puzzle — Path to Plant 42',inv:['Key for Room 003 (found in the Residence bedroom area)','Red Book (from the Residence Bar area on 1F)'],steps:[
+        {t:'Find the KEY FOR ROOM 003 somewhere in the Residence. Use it to enter Room 003.',img:false,map:'residence'},
+        {t:'Inside Room 003, the bookcase has an empty slot. You need a specific book to fill it.',img:false},
+        {t:'Find the RED BOOK (located in the Bar area of the Residence). Bring it to Room 003 and insert it into the empty bookcase slot.',img:false},
+        {t:'BOOKCASE PUZZLE: Rearrange the books on the shelf so that the spines together form the silhouette of a woman. The arrangement has a fixed correct solution.',img:'bookcase-puzzle'},
+        {t:'When arranged correctly, the bookcase slides to reveal a secret door leading toward the Plant 42 area.',img:false},
+      ]},
+      {title:'V-JOLT Formula & Boss: Plant 42',inv:['Water, UMB No. 3, and Yellow-6 — all found in the chemical storage area (same room, read the notes before mixing)','Grenade Launcher with Incendiary Shells (most effective against Plant 42 — essential if skipping V-JOLT)','At least one healing item before entering the boss room'],steps:[
+        {t:'Find the chemical storage area in the Residence. Collect WATER, UMB No. 3, and YELLOW-6. Read the research notes before mixing.',img:false},
+        {t:'V-JOLT RECIPE (follow this order exactly — wrong mixes waste chemicals): Step 1: Water + UMB No. 3 = NP-004.',img:false},
+        {t:'Step 2: NP-004 + Yellow-6 = UMB No. 10.',img:false},
+        {t:'Step 3: Water + Yellow-6 = UMB No. 7.',img:false},
+        {t:'Step 4: UMB No. 10 + UMB No. 7 = VP-017.',img:false},
+        {t:'Step 5: VP-017 + UMB No. 3 = V-JOLT. This is the finished compound.',img:false},
+        {t:'Take V-JOLT to the plant root system in the Residence basement. Pour it on the roots to weaken Plant 42.',img:'vjolt-roots'},
+        {t:'BOSS: PLANT 42 (with V-JOLT) — Plant 42 is already dying when Jill enters the room. It grabs her one final time. Barry Burton arrives and uses a flamethrower to rescue Jill and finish the boss.',img:false},
+        {t:'BOSS: PLANT 42 (without V-JOLT) — Fight it directly. Incendiary/Flame Grenade Rounds are most effective. It takes approximately 3–6 Grenade Launcher rounds. Fire-based attacks deal bonus damage.',img:false},
+        {t:'After Plant 42, collect the HELMET KEY from the FIREPLACE in the Plant 42 room.',img:'helmet-fireplace',story:'Plant 42 is dead. V-JOLT destroyed its root system and Barry Burton arrived to fire the killing shot. His presence confirms he was not acting against Jill by choice — something was threatening people he loved, and he was doing what he had to. That threat is apparently resolved. The Helmet Key was in the fireplace. The underground laboratory is now open. The Arklay Research Facility built beneath the Spencer Estate is where the T-Virus was refined, where the B.O.W. contracts were fulfilled, and where the worst of it still waits. Albert Wesker, S.T.A.R.S. unit commander, has been missing since the early mansion. His absence is starting to mean something.',save:'Residence Save Room — 2F. IMPORTANT: Save after getting the Helmet Key. The underground lab is the most dangerous part of the game — Chimeras, Lisa Trevor, and the final boss sequence are all ahead.'},
+      ]},
+      {title:'Cemetery — Four Crests & Colt Python Magnum',inv:['Wind Crest — MUST have been picked up during earlier mansion exploration (1F/2F rooms). This is easy to miss. If you do not have it, backtrack now before proceeding to the lab.'],steps:[
+        {t:'Return to the courtyard cemetery area. You should have been collecting the WIND CREST during earlier mansion exploration.',img:false,map:'courtyard'},
+        {t:'Place the WIND CREST in the right-side grave in the cemetery. A compartment opens.',img:false},
+        {t:'Collect the MOON CREST, STAR CREST, and SUN CREST from inside the compartment.',img:false},
+        {t:'IMPORTANT: Examine each of the three new crests in your inventory and press the button on the back of each one before placing them.',img:'crest-button'},
+        {t:'Place all three crests correctly in the left-side grave.',img:false},
+        {t:'Reward: COLT PYTHON MAGNUM REVOLVER — the most powerful handgun in the game. Use it sparingly; Python rounds are rare.',img:false,story:'The cemetery puzzle is solved and the Colt Python Magnum is in hand. The cemetery sits directly above the underground passage that leads to the laboratory — the graves of the estate above, the research facility below. The Spencer Estate was always two things at once: the home of Umbrella\'s founder on the surface, and a weapons laboratory underneath. One key remains. The lab is the last act.'},
+      ]},
+      {title:'Underground Laboratory',inv:['Helmet Key (from the Plant 42 room fireplace — see previous section)','MO Disk #1 (Tiger Statue puzzle area, Mansion 1F — backtrack now if not collected)','Shotgun + ammo and/or Grenade Launcher (Chimeras are fast and aggressive)','2 or more healing items — the lab is the most dangerous area in the game'],steps:[
+        {t:'Use the HELMET KEY to access the underground laboratory section of the mansion.',img:false},
+        {t:'LISA TREVOR WARNING: Lisa Trevor patrols the underground passage leading to the lab. She is completely unkillable — do not waste ammo on her.',img:false},
+        {t:'When Lisa appears, run immediately. Move through doors as fast as possible. She pursues relentlessly but cannot follow through every door.',img:'lisa-escape'},
+        {t:'Collect the LAB MAP near the laboratory entrance.',img:false,save:'Lab Save Room — near the lab entrance, shortly after the underground passage. This is the LAST typewriter in the game. Save here before tackling Chimeras, the MO Disk terminals, and the escape sequence.'},
+        {t:'The lab contains CHIMERAS — fast, aggressive human-fly mutants. Shotgun or Grenade Launcher recommended.',img:false},
+        {t:'Find the POWER ROOM and restore electricity to the lab. This unlocks elevators and sealed security doors.',img:'lab-power'},
+        {t:'There are THREE MO DISKS hidden in the laboratory (one near the Tiger Statue puzzle on Mansion 1F, two more in the lab itself). Collect all three.',img:false},
+        {t:'Use each MO DISK on a PASS CODE OUTPUT TERMINAL — there are three terminals in the underground lab. Using all three unlocks the Cell Entrance needed for the best ending.',img:'mo-terminals'},
+        {t:'WARNING — CRIMSON HEADS: Zombies you killed earlier but did not burn may have become Crimson Heads — faster, red-coloured zombies. Outrun them, or use the Shotgun.',img:false},
+        {t:'Activate the self-destruct escape sequence. A countdown begins — do not panic, you have ample time.',img:false,story:'S.T.A.R.S. Alpha came to find Bravo Team and found the full scope of what Umbrella built in the Arklay Mountains. The lab files are the worst yet: Tyrant Programme documentation, human experimentation records, a project to engineer a controllable super-soldier from T-Virus-enhanced humans. T-002 is in containment somewhere below. Albert Wesker\'s name appears in restricted lab clearance files — he has been Umbrella\'s sleeper agent inside S.T.A.R.S. from the beginning. He triggered the self-destruct to bury the evidence. The escape counter is running. The helipad is the only way out.'},
+        {t:'Navigate from the lab back through the underground passage, through the mansion, and up to the rooftop helipad.',img:false},
+      ]},
+      {title:'Final Boss — Tyrant & Escape',inv:['Shotgun or Grenade Launcher with ammo (two Tyrant encounters back to back)','Colt Python Magnum rounds if obtained from the cemetery (optional — very effective)','At least 2 healing items — you cannot restock after the self-destruct sequence begins'],steps:[
+        {t:'As you approach the helipad, a cutscene plays. The TYRANT (T-002 Model) breaks out of containment.',img:false},
+        {t:'BOSS ROUND 1: The Tyrant pursues you. You can damage it with Shotgun or Grenade Launcher to push it back, but you do not need to kill it here.',img:false},
+        {t:'Get to the rooftop HELIPAD and use the radio to call for helicopter extraction.',img:false},
+        {t:'BOSS ROUND 2 — SUPER TYRANT: The Tyrant mutates into a faster, more dangerous form on the helipad.',img:false},
+        {t:'Fight the Super Tyrant with your best remaining weapons. After sufficient damage, BRAD VICKERS (your helicopter pilot) drops a ROCKET LAUNCHER from the helicopter.',img:false},
+        {t:'Pick up the ROCKET LAUNCHER immediately and fire it at the Super Tyrant — one shot kills it.',img:false,story:'S.T.A.R.S. Alpha Team was sent to the Arklay Mountains to find missing colleagues. They found Umbrella Corporation\'s most classified installation — two decades of illegal T-Virus research, B.O.W. development, and human experimentation concealed beneath the Spencer Estate. Albert Wesker, their commanding officer, was Umbrella\'s mole inside S.T.A.R.S. the entire time. He triggered the self-destruct to destroy the evidence and released T-002 to eliminate his own team. On the helipad, T-002 mutated into the Super Tyrant. Brad Vickers — who had abandoned them at the start — returned. His Rocket Launcher ended it in one shot. Jill Valentine, Barry Burton, and Chris Redfield escaped as the Spencer Estate burned into the valley below. What Umbrella built in the Arklay Mountains is ash. What Umbrella is doing elsewhere is not.'},
+        {t:'Board the helicopter. The game ends. You survived the Spencer Mansion.',img:false},
+      ]},
+    ]
+  },
+
+  speedrun:{
+    tips:[
+      'Jill\'s route is faster overall — her Lockpick skips several key fetch sequences and the Grenade Launcher destroys bosses quickly.',
+      'The correct key order is: Sword Key first (Book of Curses in the Crypt), then Armor Key (Dog Whistle trick), then Shield Key (piano/Gold Emblem), then Helmet Key (from Plant 42). Learn this cold.',
+      'Skip the V-JOLT chemical puzzle entirely — fight Plant 42 directly with Incendiary Grenade Launcher rounds (3–6 rounds). Saves 2–3 minutes.',
+      'The Broken Shotgun swap is done by JILL ALONE at the wall mount. Barry has no role in it and there is no scripted event to wait through.',
+      'Quick Turn: hold Down direction + Run button simultaneously. Practice until it is muscle memory — you will use it hundreds of times.',
+      'Use Ink Ribbons as rarely as possible. Aim for 3 or fewer saves for S-Rank (must also finish under 3 hours, no First Aid Sprays).',
+      'Skip all files, notes, and flavour text entirely. Only stop moving for key items.',
+      'Memorize the Moonlight Sonata piano solution and the Room 003 bookcase silhouette solution before your run.',
+      'The Neptune fight requires both draining the tank AND pushing the generator in. Neither step alone kills it — learn the room layout.',
+      'The four crests puzzle is in the CEMETERY, not the lab. The Colt Python Magnum from this puzzle is useful but optional — skip if going for fastest time.',
+    ],
+    sections:[
+      {title:'Optimized Opening',inv:['Handgun','Lockpick (Jill) — skips several key fetch sequences, saving 3–5 minutes total'],steps:[
+        {t:'Skip all cutscenes immediately.',img:false,sr:'Saves ~30 sec in the opening'},
+        {t:'Grab MANSION MAP (1F). Skip all other readable items.',img:false},
+        {t:'Pick up early ammo and herbs only if they are directly on your path — never detour.',img:false,sr:'Move with purpose — no aimless exploration'},
+        {t:'Locate GOLDEN ARROW as early as possible. Examine it immediately to get the ARROWHEAD.',img:false,sr:'Sword Key is the fastest first key — do not detour toward Armor Key first'},
+      ]},
+      {title:'Sword Key — Fast Route',inv:['Arrowhead (examine the Golden Arrow immediately on pickup — do not carry the full arrow)'],steps:[
+        {t:'Arrowhead → Cemetery → Angel statue → Crypt → Book of Curses → examine back → SWORD KEY.',img:false,sr:'This whole sequence takes ~2 min if you know the layout',story:'S.T.A.R.S. Alpha was stranded in the Spencer Mansion when their helicopter was attacked and Brad abandoned them. Frost is dead. The mansion is full of walking corpses and locked crested doors. Sword Key recovered from the cemetery crypt.'},
+        {t:'Skip reading the Book of Curses text — only the Sword Key matters for the run.',img:false,sr:'Save 15–20 sec by not reading the file'},
+      ]},
+      {title:'Grenade Launcher & Armor Key',inv:['Dog Whistle (2F east area)','Imitation of a Key (examine Dog Collar immediately after Cerberus kill)'],steps:[
+        {t:'2F East Terrace: deal with Forest Speyer zombie, collect GRENADE LAUNCHER.',img:false},
+        {t:'Dog Whistle → Cerberus → Dog Collar → examine → Imitation of a Key → Armor Key corridor → swap immediately.',img:false,sr:'Memorize the swap — standing still costs time'},
+        {t:'If Barry\'s ceiling-trap rescue is available, it plays automatically — you cannot prevent it, just keep moving after.',img:false,sr:'This only happens if you have not yet triggered certain flags — plan your route to avoid it',story:'Abandoned by Brad, fighting through the Spencer Mansion. Two keys down. Grenade Launcher from Forest Speyer\'s body on the east terrace. Armor Key from the dog-whistle decoy corridor. Barry keeps showing up. Something is off about him.'},
+      ]},
+      {title:'Shotgun & Shield Key',inv:['Broken Shotgun (Small Storeroom, 1F)','Musical Score + Missing Music (combine in inventory before the piano — do not go to the piano without both)','Plain Emblem (Dining Room)'],steps:[
+        {t:'BROKEN SHOTGUN swap: grab Broken Shotgun from Storeroom, go directly to Shotgun wall mount, swap in one motion.',img:false,sr:'Jill does this alone — no wait time'},
+        {t:'Musical Score + Missing Music → Moonlight Sonata. Piano → hidden passage → swap emblem → Gold Emblem → Dining Room fireplace → Clock to 6:00 → SHIELD KEY.',img:false,sr:'Memorize the piano melody — any hesitation costs 10–30 sec',story:'Four keys collected, Shotgun in hand. The Spencer Estate is an Umbrella Corporation front covering an illegal bioweapons facility. Shotgun swapped from the wall mount; piano solved; clock to six o\'clock for the Shield Key. The Residence and underground lab are all that\'s left. Wesker hasn\'t been seen since early in the mansion.',save:'SAVE 1 OF 3 — East Wing Save Room, 1F. Best early checkpoint: Shotgun and Shield Key both secured, Residence ahead. S-rank allows only 3 saves total — spend one here.'},
+      ]},
+      {title:'Residence — Neptune Fast Kill',inv:['Shield Key (from Grandfather Clock)','Skip all non-essential pickups in the Residence — only collect what the route requires'],steps:[
+        {t:'Enter Residence. Skip all rooms that do not contain required items.',img:false,sr:'Saves 1–2 minutes of exploration'},
+        {t:'Aqua Ring: drain the tank via the correct switch sequence, THEN push the generator into the tank, THEN restore power. Neptune dies from electrocution.',img:false,sr:'Both steps are required — draining alone does not kill Neptune'},
+        {t:'Pick up MO DISK(s) in the Residence. Do NOT pick up the Flamethrower.',img:false,sr:'Every non-essential pickup costs seconds',story:'Residence entered. Neptune sharks in the Aqua Ring electrocuted via the drained tank and generator. The Residence housed Umbrella\'s research staff — their files tell the human cost of what was built here. Plant 42 is next: a T-Virus specimen whose roots have consumed the entire building.'},
+      ]},
+      {title:'Room 003 & Plant 42 — Skip V-JOLT',inv:['Key for Room 003 (Residence bedroom area)','Red Book (Residence Bar area)','Grenade Launcher with Incendiary Shells — 3 to 6 rounds needed for Plant 42 without V-JOLT'],steps:[
+        {t:'Key for Room 003 → Room 003 → Red Book → bookcase silhouette puzzle → secret door.',img:false},
+        {t:'Do NOT make V-JOLT. Head straight to Plant 42.',img:false,sr:'Saves 2–3 minutes'},
+        {t:'BOSS: PLANT 42 — 3–6 Incendiary Grenade Launcher rounds. Barry does NOT appear to help if you skip V-JOLT.',img:false,sr:'Fire rounds deal bonus damage — most efficient option'},
+        {t:'HELMET KEY is in the fireplace of the Plant 42 room. Grab it immediately.',img:false,story:'Plant 42 down — Incendiary rounds, no V-JOLT. Barry didn\'t show; he only appears if you use V-JOLT. Helmet Key from the fireplace. The underground lab is Umbrella\'s Arklay Research Facility — the Tyrant Programme, human experimentation, T-Virus origins. Wesker triggered the self-destruct. The helipad is the exit.',save:'SAVE 2 OF 3 — Residence Save Room, 2F. Plant 42 down, Helmet Key in hand. Save before the lab — Lisa Trevor, Chimeras, escape timer, and final boss are all ahead with no additional typewriters.'},
+      ]},
+      {title:'Underground — Lisa Evasion & MO Disks',inv:['Helmet Key (from Plant 42 room fireplace — collected in previous section)','MO Disk #1 (Tiger Statue area, Mansion 1F — must have collected before descending to lab)','Grenade Launcher or Shotgun (Lisa cannot be killed — ammo is for Chimeras in the lab corridors)'],steps:[
+        {t:'Lisa Trevor: sprint through the underground passage. Know her patrol pattern.',img:false,sr:'Practice this segment — her movement has variance'},
+        {t:'Collect all three MO DISKS and use them on the three Pass Code Output Terminals.',img:false},
+        {t:'Restore power. Collect Lab Map. Move efficiently — kill only Chimeras that block you.',img:false},
+        {t:'Activate escape timer. Sprint to helipad.',img:false,sr:'Do not fight Crimson Heads — outrun them',story:'MO Disks processed, self-destruct active, Lisa evaded. Wesker was Umbrella\'s plant in S.T.A.R.S. the entire time — he triggered this to bury the evidence and released T-002 to clean up. Brad is somewhere above. The timer is running.',save:'SAVE 3 OF 3 — Lab Save Room, before activating the escape timer. Optional: only use if you need insurance. Once the timer starts you cannot save. If pace is good, skip this and finish clean.'},
+      ]},
+      {title:'Final Boss — Finish',inv:['Rocket Launcher is dropped by Brad — you do NOT need to carry it in advance','Grenade Launcher with remaining rounds for Super Tyrant before Brad arrives','At least 1 healing item — two Tyrant encounters back to back with no restock opportunity'],steps:[
+        {t:'Tyrant Round 1: push past it toward the helipad. Minimal engagement.',img:false},
+        {t:'Super Tyrant: dump remaining Grenade Launcher rounds. Grab Rocket Launcher when Brad drops it.',img:false},
+        {t:'Fire Rocket Launcher immediately. Board helicopter.',img:false,sr:'Clean hit saves 10–15 sec vs prolonged fight',story:'Done. Wesker was Umbrella\'s mole, triggered the self-destruct, released T-002. Super Tyrant on the helipad — Brad came back and dropped the Rocket Launcher. One shot. The estate is ash. Umbrella is still out there.'},
+      ]},
+    ]
+  },
+
+  completionist:{
+    tips:[
+      'PLAN FOR TWO RUNS: Complete the game as both Jill Valentine and Chris Redfield. Chris has exclusive weapons (Flamethrower), different dialogue, and his own set of scripted events.',
+      'There are over 20 collectable FILE documents. Missing any prevents 100% file completion. Check every desk, shelf, bookcase, and body.',
+      'S-Rank requirements: finish under 3 hours, use 3 or fewer Ink Ribbons (saves), and use zero First Aid Sprays. Plan carefully.',
+      'The BEST ENDING requires Barry Burton to be alive at the finale. Choose dialogue options that protect and trust him throughout. Save before key Barry conversations.',
+      'The JEWELRY BOX must be opened via the correct method described in an associated file. Opening it incorrectly destroys the reward inside — read the file first.',
+      'Defense Items (Dagger, Stun Gun, Flashbang) each have their own trophy/achievement for use. Set to Automatic in Options so they trigger reliably when grabbed.',
+      'The COLT PYTHON MAGNUM is obtained from the Cemetery four-crests puzzle (Wind, Moon, Star, Sun crests). It is missable if you skip the cemetery entirely.',
+      'Lisa Trevor\'s cabin is accessible from the courtyard and contains lore files not found elsewhere. It is completely optional but required for full file completion.',
+      'Chris has 1400 HP vs Jill\'s 960 HP — he is tankier but has only 6 inventory slots. Account for this difference in your second-run planning.',
+      'Burn zombie bodies with the Lighter and Kerosene whenever possible to prevent Crimson Head spawns. Crimson Heads emerging mid-combat are a leading cause of failed completion runs.',
+    ],
+    sections:[
+      {title:'Pre-Run Planning',inv:['No inventory requirements — this is the start of the game','Plan your two-run order now: Run 1 (Jill, Normal — all files & Barry alive), Run 2 (Chris, Hard — Flamethrower & character trophies)'],steps:[
+        {t:'Run 1: Jill Valentine on Normal difficulty. Focus on all files, all enemy encounters, and keeping Barry alive.',img:false},
+        {t:'Run 2: Chris Redfield, recommended on Hard for a difficulty trophy. His route has different scripted moments and the Flamethrower.',img:false},
+        {t:'Before starting: understand that the key order is Sword Key → Armor Key → Shield Key → Helmet Key. Do not rush past areas — file documents are everywhere.',img:false},
+        {missable:true,trophy:'BEST ENDING — HOW IT WORKS: Barry\'s survival is not a dialogue tree. There are two required gameplay actions: (1) Use V-JOLT in the Residence — this is what causes Barry to arrive and help defeat Plant 42, keeping him in play. (2) During the Lisa Trevor underground encounter later in the game, Lisa will disarm Barry. When prompted, give him back his weapon. Both of these must happen or Barry does not survive to the helipad.',t:'BEST ENDING REQUIRES TWO ACTIONS: (1) Use V-JOLT on Plant 42 roots — do not skip it. (2) During Lisa Trevor\'s encounter, give Barry back his weapon when Lisa disarms him. Miss either and Barry does not survive.',img:false},
+        {t:'Set Defense Items to AUTOMATIC in the Options menu before you start. Dagger, Electric Shocker, and Flash Grenade each have their own trophy/achievement for triggering them in combat. Automatic means they fire when you are grabbed, without pausing to navigate menus.',img:false},
+        {t:'Burn every zombie body with the Lighter and Kerosene combination. A zombie you do not burn will re-enter as a Crimson Head — faster, more aggressive, and deadly in tight corridors. Establish the habit now, from the very first zombie.',img:false},
+      ]},
+      {title:'Sword Key Area — Files',inv:['Golden Arrow — found in the cemetery area on your first visit','Handgun with at least 15 rounds (crows and zombies in 1F east)'],steps:[
+        {t:'BARRY — GAME OPENING: Barry gives Jill the Lockpick in the Entrance Hall. This is a scripted moment with no choices to make. It simply establishes the Barry storyline.',img:false},
+        {t:'Golden Arrow → Arrowhead → Cemetery → Angel statue → Crypt → Book of Curses → Sword Key. Read the Book of Curses — it may be a collectable file.',img:false,story:'S.T.A.R.S. Alpha was dispatched to the Arklay Mountains to find Bravo Team, missing during a murder investigation near Raccoon City. Their helicopter was attacked by zombie dogs and Brad Vickers abandoned them. Inside the Spencer Mansion, the dead walked. Joseph Frost was killed in the first seconds. The Keeper\'s Diary — found in a 1F study — documents a researcher\'s transformation into something else, the final entries barely legible. The Suicide Note in the 2F bathroom tells a quieter story: someone chose death over whatever was happening in this house. The Sword Key was hidden in the back cover of a cursed book in the cemetery crypt.',save:'Main Hall Save Room — 1F. Save after the cemetery route. You have the Sword Key and should have the Keeper\'s Diary and Suicide Note. Verify the files before moving on.'},
+        {missable:true,trophy:'MISSABLE — ALL FILES: The KEEPER\'S DIARY is on the desk in a study on 1F. One of the game\'s most iconic documents. Do not walk past the desk.',t:'1F STUDY: Examine the desk to collect the KEEPER\'S DIARY file.',img:false},
+        {missable:true,trophy:'MISSABLE — ALL FILES: The SUICIDE NOTE file is in the 2F bathroom. Examine the bathtub.',t:'2F BATHROOM: Find and read the SUICIDE NOTE in the bathtub.',img:false},
+        {t:'BURN BODIES: Use the Lighter and Kerosene on every zombie you kill in the Entrance Hall, Dining Room, and 1F east corridors. You cannot burn a Crimson Head once it has already risen.',img:false},
+      ]},
+      {title:'Armor Key & Shotgun — Files',inv:['Sword Key (from previous section)','Dog Whistle (2F east area — bedroom or nearby room)','Imitation of a Key — examine the Dog Collar after killing the Cerberus','Broken Shotgun (Small Storeroom, 1F east side)'],steps:[
+        {t:'BARRY — TRAPDOOR RESCUE: Barry saves Jill from a collapsing floor in the mansion during this part of the game. This is a scripted cutscene with no action required. No choices to make.',img:false},
+        {t:'Dog Whistle → Cerberus → Dog Collar → Imitation of Key → Armor corridor swap.',img:false},
+        {missable:true,trophy:'MISSABLE — ALL FILES: A RESEARCHER\'S MEMO is on a 2F study desk. It is not destroyed by any event but is extremely easy to sprint past.',t:'2F STUDY DESK: Read the RESEARCHER\'S MEMO before leaving the study area.',img:false},
+        {t:'Broken Shotgun swap at wall mount (Jill alone). Store Broken Shotgun in Item Box.',img:false,story:'Two keys recovered. The Spencer Mansion is built on top of the Arklay Research Facility — an Umbrella Corporation weapons laboratory hidden beneath a country estate. Umbrella\'s founders, Spencer, Ashford, and Marcus, discovered the Progenitor Virus in West Africa and built a pharmaceutical empire to conceal its weaponisation. The T-Virus is the mutagenic derivative they refined here. A Researcher\'s Memo on a 2F desk describes ordinary workdays at an extraordinary facility: meetings, quotas, the banal machinery of a place that was manufacturing the end of the world. Barry Burton saved Jill from a ceiling trap, but something is threatening him — he hasn\'t said what.',save:'East Wing Save Room — 1F. Armor Key, Shotgun, and Researcher\'s Memo all secured. Good time to save before the longer Shield Key / piano sequence.'},
+        {t:'BURN BODIES: Continue burning zombie bodies in the 2F corridors and rooms. Cerberus (dogs) do NOT become Crimson Heads — only humanoid zombies.',img:false},
+      ]},
+      {title:'Shield Key & Piano — Files',inv:['Armor Key (from previous section)','Musical Score (1F near piano / Bar area)','Missing Music (behind moveable shelf in Bar area)','Plain Emblem (Dining Room shelf near fireplace)','Combine Musical Score + Missing Music in inventory before approaching the piano'],steps:[
+        {t:'Musical Score + Missing Music → Moonlight Sonata → piano → Gold Emblem → Dining Room → Clock at 6:00 → Shield Key.',img:false,story:'Three keys in hand. The piano played Moonlight Sonata and opened a hidden passage; the grandfather clock gave up the Shield Key at six o\'clock. The Spencer Estate is a puzzle-box — deliberately so. George Trevor, the architect Oswell Spencer commissioned to design it, built every lock and hidden room on Spencer\'s instructions. Spencer then had Trevor and his family locked inside their own creation so they could never reveal what was beneath it. Trevor\'s daughter, Jessica, was subjected to every virus Umbrella developed over thirty years. She is still in the estate. She is not dead. The Jewelry Box opened correctly and gave up its gemstone intact. Barry is still here, still helping, still not explaining.',save:'CRITICAL SAVE — 2F Save Room. The Hunter trigger fires shortly after getting the Shield Key. Save now while the mansion is still manageable. Confirm the Jewelry Box gemstone is in your inventory before moving on.'},
+        {missable:true,trophy:'MISSABLE ITEM: The JEWELRY BOX must be opened using the method described in a nearby file. Wrong method destroys the reward (a gemstone). Read the associated file first.',t:'JEWELRY BOX: Collect it from the west wing and open it using the correct technique from the nearby file instructions.',img:'jewelry-box'},
+        {t:'Look for any additional files in Armor Key and Sword Key-locked rooms you can now access.',img:false},
+        {t:'BURN BODIES: Sweep the Bar area, west wing, and any rooms you are unlocking for the first time. These rooms may have zombies you have not yet burned.',img:false},
+        {t:'DEFENSE ITEM TROPHY: You should have had a few grab attempts by now. If your Dagger or Electric Shocker has not triggered yet, allow a weakened zombie to grab Jill once to fire it. Check that the item was consumed in your defense slot — if it was, the trophy is earned.',img:false},
+      ]},
+      {title:'The Hunters — All Enemy Types',inv:['Shield Key (from Grandfather Clock)','Shotgun or Grenade Launcher — Hunters can instantly decapitate Jill at Caution or lower health','At least one Green+Red herb combination in reserve','Health at Fine or Good before entering any room where Hunters may appear'],steps:[
+        {t:'When Hunters appear, walk through every affected room. Do not skip entire areas.',img:false},
+        {missable:true,trophy:'ENEMY TYPES — ALL VARIANTS: There are two distinct Hunter types. Alpha Hunters are upright, humanoid, with blade-like forearms — found in mansion corridors. Gamma Hunters are frog-like, move on all fours, and can swallow Jill whole — found in outdoor and pool areas. You must kill at least one of each for full enemy-type completion.',t:'HUNTER VARIANTS: Kill at least one Alpha Hunter (mansion corridors) and at least one Gamma Hunter (outdoor/pool areas). They count as separate enemy types.',img:false},
+        {t:'CRIMSON HEADS: Any zombie you did not burn in earlier sections may now be a Crimson Head. Approach previously cleared rooms cautiously — treat the floor as unknown. Crimson Heads are significantly faster and more aggressive than standard zombies.',img:false},
+        {t:'Return to earlier areas — new items may have appeared after the Hunter trigger event.',img:false,story:'The Hunter trigger has fired. Alpha Hunters patrol mansion corridors; Gamma Hunters lurk in outdoor and pool areas — different variants, both engineered for military contract deployment. The Spencer Estate is running through its contingencies, deploying the things the facility created. The Crimson Heads that have risen from unburned zombie bodies are a secondary complication — the T-Virus accelerates and mutates what it cannot kill outright. Barry Burton has been present throughout and is clearly operating under threat. Albert Wesker, S.T.A.R.S. unit commander, has not been seen in some time.'},
+      ]},
+      {title:'Residence — All Files & Neptune',inv:['Shield Key (to access the Residence building)','Residence Map — pick up near the entrance immediately on arrival','Grenade Launcher or Shotgun for Neptune boss','At least one healing item — Residence has tough enemies in tight corridors'],steps:[
+        {t:'Pick up the RESIDENCE MAP near the building entrance.',img:false,save:'Residence Save Room — 1F, near the entrance. Save immediately on arriving. Stock up herbs and drop off anything non-essential before going deeper into the Residence.'},
+        {missable:true,trophy:'MISSABLE — ALL FILES: Residence bedrooms (Room 001, 002, and 003) each contain desk files. Open every single door. Check every desk and cabinet.',t:'RESIDENCE BEDROOMS: Check Rooms 001, 002, and 003 thoroughly — files in each one are easy to skip.',img:false},
+        {t:'Aqua Ring: drain tank → push generator into tank → restore power → Neptune dies from electrocution. Both steps required.',img:false,story:'The Residence held the researchers who staffed the Arklay facility. Rooms 001, 002, and 003 each had files: daily logs, personal correspondence, administrative memos written by people who were methodically isolated and never allowed to leave. Neptune sharks in the Aqua Ring are dead — electrocuted after Jill drained the tank. Umbrella bred Neptune for underwater military contracts. The research logs document the process with pride: infect an animal, observe, document, weaponise. The Residence files make the same story personal. Plant 42 is next — a T-Virus specimen that has spread its root system through the entire building.',save:'Residence Save Room — 1F. Save after Neptune. Confirm you have the bedroom files from Rooms 001, 002, and 003 before continuing to V-JOLT and Plant 42.'},
+        {t:'After Neptune, search the drained tank floor for any items.',img:false},
+        {missable:true,trophy:'MISSABLE (CHRIS RUN ONLY): The CHEMICAL FLAMETHROWER is Chris-exclusive. Note its location for your second run — Jill cannot use it.',t:'Residence storage: note the CHEMICAL FLAMETHROWER location for your Chris run.',img:false},
+      ]},
+      {title:'Room 003 & V-JOLT — All Files',inv:['Key for Room 003 (found in the Residence bedroom area)','Red Book (from the Residence Bar area on 1F)','Water, UMB No. 3, and Yellow-6 — all in the chemical storage area (do NOT mix anything until you have read every file in the room)','Grenade Launcher with Incendiary Shells for Plant 42'],steps:[
+        {missable:true,trophy:'MISSABLE — ALL FILES: The V-JOLT RESEARCH NOTES and related chemical files are in the Residence chemical storage area. Collect ALL of them BEFORE starting to mix anything.',t:'CHEMICAL STORAGE: Read every research note and document before mixing V-JOLT.',img:false},
+        {t:'Mix V-JOLT using the correct formula (Water+UMB No.3 → NP-004; NP-004+Yellow-6 → UMB No.10; Water+Yellow-6 → UMB No.7; UMB No.10+UMB No.7 → VP-017; VP-017+UMB No.3 → V-JOLT).',img:false},
+        {missable:true,trophy:'BEST ENDING — V-JOLT IS REQUIRED: Using V-JOLT is what triggers Barry\'s arrival at Plant 42. Without it, Barry does not appear for this fight, and his storyline toward the best ending is cut off. There is no other way to keep Barry in play at this point. Do not skip V-JOLT on a completionist or best-ending run.',t:'BEST ENDING: Apply V-JOLT to the roots. This is what brings Barry here. He arrives to help finish Plant 42 — without V-JOLT, he does not come, and the best ending is no longer possible.',img:false},
+        {t:'Barry arrives and fires the killing shot on Plant 42 after V-JOLT weakens it. Let the cutscene complete.',img:false,story:'Plant 42 is dead. V-JOLT dissolved its root system and Barry Burton arrived to fire the killing shot. His presence here means the threat against him has lifted — or he decided it no longer mattered. He chose to show up. Helmet Key from the fireplace. The underground laboratory is open. This is where Umbrella\'s Arklay facility kept its real work: the Tyrant Programme, human experimentation records, two decades of T-Virus development. Albert Wesker\'s name appears in restricted lab clearance files. His absence since the early mansion is starting to have a shape.'},
+        {t:'Helmet Key is in the fireplace after the fight.',img:false,save:'Residence Save Room — 2F. IMPORTANT: Save with the Helmet Key in hand. The lab is the final stretch — Chimeras, MO Disks, and the escape sequence all ahead. Confirm Barry appeared for the Plant 42 fight before continuing.'},
+      ]},
+      {title:'Cemetery — Four Crests & Magnum',inv:['Wind Crest — MUST have been collected during earlier mansion exploration (1F/2F rooms). This is easy to miss. Backtrack now if you do not have it.','Moon Crest, Star Crest, Sun Crest — all found in the cemetery area','Examine each crest in your inventory to press the hidden button on the back BEFORE placing them in the grave'],steps:[
+        {missable:true,trophy:'MISSABLE WEAPON: The COLT PYTHON MAGNUM requires completing the four-crests puzzle in the cemetery. Skipping the cemetery entirely means permanently missing this weapon on this run.',t:'CEMETERY CRESTS: Place Wind Crest in the right grave, collect Moon/Star/Sun crests, press the button on the back of each one, then place them correctly in the left grave.',img:false,story:'Four crests placed. Cemetery puzzle solved. Colt Python Magnum secured — Wind Crest was the missable one.'},
+        {t:'Examine each of the three crests in inventory to press the hidden button on the back BEFORE placing them — this step is required for the puzzle to work.',img:'crest-button'},
+      ]},
+      {title:'Lisa Trevor — Lore Files',inv:['Helmet Key (from Plant 42 room fireplace — needed for the lab, not this section)','Handgun or Shotgun — Lisa is invincible but Zombies and other enemies are still present in the underground passage','Do NOT bring a full inventory — you need space for the two missable files in the underground passage'],steps:[
+        {t:'Enter the underground passage after collecting George\'s Diary and the Lisa Trevor Medical Report.',img:false,save:'SAVE BEFORE THIS SECTION — Residence Save Room, 2F. The Barry weapon-return moment is in this passage. If you miss it there is no second chance — you need a clean reload point before entering.'},
+        {missable:true,trophy:'MISSABLE — ALL FILES: GEORGE\'S DIARY and the MEDICAL REPORT on Lisa Trevor are in the underground passage. Players sprint past in fear. Force yourself to stop and collect them.',t:'UNDERGROUND PASSAGE: Collect GEORGE\'S DIARY and the LISA TREVOR MEDICAL REPORT. Run, but grab the files.',img:'lisa-escape'},
+        {missable:true,trophy:'BEST ENDING — CRITICAL ACTION: During the underground passage encounter, Lisa Trevor will attack and DISARM Barry, knocking his weapon away. When you are given the option to act, choose to GIVE BARRY BACK HIS WEAPON. If you do not do this, Barry is left defenceless and does not survive. This is the second and final condition for the best ending — V-JOLT was the first.',t:'BARRY\'S GUN: When Lisa disarms Barry during the underground encounter, immediately give him back his weapon when prompted. This is the key action that keeps Barry alive. Do not hesitate — act when the option appears.',img:false,story:'George\'s Diary and the Lisa Trevor Medical Report are collected. The documents tell the full story of what Umbrella did to the Trevor family: George designed the Spencer Estate, was locked inside it with his wife and daughter, and died there. His daughter Jessica — later renamed Lisa Trevor in the research files — was subjected to every virus Umbrella developed over thirty years. She cannot die. She wanders the estate, carrying the faces of those she has taken, still looking for her mother. In the underground passage, Lisa disarmed Barry Burton. Jill gave him back his weapon. Both conditions for the best ending are now confirmed met.'},
+        {t:'Lisa Trevor\'s CABIN is accessible from the courtyard area (optional encounter). Visit it for environmental storytelling and at least one additional file.',img:false},
+        {t:'Lisa Trevor is invincible. Do not fight her. Her storyline resolves in an optional tomb encounter — puzzle-based, not combat.',img:false},
+      ]},
+      {title:'Laboratory — All Files & MO Disks',inv:['Helmet Key (from Plant 42 room fireplace — required to enter the lab)','MO Disk #1 (Tiger Statue puzzle area, Mansion 1F — must be collected before descending)','Shotgun and/or Grenade Launcher — Chimeras are fast and dangerous in tight lab corridors','2 or more healing items — the lab is the most dangerous area in the game','Free inventory space for MO Disks #2 and #3 collected inside the lab'],steps:[
+        {t:'Collect LAB MAP at the entrance. Methodically clear every room.',img:false,save:'Lab Save Room — near the lab entrance. Last typewriter in the game. Save here, stock up, and confirm you have MO Disk #1 from the Tiger Statue area before pushing into the lab.'},
+        {t:'If you used V-JOLT AND gave Barry his weapon back in the underground passage, he will appear in the lab area and assist Jill. His presence here confirms you are on track for the best ending.',img:false},
+        {t:'Restore power. Immediately revisit now-accessible locked rooms for new items.',img:false},
+        {missable:true,trophy:'MISSABLE — ALL FILES: Lab office rooms contain a RESEARCHER\'S DIARY and an EXPERIMENT LOG. Check every terminal desk and every side room off the main corridors.',t:'LAB OFFICES: Read the RESEARCHER\'S DIARY and EXPERIMENT LOG.',img:false},
+        {t:'Collect all three MO DISKS and use them on the three Pass Code Output Terminals to unlock the Cell Entrance.',img:false},
+        {t:'Kill every Chimera you encounter — enemy type completion requires it.',img:false,story:'The Arklay Research Facility is the heart of everything. Lab files document the Tyrant Programme — an attempt to engineer a controllable super-soldier from T-Virus-enhanced humans with sufficient genetic stability to remain functional. T-002 is in containment in this facility. The Chimeras — human-fly hybrids from failed T-Virus experiments — are accounted for. MO Disks processed. Barry Burton is present in the lab, confirming both best-ending conditions were met. Albert Wesker\'s restricted clearance in this facility removes any remaining doubt. The self-destruct sequence is next.'},
+        {t:'Activate escape timer. Ensure inventory is optimal: weapons, healing, no junk.',img:false},
+      ]},
+      {title:'Best Ending & Barry — Second Run',inv:['Barry Burton must be alive — confirm you used V-JOLT AND gave him his weapon back during the Lisa Trevor underground encounter','Shotgun or Grenade Launcher with ammo for two Tyrant encounters (Rocket Launcher is dropped by Brad — you do not carry it in)','Colt Python Magnum rounds if obtained from the cemetery puzzle','At least 2 healing items — no restock opportunity once the self-destruct sequence begins'],steps:[
+        {t:'Approach the helipad with enough ammo for both Tyrant encounters.',img:false},
+        {missable:true,trophy:'BEST ENDING CHECKPOINT: If you used V-JOLT and gave Barry his weapon back during the Lisa Trevor encounter, Barry will be at the helipad when you arrive. If he is not there, one of those two conditions was missed. You cannot fix this now — it requires reloading a save from before the relevant moment.',t:'BEST ENDING: Barry should already be at the helipad if both conditions were met earlier. His presence here is the payoff — no new actions required at this point.',img:false},
+        {t:'Tyrant Round 1 (T-002): avoid or deal damage with your best weapon to stagger it. Focus on reaching the helipad.',img:false},
+        {t:'Super Tyrant: dump remaining Grenade Launcher or Magnum rounds. Brad drops the Rocket Launcher from the helicopter — grab it immediately and fire once to end the fight.',img:false},
+        {t:'Fire Rocket Launcher at Super Tyrant. Board helicopter with Barry and Chris. This is the best ending.',img:false,story:'The Spencer Estate is gone. The Arklay Research Facility — over two decades of T-Virus development, B.O.W. engineering, and human experimentation built beneath a Victorian mansion in the Raccoon Mountains — burned with it. Albert Wesker was Umbrella\'s mole inside S.T.A.R.S. from the beginning. He triggered the self-destruct to bury the evidence and released T-002 to eliminate his own team. On the helipad, T-002 mutated into the Super Tyrant. Brad Vickers, who had abandoned them at the mission\'s start, came back. His Rocket Launcher ended it in one shot. Jill Valentine, Barry Burton, and Chris Redfield escaped as the estate fell. Lisa Trevor found peace in the tomb her father designed, decades too late. The mountains are ash. Umbrella Corporation is not. Raccoon City is still out there.'},
+        {missable:true,trophy:'TROPHY — BOTH CHARACTERS: Start a new game as Chris Redfield after completing Jill\'s route. Chris has a Flamethrower (exclusive weapon), different scripted partner moments with Rebecca Chambers, different puzzle item names, and 1400 HP vs Jill\'s 960 HP.',t:'After completing Jill\'s route, begin a NEW GAME as Chris Redfield for all character-exclusive content, files, and trophies.',img:false},
+      ]},
+    ]
+  }
+};
+
+// ===== PLACEHOLDER DATA =====
+function makePlaceholder(name){
+  var ph = {tips:['Walkthrough content for '+name+' is coming soon. Use the checkboxes to track your own progress in the meantime.'],sections:[
+    {title:'Chapter 1 — [Fill In]',steps:[
+      {t:'[Placeholder step — add walkthrough content here]',img:false},
+      {t:'[Placeholder step]',img:false},
+    ]},
+    {title:'Chapter 2 — [Fill In]',steps:[
+      {t:'[Placeholder step]',img:false},
+      {t:'[Placeholder step]',img:false},
+    ]},
+  ]};
+  return {standard:ph,speedrun:JSON.parse(JSON.stringify(ph)),completionist:JSON.parse(JSON.stringify(ph))};
+}
+
+var DATA = {
+  re1: RE1,
+  re2: makePlaceholder('Resident Evil 2 Remake'),
+  re3: makePlaceholder('Resident Evil 3 Remake'),
+  re4: makePlaceholder('Resident Evil 4 Remake'),
+  re7: makePlaceholder('Resident Evil 7: Biohazard'),
+  re8: makePlaceholder('Resident Evil Village'),
+};
+
+// ===== FLOOR MAPS =====
+var MAPS = {
+
+'mansion1f':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 295"><rect width="560" height="295" fill="#070707"/><text x="280" y="14" text-anchor="middle" fill="#553333" font-family="monospace" font-size="9" letter-spacing="3">SPENCER ESTATE — GROUND FLOOR (1F)</text><!-- corridors/connections --><line x1="55" y1="82" x2="70" y2="82" stroke="#2a1010" stroke-width="6"/><rect x="55" y="76" width="15" height="12" fill="#0a0a00" stroke="#886600" stroke-width="1" stroke-dasharray="2,2"/><text x="62" y="86" text-anchor="middle" fill="#665500" font-family="sans-serif" font-size="8">K</text><line x1="185" y1="82" x2="220" y2="82" stroke="#1a0808" stroke-width="6"/><line x1="360" y1="82" x2="380" y2="82" stroke="#1a0808" stroke-width="6"/><line x1="440" y1="82" x2="458" y2="82" stroke="#1a0808" stroke-width="6"/><line x1="128" y1="125" x2="128" y2="150" stroke="#1a0808" stroke-width="5"/><line x1="415" y1="130" x2="415" y2="155" stroke="#1a0808" stroke-width="5"/><line x1="500" y1="130" x2="500" y2="155" stroke="#1a0808" stroke-width="5"/><line x1="420" y1="215" x2="420" y2="230" stroke="#1a0808" stroke-width="5"/><!-- BAR / PIANO --><rect x="15" y="35" rx="2" width="40" height="90" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="35" y="74" text-anchor="middle" fill="#9a8080" font-family="sans-serif" font-size="9">BAR</text><text x="35" y="86" text-anchor="middle" fill="#9a8080" font-family="sans-serif" font-size="9">&amp;</text><text x="35" y="98" text-anchor="middle" fill="#9a8080" font-family="sans-serif" font-size="9">PIANO</text><!-- DINING ROOM --><rect x="70" y="35" rx="2" width="115" height="90" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="127" y="77" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="11" font-weight="bold">DINING</text><text x="127" y="92" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="11" font-weight="bold">ROOM</text><!-- MAIN HALL --><rect x="220" y="30" rx="2" width="140" height="100" fill="#1c0c0c" stroke="#cc3333" stroke-width="2"/><text x="290" y="77" text-anchor="middle" fill="#eec8c8" font-family="sans-serif" font-size="12" font-weight="bold">MAIN</text><text x="290" y="93" text-anchor="middle" fill="#eec8c8" font-family="sans-serif" font-size="12" font-weight="bold">HALL</text><text x="290" y="108" text-anchor="middle" fill="#884444" font-family="sans-serif" font-size="8">▲ 2F stairs inside ▲</text><!-- EAST CORRIDOR --><rect x="380" y="30" rx="2" width="60" height="100" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="410" y="76" text-anchor="middle" fill="#9a8080" font-family="sans-serif" font-size="9">EAST</text><text x="410" y="90" text-anchor="middle" fill="#9a8080" font-family="sans-serif" font-size="9">CORR.</text><!-- EAST WING --><rect x="458" y="30" rx="2" width="90" height="100" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="503" y="76" text-anchor="middle" fill="#9a8080" font-family="sans-serif" font-size="9">EAST</text><text x="503" y="90" text-anchor="middle" fill="#9a8080" font-family="sans-serif" font-size="9">WING</text><!-- BASEMENT STAIRS --><rect x="70" y="150" rx="2" width="115" height="45" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="127" y="176" text-anchor="middle" fill="#7a6060" font-family="sans-serif" font-size="9">BASEMENT STAIRS (B1)</text><!-- ARMOR KEY CORRIDOR --><rect x="380" y="155" rx="2" width="80" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="420" y="181" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">ARMOR KEY</text><text x="420" y="195" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">CORRIDOR</text><!-- SMALL STOREROOM --><rect x="475" y="155" rx="2" width="73" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="511" y="181" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">SMALL</text><text x="511" y="195" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">STOREROOM</text><!-- SHOTGUN ROOM --><rect x="380" y="230" rx="2" width="80" height="50" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="420" y="252" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">SHOTGUN</text><text x="420" y="266" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">TRAP ROOM</text><!-- legend --><rect x="15" y="255" rx="2" width="530" height="30" fill="#0a0000" stroke="#251010" stroke-width="1"/><rect x="28" y="264" width="11" height="11" rx="1" fill="#1c0c0c" stroke="#cc3333" stroke-width="1.5"/><text x="45" y="273" fill="#886666" font-family="sans-serif" font-size="9">Landmark / reference</text><rect x="183" y="264" width="11" height="11" rx="1" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="200" y="273" fill="#886666" font-family="sans-serif" font-size="9">Room</text><rect x="270" y="265" width="14" height="9" rx="1" fill="#0a0a00" stroke="#886600" stroke-width="1" stroke-dasharray="2,2"/><text x="253" y="273" fill="#665500" font-family="sans-serif" font-size="9">K</text><text x="290" y="273" fill="#886666" font-family="sans-serif" font-size="9">= Locked (key)</text><text x="430" y="273" fill="#443333" font-family="sans-serif" font-size="8" font-style="italic">Schematic — approx.</text></svg>',
+
+'mansion2f':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 270"><rect width="560" height="270" fill="#070707"/><text x="280" y="14" text-anchor="middle" fill="#553333" font-family="monospace" font-size="9" letter-spacing="3">SPENCER ESTATE — UPPER FLOOR (2F)</text><!-- connections --><line x1="155" y1="90" x2="175" y2="90" stroke="#1a0808" stroke-width="6"/><line x1="335" y1="90" x2="365" y2="90" stroke="#1a0808" stroke-width="6"/><line x1="455" y1="90" x2="480" y2="90" stroke="#1a0808" stroke-width="6"/><!-- WEST 2F: LIBRARY/STUDY --><rect x="15" y="45" rx="2" width="140" height="90" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="85" y="87" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="11" font-weight="bold">LIBRARY</text><text x="85" y="102" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="11" font-weight="bold">/ STUDY</text><!-- UPPER LANDING (above main hall) --><rect x="175" y="35" rx="2" width="160" height="110" fill="#1c0c0c" stroke="#cc3333" stroke-width="2"/><text x="255" y="82" text-anchor="middle" fill="#eec8c8" font-family="sans-serif" font-size="12" font-weight="bold">UPPER</text><text x="255" y="98" text-anchor="middle" fill="#eec8c8" font-family="sans-serif" font-size="12" font-weight="bold">LANDING</text><text x="255" y="114" text-anchor="middle" fill="#884444" font-family="sans-serif" font-size="8">Above Main Hall</text><!-- EAST 2F CORRIDOR --><rect x="365" y="45" rx="2" width="90" height="90" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="410" y="82" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="10" font-weight="bold">EAST 2F</text><text x="410" y="97" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="10" font-weight="bold">CORRIDOR</text><text x="410" y="110" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">Bedrooms</text><!-- EAST TERRACE (Forest Speyer) --><rect x="480" y="45" rx="2" width="70" height="90" fill="#1c0c0c" stroke="#cc5533" stroke-width="2"/><text x="515" y="77" text-anchor="middle" fill="#eec8a0" font-family="sans-serif" font-size="9" font-weight="bold">EAST</text><text x="515" y="91" text-anchor="middle" fill="#eec8a0" font-family="sans-serif" font-size="9" font-weight="bold">TERRACE</text><text x="515" y="105" text-anchor="middle" fill="#cc6644" font-family="sans-serif" font-size="8">Forest</text><text x="515" y="116" text-anchor="middle" fill="#cc6644" font-family="sans-serif" font-size="8">Speyer ☠</text><!-- arrow: Landing → East Corr → Terrace --><line x1="335" y1="90" x2="365" y2="90" stroke="#ccaa33" stroke-width="2" stroke-dasharray="5,3"/><line x1="455" y1="90" x2="480" y2="90" stroke="#ccaa33" stroke-width="2" stroke-dasharray="5,3"/><polygon points="480,86 490,90 480,94" fill="#ccaa33"/><!-- You are here: Upper Landing --><circle cx="255" cy="55" r="6" fill="#cc3333"/><text x="265" y="59" fill="#ee4444" font-family="sans-serif" font-size="8" font-weight="bold">START HERE</text><!-- instruction --><rect x="15" y="165" rx="2" width="530" height="40" fill="#0d0000" stroke="#251010" stroke-width="1"/><text x="280" y="180" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="11">From Upper Landing → head east → East 2F Corridor → East Terrace</text><text x="280" y="197" text-anchor="middle" fill="#7a5050" font-family="sans-serif" font-size="9">Forest Speyer\'s body is on the East Terrace. Collect the GRENADE LAUNCHER from his remains.</text><!-- legend --><rect x="15" y="237" rx="2" width="530" height="25" fill="#0a0000" stroke="#251010" stroke-width="1"/><circle cx="30" cy="249" r="5" fill="#cc3333"/><text x="40" y="253" fill="#886666" font-family="sans-serif" font-size="9">Start</text><rect x="110" y="243" width="11" height="11" rx="1" fill="#1c0c0c" stroke="#cc5533" stroke-width="1.5"/><text x="127" y="253" fill="#886666" font-family="sans-serif" font-size="9">Destination</text><line x1="250" y1="249" x2="275" y2="249" stroke="#ccaa33" stroke-width="1.5" stroke-dasharray="4,2"/><polygon points="275,246 282,249 275,252" fill="#ccaa33"/><text x="287" y="253" fill="#886666" font-family="sans-serif" font-size="9">Route</text><text x="420" y="253" fill="#443333" font-family="sans-serif" font-size="8" font-style="italic">Schematic — approx.</text></svg>',
+
+'courtyard':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320"><rect width="560" height="320" fill="#070707"/><text x="280" y="14" text-anchor="middle" fill="#553333" font-family="monospace" font-size="9" letter-spacing="3">COURTYARD, CEMETERY &amp; RESIDENCE</text><!-- MANSION block (north) --><rect x="120" y="22" rx="2" width="320" height="40" fill="#1a0808" stroke="#cc3333" stroke-width="2"/><text x="280" y="47" text-anchor="middle" fill="#eec8c8" font-family="sans-serif" font-size="12" font-weight="bold">SPENCER MANSION</text><!-- exits --><rect x="175" y="62" width="40" height="20" fill="#070707"/><text x="195" y="75" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">WEST EXIT</text><rect x="345" y="62" width="40" height="20" fill="#070707"/><text x="365" y="75" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">EAST EXIT</text><!-- COURTYARD --><rect x="80" y="82" rx="2" width="400" height="80" fill="#0e0808" stroke="#331515" stroke-width="1"/><text x="280" y="128" text-anchor="middle" fill="#7a6060" font-family="sans-serif" font-size="13">COURTYARD</text><!-- CEMETERY (left side) --><rect x="15" y="82" rx="2" width="60" height="140" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="45" y="144" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9" transform="rotate(-90 45 144)">CEMETERY</text><!-- Two graves --><rect x="23" y="90" rx="1" width="44" height="18" fill="#0d0d0d" stroke="#3d3333" stroke-width="1"/><text x="45" y="103" text-anchor="middle" fill="#7a6060" font-family="sans-serif" font-size="7">RIGHT GRAVE</text><text x="45" y="112" text-anchor="middle" fill="#886644" font-family="sans-serif" font-size="7">Wind Crest →</text><rect x="23" y="120" rx="1" width="44" height="18" fill="#0d0d0d" stroke="#3d3333" stroke-width="1"/><text x="45" y="133" text-anchor="middle" fill="#7a6060" font-family="sans-serif" font-size="7">LEFT GRAVE</text><text x="45" y="142" text-anchor="middle" fill="#886644" font-family="sans-serif" font-size="7">★ Magnum</text><!-- Angel Statue --><rect x="23" y="150" rx="1" width="44" height="25" fill="#0d0d0d" stroke="#3a3060" stroke-width="1"/><text x="45" y="162" text-anchor="middle" fill="#7a6088" font-family="sans-serif" font-size="7">ANGEL</text><text x="45" y="172" text-anchor="middle" fill="#7a6088" font-family="sans-serif" font-size="7">STATUE</text><text x="45" y="181" text-anchor="middle" fill="#556688" font-family="sans-serif" font-size="6">Arrowhead →</text><!-- path arrows in courtyard --><line x1="195" y1="162" x2="195" y2="185" stroke="#ccaa33" stroke-width="2" stroke-dasharray="5,3"/><line x1="195" y1="185" x2="80" y2="185" stroke="#ccaa33" stroke-width="2" stroke-dasharray="5,3"/><line x1="80" y1="185" x2="70" y2="155" stroke="#ccaa33" stroke-width="2" stroke-dasharray="5,3"/><polygon points="67,145 70,157 74,145" fill="#ccaa33"/><!-- RESIDENCE --><rect x="175" y="235" rx="2" width="210" height="55" fill="#1c0c0c" stroke="#cc5533" stroke-width="2"/><text x="280" y="258" text-anchor="middle" fill="#eec8a0" font-family="sans-serif" font-size="12" font-weight="bold">RESIDENCE</text><text x="280" y="276" text-anchor="middle" fill="#cc6644" font-family="sans-serif" font-size="9">(Guardhouse / Dormitory)</text><!-- path: courtyard to residence --><line x1="280" y1="162" x2="280" y2="235" stroke="#ccaa33" stroke-width="2" stroke-dasharray="5,3"/><polygon points="276,235 280,245 284,235" fill="#ccaa33"/><!-- instruction --><rect x="80" y="183" rx="2" width="400" height="40" fill="#0e0808" stroke="#251010" stroke-width="1"/><text x="280" y="198" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="10">Exit mansion via West or East exit into the Courtyard.</text><text x="280" y="213" text-anchor="middle" fill="#7a5050" font-family="sans-serif" font-size="9">Cemetery is on the west side. Residence entrance is to the south.</text><!-- legend --><rect x="15" y="300" rx="2" width="530" height="14" fill="#0a0000" stroke="#251010" stroke-width="1"/><text x="280" y="311" text-anchor="middle" fill="#443333" font-family="sans-serif" font-size="8" font-style="italic">Schematic — not to scale. Cemetery on west side of courtyard. Arrowhead → Crypt under angel statue.</text></svg>',
+
+'residence':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 350"><rect width="560" height="350" fill="#070707"/><text x="280" y="14" text-anchor="middle" fill="#553333" font-family="monospace" font-size="9" letter-spacing="3">RESIDENCE / GUARDHOUSE — ALL FLOORS</text><!-- 1F LABEL --><text x="18" y="38" fill="#664444" font-family="monospace" font-size="10" letter-spacing="2">1F</text><line x1="35" y1="34" x2="545" y2="34" stroke="#251010" stroke-width="1"/><!-- 1F ROOMS --><rect x="15" y="42" rx="2" width="75" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="52" y="69" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">ENTRANCE</text><!-- Room 001 --><rect x="105" y="42" rx="2" width="75" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="142" y="69" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">ROOM 001</text><text x="142" y="81" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">File inside</text><!-- Room 002 --><rect x="195" y="42" rx="2" width="75" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="232" y="69" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">ROOM 002</text><text x="232" y="81" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">File inside</text><!-- Room 003 (highlighted - bookcase puzzle) --><rect x="285" y="42" rx="2" width="75" height="60" fill="#1c0c0c" stroke="#cc5533" stroke-width="2"/><text x="322" y="66" text-anchor="middle" fill="#eec8a0" font-family="sans-serif" font-size="9" font-weight="bold">ROOM 003</text><text x="322" y="79" text-anchor="middle" fill="#cc7744" font-family="sans-serif" font-size="8">Bookcase</text><text x="322" y="91" text-anchor="middle" fill="#cc7744" font-family="sans-serif" font-size="8">Puzzle ★</text><!-- BAR --><rect x="375" y="42" rx="2" width="85" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="417" y="66" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9" font-weight="bold">BAR</text><text x="417" y="79" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">Red Book here</text><!-- Storage --><rect x="475" y="42" rx="2" width="75" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="512" y="66" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">STORAGE</text><text x="512" y="79" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">Flamethrower</text><text x="512" y="91" text-anchor="middle" fill="#664444" font-family="sans-serif" font-size="8">(Chris only)</text><!-- Staircase to B1 --><rect x="15" y="118" rx="2" width="75" height="40" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="52" y="138" text-anchor="middle" fill="#7a6060" font-family="sans-serif" font-size="9">STAIRS</text><text x="52" y="150" text-anchor="middle" fill="#7a6060" font-family="sans-serif" font-size="9">↓ B1</text><!-- doors in 1F --><line x1="90" y1="72" x2="105" y2="72" stroke="#1a0808" stroke-width="5"/><line x1="180" y1="72" x2="195" y2="72" stroke="#1a0808" stroke-width="5"/><line x1="270" y1="72" x2="285" y2="72" stroke="#1a0808" stroke-width="5"/><line x1="360" y1="72" x2="375" y2="72" stroke="#1a0808" stroke-width="5"/><line x1="460" y1="72" x2="475" y2="72" stroke="#1a0808" stroke-width="5"/><line x1="52" y1="102" x2="52" y2="118" stroke="#1a0808" stroke-width="5"/><!-- B1 DIVIDER --><line x1="15" y1="172" x2="545" y2="172" stroke="#331010" stroke-width="1.5" stroke-dasharray="8,4"/><text x="18" y="186" fill="#664444" font-family="monospace" font-size="10" letter-spacing="2">B1 — BASEMENT</text><!-- B1 ROOMS --><rect x="15" y="195" rx="2" width="75" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="52" y="222" text-anchor="middle" fill="#7a6060" font-family="sans-serif" font-size="9">STAIRCASE</text><!-- Control Room --><rect x="105" y="195" rx="2" width="95" height="60" fill="#111111" stroke="#2a1010" stroke-width="1"/><text x="152" y="222" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">CONTROL</text><text x="152" y="236" text-anchor="middle" fill="#c8b898" font-family="sans-serif" font-size="9">ROOM</text><!-- Aqua Ring (Neptune) --><rect x="215" y="185" rx="2" width="150" height="80" fill="#1c0c0c" stroke="#cc3333" stroke-width="2"/><text x="290" y="218" text-anchor="middle" fill="#eec8c8" font-family="sans-serif" font-size="11" font-weight="bold">AQUA RING</text><text x="290" y="234" text-anchor="middle" fill="#cc4444" font-family="sans-serif" font-size="9">Neptune Boss</text><text x="290" y="248" text-anchor="middle" fill="#884444" font-family="sans-serif" font-size="8">Drain + Electrocute</text><!-- Chemical Lab --><rect x="380" y="195" rx="2" width="95" height="60" fill="#1c0c0c" stroke="#cc5533" stroke-width="2"/><text x="427" y="219" text-anchor="middle" fill="#eec8a0" font-family="sans-serif" font-size="9" font-weight="bold">CHEMICAL</text><text x="427" y="233" text-anchor="middle" fill="#eec8a0" font-family="sans-serif" font-size="9" font-weight="bold">LAB</text><text x="427" y="246" text-anchor="middle" fill="#cc7744" font-family="sans-serif" font-size="8">V-JOLT here</text><!-- Plant 42 Chamber --><rect x="215" y="280" rx="2" width="150" height="55" fill="#1c0c0c" stroke="#446633" stroke-width="2"/><text x="290" y="304" text-anchor="middle" fill="#a0cc88" font-family="sans-serif" font-size="10" font-weight="bold">PLANT 42</text><text x="290" y="318" text-anchor="middle" fill="#446633" font-family="sans-serif" font-size="9">Boss Chamber</text><!-- B1 connections --><line x1="90" y1="225" x2="105" y2="225" stroke="#1a0808" stroke-width="5"/><line x1="200" y1="225" x2="215" y2="225" stroke="#1a0808" stroke-width="5"/><line x1="365" y1="225" x2="380" y2="225" stroke="#1a0808" stroke-width="5"/><line x1="290" y1="265" x2="290" y2="280" stroke="#1a0808" stroke-width="5"/><!-- legend --><rect x="15" y="290" rx="2" width="180" height="50" fill="#0a0000" stroke="#251010" stroke-width="1"/><rect x="25" y="300" width="11" height="11" rx="1" fill="#1c0c0c" stroke="#cc3333" stroke-width="1.5"/><text x="42" y="309" fill="#886666" font-family="sans-serif" font-size="9">Neptune / Boss</text><rect x="25" y="318" width="11" height="11" rx="1" fill="#1c0c0c" stroke="#cc5533" stroke-width="1.5"/><text x="42" y="327" fill="#886666" font-family="sans-serif" font-size="9">Key objective room</text><text x="490" y="335" fill="#443333" font-family="sans-serif" font-size="8" font-style="italic">Schematic — approx.</text></svg>'
+
+};
+
+var IMGS = {
+'angel-statue':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200"><rect width="400" height="200" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">CEMETERY — STONE ANGEL STATUE</text><rect x="0" y="162" width="400" height="38" fill="#0c0a06"/><line x1="0" y1="162" x2="400" y2="162" stroke="#2a1a0a" stroke-width="1.5"/><text x="200" y="182" text-anchor="middle" fill="#3a2818" font-family="monospace" font-size="8">Cemetery path</text><rect x="165" y="122" width="70" height="40" fill="#14100a" stroke="#4a3020" stroke-width="1.5"/><rect x="158" y="155" width="84" height="8" rx="1" fill="#14100a" stroke="#3a2818" stroke-width="1"/><rect x="182" y="72" width="36" height="52" rx="5" fill="#14100a" stroke="#4a3020" stroke-width="1.5"/><circle cx="200" cy="60" r="14" fill="#14100a" stroke="#4a3020" stroke-width="1.5"/><path d="M182,88 Q155,74 148,52" stroke="#4a3020" stroke-width="2" fill="none"/><path d="M218,88 Q245,74 252,52" stroke="#4a3020" stroke-width="2" fill="none"/><rect x="184" y="90" width="32" height="18" rx="2" fill="#1a0e04" stroke="#d4a844" stroke-width="2.5"/><text x="200" y="103" text-anchor="middle" font-family="monospace" font-size="7" fill="#d4a844">SLOT</text><line x1="308" y1="99" x2="220" y2="99" stroke="#22aa55" stroke-width="2"/><polygon points="220,95 220,103 230,99" fill="#22aa55"/><text x="355" y="103" text-anchor="middle" font-family="monospace" font-size="9" fill="#22aa55">USE ARROWHEAD</text><rect x="183" y="162" width="34" height="28" fill="#060402" stroke="#2a1a0a" stroke-width="1" stroke-dasharray="2,2"/><text x="200" y="176" text-anchor="middle" font-family="monospace" font-size="7" fill="#556688">STAIRCASE</text><text x="200" y="192" text-anchor="middle" font-family="monospace" font-size="8" fill="#556688">CRYPT ENTRANCE (B1)</text></svg>',
+
+'book-examine':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 175"><rect width="400" height="175" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">BOOK OF CURSES — EXAMINE IN INVENTORY</text><rect x="35" y="28" width="110" height="118" rx="3" fill="#1a0808" stroke="#4a2020" stroke-width="2"/><line x1="47" y1="28" x2="47" y2="146" stroke="#3a1818" stroke-width="2"/><text x="97" y="75" text-anchor="middle" fill="#884444" font-family="monospace" font-size="9">BOOK OF</text><text x="97" y="90" text-anchor="middle" fill="#884444" font-family="monospace" font-size="9">CURSES</text><text x="97" y="138" text-anchor="middle" fill="#4a2828" font-family="monospace" font-size="8">FRONT COVER</text><path d="M162,87 Q200,50 238,87" stroke="#c8b898" stroke-width="2" fill="none" stroke-dasharray="5,3"/><polygon points="234,83 240,90 246,82" fill="#c8b898"/><text x="200" y="50" text-anchor="middle" font-family="monospace" font-size="8" fill="#c8b898">EXAMINE +</text><text x="200" y="62" text-anchor="middle" font-family="monospace" font-size="8" fill="#c8b898">TURN OVER</text><rect x="255" y="28" width="110" height="118" rx="3" fill="#1a0808" stroke="#4a2020" stroke-width="2"/><line x1="267" y1="28" x2="267" y2="146" stroke="#3a1818" stroke-width="2"/><rect x="278" y="55" width="60" height="12" rx="4" fill="#0e0c08" stroke="#d4a844" stroke-width="2"/><circle cx="286" cy="61" r="9" fill="#0e0c08" stroke="#d4a844" stroke-width="2"/><rect x="296" y="57" width="7" height="6" fill="#0e0c08" stroke="#d4a844" stroke-width="1"/><rect x="308" y="57" width="7" height="9" fill="#0e0c08" stroke="#d4a844" stroke-width="1"/><text x="310" y="85" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">SWORD KEY</text><text x="310" y="99" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">embedded here</text><line x1="310" y1="70" x2="310" y2="104" stroke="#22aa55" stroke-width="1" stroke-dasharray="2,2"/><polygon points="306,104 314,104 310,113" fill="#22aa55"/><text x="310" y="138" text-anchor="middle" fill="#4a2828" font-family="monospace" font-size="8">BACK COVER</text><text x="200" y="165" text-anchor="middle" fill="#664444" font-family="monospace" font-size="8">Press examine/rotate in inventory to reveal the key embedded in the back</text></svg>',
+
+'forest-speyer':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180"><rect width="400" height="180" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">2F EAST TERRACE — FOREST SPEYER</text><rect x="15" y="28" width="370" height="130" fill="#0e0a06" stroke="#1a1208" stroke-width="1.5"/><text x="200" y="42" text-anchor="middle" fill="#2a2010" font-family="monospace" font-size="8">Outdoor terrace — 2nd floor east side</text><line x1="15" y1="28" x2="385" y2="28" stroke="#3a2818" stroke-width="3"/><rect x="28" y="28" width="6" height="18" fill="#3a2818"/><rect x="66" y="28" width="4" height="18" fill="#2a1a0a"/><rect x="104" y="28" width="4" height="18" fill="#2a1a0a"/><rect x="142" y="28" width="4" height="18" fill="#2a1a0a"/><rect x="180" y="28" width="4" height="18" fill="#2a1a0a"/><ellipse cx="270" cy="118" rx="55" ry="18" fill="#1a0808" stroke="#4a1818" stroke-width="1.5"/><circle cx="318" cy="108" r="16" fill="#1a0808" stroke="#4a1818" stroke-width="1.5"/><text x="270" y="122" text-anchor="middle" fill="#3a2020" font-family="monospace" font-size="8">FOREST SPEYER  &#9760;</text><text x="270" y="148" text-anchor="middle" fill="#884444" font-family="monospace" font-size="8">S.T.A.R.S. member — East Terrace</text><ellipse cx="152" cy="112" rx="34" ry="14" fill="#1a1604" stroke="#d4a844" stroke-width="2"/><text x="152" y="109" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">GRENADE</text><text x="152" y="121" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">LAUNCHER</text><line x1="88" y1="88" x2="124" y2="105" stroke="#22aa55" stroke-width="2"/><polygon points="121,102 126,109 130,101" fill="#22aa55"/><text x="65" y="84" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">EXAMINE</text><text x="65" y="96" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">BODY</text><rect x="15" y="46" width="20" height="55" fill="#0a0806" stroke="#2a1a0a" stroke-width="1"/><text x="25" y="76" text-anchor="middle" fill="#2a1a0a" font-family="monospace" font-size="7" transform="rotate(-90 25 76)">DOOR IN</text></svg>',
+
+'armor-corridor':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">ARMOR KEY CORRIDOR — TOP-DOWN</text><rect x="40" y="28" width="320" height="130" fill="#0e0a06" stroke="#3a2020" stroke-width="2"/><rect x="40" y="28" width="320" height="14" fill="#1a1208" stroke="#2a1a0a" stroke-width="1"/><rect x="40" y="144" width="320" height="14" fill="#1a1208" stroke="#2a1a0a" stroke-width="1"/><rect x="68" y="42" width="264" height="102" fill="#1a0808" stroke="#d46858" stroke-width="1.5" stroke-dasharray="5,3"/><text x="200" y="62" text-anchor="middle" fill="#d46858" font-family="monospace" font-size="9">&#9888;  CEILING TRAP ZONE</text><text x="200" y="76" text-anchor="middle" fill="#884444" font-family="monospace" font-size="8">Triggered if slot is left empty when exiting</text><rect x="180" y="98" width="40" height="36" rx="3" fill="#14100a" stroke="#d4a844" stroke-width="2"/><circle cx="200" cy="116" r="11" fill="#180e04" stroke="#d4a844" stroke-width="2.5"/><text x="200" y="120" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="7">KEY</text><text x="200" y="148" text-anchor="middle" fill="#886644" font-family="monospace" font-size="8">PEDESTAL</text><rect x="8" y="78" width="32" height="44" fill="#0a0806" stroke="#2a1a0a" stroke-width="1"/><text x="24" y="102" text-anchor="middle" fill="#3a2020" font-family="monospace" font-size="7" transform="rotate(-90 24 102)">ENTER</text><rect x="360" y="78" width="32" height="44" fill="#0a0806" stroke="#2a1a0a" stroke-width="1"/><text x="376" y="102" text-anchor="middle" fill="#3a2020" font-family="monospace" font-size="7" transform="rotate(-90 376 102)">EXIT</text><circle cx="95" cy="116" r="8" fill="#0e1408" stroke="#22aa55" stroke-width="2"/><text x="95" y="120" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7">YOU</text><line x1="107" y1="116" x2="175" y2="116" stroke="#22aa55" stroke-width="2"/><polygon points="175,112 175,120 185,116" fill="#22aa55"/><text x="200" y="185" text-anchor="middle" fill="#884444" font-family="monospace" font-size="8">Take key AND replace with Imitation Key before leaving — empty slot drops ceiling</text></svg>',
+
+'armor-swap':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 175"><rect width="400" height="175" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">ARMOR KEY — CRITICAL SWAP</text><text x="95" y="32" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="9">STEP 1: TAKE</text><rect x="45" y="40" width="100" height="78" rx="3" fill="#141008" stroke="#d4a844" stroke-width="2"/><circle cx="95" cy="74" r="22" fill="#180e04" stroke="#d4a844" stroke-width="2.5"/><text x="95" y="78" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="9">ARMOR</text><text x="95" y="91" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="9">KEY</text><text x="95" y="130" text-anchor="middle" fill="#4a3020" font-family="monospace" font-size="8">Slot A (original)</text><line x1="158" y1="79" x2="238" y2="79" stroke="#c8b898" stroke-width="2.5"/><polygon points="236,75 240,79 236,83" fill="#c8b898"/><text x="198" y="65" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="8">NOW</text><text x="198" y="98" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="8">IMMEDIATELY</text><text x="305" y="32" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">STEP 2: PLACE</text><rect x="255" y="40" width="100" height="78" rx="3" fill="#0e1008" stroke="#22aa55" stroke-width="2"/><rect x="270" y="56" width="70" height="18" rx="3" fill="#0c1208" stroke="#22aa55" stroke-width="1.5"/><text x="305" y="69" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">IMITATION</text><rect x="270" y="80" width="70" height="18" rx="3" fill="#0c1208" stroke="#22aa55" stroke-width="1.5"/><text x="305" y="93" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">KEY HERE</text><text x="305" y="130" text-anchor="middle" fill="#446633" font-family="monospace" font-size="8">Slot A (refilled)</text><rect x="15" y="148" width="370" height="22" rx="2" fill="#1a0404" stroke="#d46858" stroke-width="1"/><text x="200" y="163" text-anchor="middle" fill="#ee4444" font-family="monospace" font-size="8">&#9888;  Slot must be filled on exit — leaving it empty drops the ceiling trap</text></svg>',
+
+'shotgun-swap':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 175"><rect width="400" height="175" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">SHOTGUN WALL MOUNT — SWAP</text><rect x="30" y="28" width="340" height="115" fill="#0e0a06" stroke="#2a1a0a" stroke-width="1.5"/><rect x="30" y="28" width="340" height="10" fill="#1a1008" stroke="#3a2818" stroke-width="1"/><text x="200" y="37" text-anchor="middle" fill="#3a2818" font-family="monospace" font-size="7">WALL SURFACE</text><rect x="100" y="44" width="12" height="55" fill="#2a1a0a" stroke="#3a2818" stroke-width="1"/><rect x="288" y="44" width="12" height="55" fill="#2a1a0a" stroke="#3a2818" stroke-width="1"/><rect x="30" y="108" width="340" height="8" rx="1" fill="#1a1008" stroke="#d4a844" stroke-width="1.5"/><text x="200" y="116" text-anchor="middle" fill="#886644" font-family="monospace" font-size="7">PRESSURE PLATE — must stay depressed</text><rect x="112" y="48" width="176" height="20" rx="4" fill="#1a1008" stroke="#d4a844" stroke-width="2.5"/><rect x="112" y="52" width="120" height="7" rx="2" fill="#141008" stroke="#3a2010" stroke-width="1"/><rect x="232" y="50" width="56" height="10" rx="2" fill="#141008" stroke="#3a2010" stroke-width="1"/><text x="200" y="43" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">1. TAKE real shotgun first</text><line x1="200" y1="48" x2="200" y2="30" stroke="#22aa55" stroke-width="2" stroke-dasharray="3,2"/><polygon points="196,30 204,30 200,22" fill="#22aa55"/><rect x="112" y="74" width="176" height="16" rx="4" fill="#0e0804" stroke="#884444" stroke-width="1.5" stroke-dasharray="3,2"/><text x="200" y="86" text-anchor="middle" fill="#884444" font-family="monospace" font-size="8">2. Place BROKEN SHOTGUN on mount immediately after</text><rect x="30" y="148" width="340" height="22" rx="2" fill="#0a1008" stroke="#22aa55" stroke-width="1"/><text x="200" y="163" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">Broken Shotgun keeps pressure plate down — ceiling trap does not trigger</text></svg>',
+
+'missing-music':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 175"><rect width="400" height="175" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">BAR AREA 1F — MISSING MUSIC</text><rect x="40" y="25" width="320" height="120" fill="#0e0a06" stroke="#3a2818" stroke-width="2"/><line x1="40" y1="65" x2="360" y2="65" stroke="#2a1a0a" stroke-width="3"/><line x1="40" y1="105" x2="360" y2="105" stroke="#2a1a0a" stroke-width="3"/><rect x="48" y="68" width="22" height="35" rx="1" fill="#3a1a1a" stroke="#2a1010" stroke-width="1"/><rect x="73" y="70" width="26" height="33" rx="1" fill="#1a2a3a" stroke="#1a1a2a" stroke-width="1"/><rect x="102" y="72" width="20" height="31" rx="1" fill="#1a3a1a" stroke="#1a2a1a" stroke-width="1"/><rect x="125" y="65" width="55" height="40" rx="1" fill="#0e1008" stroke="#22aa55" stroke-width="2" stroke-dasharray="4,3"/><text x="152" y="83" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7">MOVEABLE</text><text x="152" y="95" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7">SECTION</text><line x1="152" y1="65" x2="152" y2="46" stroke="#22aa55" stroke-width="2" stroke-dasharray="3,2"/><polygon points="148,46 156,46 152,36" fill="#22aa55"/><text x="152" y="30" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">PULL OUT</text><rect x="188" y="68" width="38" height="35" rx="1" fill="#1a1408" stroke="#d4a844" stroke-width="2"/><line x1="194" y1="77" x2="220" y2="77" stroke="#886644" stroke-width="1"/><line x1="194" y1="83" x2="220" y2="83" stroke="#886644" stroke-width="1"/><line x1="194" y1="89" x2="220" y2="89" stroke="#886644" stroke-width="1"/><circle cx="198" cy="76" r="2" fill="#d4a844"/><circle cx="206" cy="82" r="2" fill="#d4a844"/><circle cx="214" cy="88" r="2" fill="#d4a844"/><text x="207" y="115" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="9">MISSING MUSIC</text><text x="207" y="128" text-anchor="middle" fill="#886644" font-family="monospace" font-size="8">hidden behind moveable section</text><rect x="248" y="68" width="24" height="35" rx="1" fill="#3a3a1a" stroke="#2a2a10" stroke-width="1"/><rect x="275" y="68" width="22" height="35" rx="1" fill="#1a2a1a" stroke="#1a2a10" stroke-width="1"/><rect x="300" y="70" width="18" height="33" rx="1" fill="#2a1a2a" stroke="#2a1a2a" stroke-width="1"/><text x="200" y="162" text-anchor="middle" fill="#664444" font-family="monospace" font-size="8">Combine with Musical Score to make complete Moonlight Sonata sheet music</text></svg>',
+
+'piano-play':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180"><rect width="400" height="180" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">BAR PIANO — USE MOONLIGHT SONATA</text><rect x="55" y="28" width="185" height="110" rx="10" fill="#0e0a06" stroke="#3a2818" stroke-width="2"/><rect x="60" y="100" width="175" height="30" rx="3" fill="#1a1818" stroke="#2a1a0a" stroke-width="1"/><line x1="74" y1="100" x2="74" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="88" y1="100" x2="88" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="102" y1="100" x2="102" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="116" y1="100" x2="116" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="130" y1="100" x2="130" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="144" y1="100" x2="144" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="158" y1="100" x2="158" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="172" y1="100" x2="172" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="186" y1="100" x2="186" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="200" y1="100" x2="200" y2="130" stroke="#3a3030" stroke-width="1"/><line x1="214" y1="100" x2="214" y2="130" stroke="#3a3030" stroke-width="1"/><rect x="100" y="36" width="95" height="55" rx="2" fill="#18140a" stroke="#d4a844" stroke-width="1.5"/><line x1="108" y1="50" x2="187" y2="50" stroke="#886644" stroke-width="1"/><line x1="108" y1="58" x2="187" y2="58" stroke="#886644" stroke-width="1"/><line x1="108" y1="66" x2="187" y2="66" stroke="#886644" stroke-width="1"/><circle cx="115" cy="49" r="2" fill="#d4a844"/><circle cx="128" cy="57" r="2" fill="#d4a844"/><circle cx="140" cy="65" r="2" fill="#d4a844"/><text x="147" y="84" text-anchor="middle" fill="#886644" font-family="monospace" font-size="8">MOONLIGHT SONATA</text><rect x="275" y="28" width="110" height="110" fill="#0e0a06" stroke="#2a1a0a" stroke-width="1.5"/><text x="330" y="68" text-anchor="middle" fill="#4a3030" font-family="monospace" font-size="8">WEST</text><text x="330" y="82" text-anchor="middle" fill="#4a3030" font-family="monospace" font-size="8">WALL</text><rect x="285" y="38" width="42" height="90" rx="2" fill="#14100a" stroke="#22aa55" stroke-width="2" stroke-dasharray="5,3"/><text x="305" y="85" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7" transform="rotate(-90 305 85)">SECRET DOOR</text><line x1="248" y1="83" x2="283" y2="83" stroke="#22aa55" stroke-width="2"/><polygon points="281,79 281,87 289,83" fill="#22aa55"/><text x="200" y="167" text-anchor="middle" fill="#664444" font-family="monospace" font-size="8">Use sheet music at piano — Jill plays automatically — secret door opens in west wall</text></svg>',
+
+'emblem-swap':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180"><rect width="400" height="180" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">BEETHOVEN STATUE — EMBLEM SWAP</text><rect x="160" y="28" width="80" height="78" rx="4" fill="#0e0a06" stroke="#3a2818" stroke-width="1.5"/><ellipse cx="200" cy="42" rx="24" ry="26" fill="#0e0a06" stroke="#3a2818" stroke-width="1.5"/><rect x="148" y="104" width="104" height="22" rx="3" fill="#14100a" stroke="#4a3020" stroke-width="1.5"/><rect x="178" y="98" width="44" height="14" rx="2" fill="#1a0e04" stroke="#d4a844" stroke-width="2"/><text x="200" y="35" text-anchor="middle" fill="#553333" font-family="monospace" font-size="8">BEETHOVEN</text><text x="30" y="35" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="9">1. BRING</text><rect x="15" y="44" width="115" height="60" rx="3" fill="#141008" stroke="#884444" stroke-width="1.5"/><circle cx="72" cy="71" r="22" fill="#0c0804" stroke="#7a5050" stroke-width="2"/><text x="72" y="68" text-anchor="middle" fill="#664444" font-family="monospace" font-size="8">PLAIN</text><text x="72" y="80" text-anchor="middle" fill="#664444" font-family="monospace" font-size="8">EMBLEM</text><line x1="130" y1="104" x2="175" y2="106" stroke="#c8b898" stroke-width="1.5" stroke-dasharray="3,2"/><polygon points="172,103 177,108 180,101" fill="#c8b898"/><text x="72" y="118" text-anchor="middle" fill="#553333" font-family="monospace" font-size="7">Place on pedestal</text><text x="358" y="35" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">2. TAKE</text><rect x="270" y="44" width="115" height="60" rx="3" fill="#141008" stroke="#d4a844" stroke-width="2"/><circle cx="327" cy="71" r="22" fill="#160c04" stroke="#d4a844" stroke-width="2.5"/><line x1="327" y1="55" x2="327" y2="87" stroke="#d4a844" stroke-width="1.5"/><line x1="311" y1="71" x2="343" y2="71" stroke="#d4a844" stroke-width="1.5"/><text x="327" y="74" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="7">GOLD</text><line x1="225" y1="104" x2="268" y2="106" stroke="#22aa55" stroke-width="1.5" stroke-dasharray="3,2"/><polygon points="265,103 270,108 273,101" fill="#22aa55"/><text x="327" y="118" text-anchor="middle" fill="#446633" font-family="monospace" font-size="7">Take from pedestal</text><rect x="15" y="148" width="370" height="26" rx="2" fill="#1a0404" stroke="#d46858" stroke-width="1"/><text x="200" y="161" text-anchor="middle" fill="#ee4444" font-family="monospace" font-size="8">&#9888;  Place plain emblem BEFORE taking the Gold Emblem</text><text x="200" y="172" text-anchor="middle" fill="#884444" font-family="monospace" font-size="8">Taking Gold first without replacing it will lock the passage door</text></svg>',
+
+'clock-600':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">GRANDFATHER CLOCK — SET TO 6:00</text><rect x="130" y="18" width="140" height="168" rx="5" fill="#0e0a06" stroke="#3a2818" stroke-width="2"/><circle cx="200" cy="88" r="58" fill="#0a0804" stroke="#4a3020" stroke-width="2"/><circle cx="200" cy="88" r="52" fill="#080602" stroke="#3a2818" stroke-width="1"/><text x="200" y="43" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="12" font-weight="bold">12</text><text x="248" y="93" text-anchor="middle" fill="#664444" font-family="monospace" font-size="12">3</text><text x="200" y="143" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="14" font-weight="bold">6</text><text x="152" y="93" text-anchor="middle" fill="#664444" font-family="monospace" font-size="12">9</text><circle cx="200" cy="135" r="12" fill="#1a1000" stroke="#d4a844" stroke-width="1.5" stroke-dasharray="2,2"/><line x1="200" y1="88" x2="200" y2="43" stroke="#c8b898" stroke-width="3" stroke-linecap="round"/><line x1="200" y1="88" x2="200" y2="130" stroke="#d4a844" stroke-width="5" stroke-linecap="round"/><circle cx="200" cy="88" r="4" fill="#c8b898"/><rect x="172" y="148" width="56" height="28" rx="2" fill="#080604" stroke="#2a1a0a" stroke-width="1"/><ellipse cx="200" cy="165" rx="14" ry="8" fill="#1a1408" stroke="#3a2818" stroke-width="1"/><text x="200" y="183" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="10">Both hands pointing straight DOWN = 6:00</text></svg>',
+
+'neptune-controls':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">AQUA RING — THREE-STEP SEQUENCE</text><rect x="20" y="46" width="360" height="100" rx="4" fill="#0e0c0a" stroke="#3a3020" stroke-width="2"/><text x="200" y="38" text-anchor="middle" fill="#664444" font-family="monospace" font-size="9">CONTROL ROOM PANEL</text><rect x="32" y="56" width="100" height="80" rx="3" fill="#0a0e0a" stroke="#22aa55" stroke-width="2"/><circle cx="82" cy="90" r="22" fill="#060c06" stroke="#22aa55" stroke-width="2"/><path d="M82,68 Q104,78 104,90" stroke="#22aa55" stroke-width="2" fill="none"/><polygon points="102,88 106,95 110,87" fill="#22aa55"/><text x="82" y="130" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8">1. DRAIN TANK</text><text x="82" y="142" text-anchor="middle" fill="#446633" font-family="monospace" font-size="7">Turn drain valve</text><rect x="150" y="56" width="100" height="80" rx="3" fill="#100a0a" stroke="#d4a844" stroke-width="2"/><rect x="168" y="70" width="42" height="30" rx="2" fill="#160c04" stroke="#d4a844" stroke-width="1.5"/><text x="189" y="83" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="7">GENER-</text><text x="189" y="93" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="7">ATOR</text><line x1="210" y1="85" x2="240" y2="85" stroke="#d4a844" stroke-width="2"/><polygon points="237,81 244,85 237,89" fill="#d4a844"/><text x="200" y="130" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">2. PUSH GENERATOR</text><text x="200" y="142" text-anchor="middle" fill="#886644" font-family="monospace" font-size="7">Into drained tank</text><rect x="268" y="56" width="100" height="80" rx="3" fill="#0a0a0e" stroke="#aaaacc" stroke-width="2"/><text x="318" y="88" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="9">POWER</text><text x="318" y="104" text-anchor="middle" fill="#d4d4ff" font-family="monospace" font-size="14" font-weight="bold">&#9889;</text><text x="318" y="130" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="8">3. RESTORE PWR</text><text x="318" y="142" text-anchor="middle" fill="#8888aa" font-family="monospace" font-size="7">Electrocutes Neptune</text><rect x="20" y="156" width="360" height="32" rx="2" fill="#1a0404" stroke="#d46858" stroke-width="1"/><text x="200" y="170" text-anchor="middle" fill="#ee4444" font-family="monospace" font-size="8">&#9888;  ALL THREE STEPS required. Draining alone does NOT kill Neptune.</text><text x="200" y="182" text-anchor="middle" fill="#884444" font-family="monospace" font-size="8">Neptune remains alive in drained tank until electrocuted by the generator.</text></svg>',
+
+'neptune-generator':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">PUSH GENERATOR INTO DRAINED TANK</text><rect x="210" y="25" width="170" height="140" rx="3" fill="#060a0e" stroke="#224466" stroke-width="2"/><text x="295" y="45" text-anchor="middle" fill="#335566" font-family="monospace" font-size="9">DRAINED TANK</text><text x="295" y="58" text-anchor="middle" fill="#224455" font-family="monospace" font-size="8">(Neptune on floor)</text><ellipse cx="295" cy="130" rx="55" ry="22" fill="#0a1018" stroke="#224466" stroke-width="1.5"/><path d="M240,130 Q265,108 268,130" stroke="#335577" fill="none" stroke-width="1.5"/><path d="M350,130 Q325,108 322,130" stroke="#335577" fill="none" stroke-width="1.5"/><circle cx="278" cy="122" r="5" fill="#1a2a3a" stroke="#335577" stroke-width="1"/><text x="295" y="168" text-anchor="middle" fill="#335566" font-family="monospace" font-size="8">NEPTUNE (vulnerable on floor)</text><rect x="52" y="95" width="88" height="58" rx="3" fill="#14100a" stroke="#d4a844" stroke-width="2"/><rect x="62" y="105" width="34" height="28" rx="1" fill="#0c0804" stroke="#d4a844" stroke-width="1"/><text x="79" y="117" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="7">ELEC.</text><text x="79" y="129" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="7">GEN.</text><rect x="104" y="110" width="22" height="12" rx="1" fill="#0c0804" stroke="#886644" stroke-width="1"/><text x="96" y="162" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">GENERATOR</text><line x1="145" y1="124" x2="205" y2="124" stroke="#22aa55" stroke-width="4"/><polygon points="205,119 205,129 218,124" fill="#22aa55"/><text x="175" y="112" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="10">PUSH</text><text x="295" y="76" text-anchor="middle" fill="#d4d4ff" font-family="monospace" font-size="16">&#9889;</text><text x="295" y="92" text-anchor="middle" fill="#aaaadd" font-family="monospace" font-size="8">Then restore power</text><text x="200" y="185" text-anchor="middle" fill="#446633" font-family="monospace" font-size="8">Generator in tank + power restored = Neptune electrocuted</text></svg>',
+
+'bookcase-puzzle':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">ROOM 003 — BOOKCASE SILHOUETTE</text><text x="200" y="30" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="8">Arrange books until tops form the outline of a woman</text><rect x="25" y="148" width="350" height="14" fill="#1a1008" stroke="#4a3020" stroke-width="1.5"/><rect x="30" y="110" width="28" height="38" rx="1" fill="#3a1a1a" stroke="#2a1010" stroke-width="1"/><rect x="61" y="95" width="28" height="53" rx="1" fill="#1a2a3a" stroke="#1a1a2a" stroke-width="1"/><rect x="92" y="80" width="28" height="68" rx="1" fill="#1a3a1a" stroke="#1a2a10" stroke-width="1"/><rect x="123" y="62" width="30" height="86" rx="1" fill="#2a1a2a" stroke="#2a1020" stroke-width="1"/><rect x="156" y="48" width="32" height="100" rx="1" fill="#3a2a1a" stroke="#3a2010" stroke-width="1"/><rect x="191" y="62" width="30" height="86" rx="1" fill="#1a2a2a" stroke="#1a2020" stroke-width="1"/><rect x="224" y="80" width="28" height="68" rx="1" fill="#2a1a3a" stroke="#2a1030" stroke-width="1"/><rect x="255" y="95" width="28" height="53" rx="1" fill="#3a3a1a" stroke="#2a2a10" stroke-width="1"/><rect x="286" y="110" width="28" height="38" rx="1" fill="#1a3a2a" stroke="#1a2a18" stroke-width="1"/><rect x="317" y="120" width="28" height="28" rx="1" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="1"/><path d="M30,110 L61,95 L92,80 L123,62 L156,48 Q172,34 180,46 Q188,34 200,48 L224,62 L255,80 L286,95 L317,110 L345,120" stroke="#d4a844" stroke-width="2.5" fill="none"/><path d="M156,48 Q163,26 171,34 Q178,20 188,34 Q196,26 200,48" stroke="#d4a844" stroke-width="2" fill="none"/><text x="172" y="22" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">head</text><text x="116" y="56" text-anchor="middle" fill="#886644" font-family="monospace" font-size="7">shoulder</text><text x="238" y="56" text-anchor="middle" fill="#886644" font-family="monospace" font-size="7">shoulder</text><text x="200" y="176" text-anchor="middle" fill="#886644" font-family="monospace" font-size="8">Tallest books in center (head), stepping down both sides (shoulders, waist)</text><text x="200" y="190" text-anchor="middle" fill="#664444" font-family="monospace" font-size="8">Bookcase slides open when silhouette is correct — reveals path to Plant 42</text></svg>',
+
+'vjolt-roots':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">PLANT 42 — V-JOLT ON ROOTS</text><line x1="0" y1="68" x2="400" y2="68" stroke="#1a1008" stroke-width="2"/><text x="200" y="62" text-anchor="middle" fill="#2a2010" font-family="monospace" font-size="8">Floor level — Residence basement</text><rect x="180" y="52" width="40" height="28" fill="#0c0804" stroke="#2a1a0a" stroke-width="1" stroke-dasharray="2,2"/><text x="200" y="65" text-anchor="middle" fill="#3a2a1a" font-family="monospace" font-size="7">through floor</text><line x1="200" y1="80" x2="200" y2="128" stroke="#446633" stroke-width="5"/><line x1="200" y1="96" x2="152" y2="140" stroke="#446633" stroke-width="3.5"/><line x1="200" y1="108" x2="245" y2="152" stroke="#446633" stroke-width="3.5"/><line x1="200" y1="120" x2="162" y2="168" stroke="#2a4422" stroke-width="2.5"/><line x1="200" y1="120" x2="236" y2="174" stroke="#2a4422" stroke-width="2.5"/><line x1="152" y1="140" x2="122" y2="168" stroke="#1a3418" stroke-width="2"/><line x1="152" y1="140" x2="140" y2="184" stroke="#1a3418" stroke-width="2"/><line x1="245" y1="152" x2="272" y2="176" stroke="#1a3418" stroke-width="2"/><line x1="245" y1="152" x2="258" y2="188" stroke="#1a3418" stroke-width="2"/><circle cx="122" cy="170" r="5" fill="#1a3418" stroke="#446633" stroke-width="1"/><circle cx="140" cy="186" r="5" fill="#1a3418" stroke="#446633" stroke-width="1"/><circle cx="272" cy="178" r="5" fill="#1a3418" stroke="#446633" stroke-width="1"/><circle cx="258" cy="190" r="5" fill="#1a3418" stroke="#446633" stroke-width="1"/><rect x="248" y="18" width="26" height="48" rx="5" fill="#1a2a08" stroke="#88cc44" stroke-width="2"/><rect x="250" y="16" width="22" height="8" rx="2" fill="#2a3a18" stroke="#88cc44" stroke-width="1"/><text x="261" y="35" text-anchor="middle" fill="#88cc44" font-family="monospace" font-size="7">V-</text><text x="261" y="46" text-anchor="middle" fill="#88cc44" font-family="monospace" font-size="7">JOLT</text><path d="M261,66 Q255,76 250,86 Q246,96 244,110" stroke="#88cc44" stroke-width="2" fill="none" stroke-dasharray="3,2"/><circle cx="244" cy="112" r="7" fill="#1a2a08" stroke="#88cc44" stroke-width="2"/><line x1="290" y1="44" x2="272" y2="44" stroke="#c8b898" stroke-width="1.5"/><polygon points="274,40 274,48 266,44" fill="#c8b898"/><text x="330" y="48" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="9">POUR HERE</text><text x="200" y="188" text-anchor="middle" fill="#446633" font-family="monospace" font-size="8">Pour V-JOLT on root access point — weakens Plant 42 before the boss fight</text></svg>',
+
+'helmet-fireplace':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180"><rect width="400" height="180" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">PLANT 42 ROOM — HELMET KEY</text><rect x="90" y="22" width="220" height="18" rx="1" fill="#1a1008" stroke="#4a3020" stroke-width="1.5"/><rect x="96" y="40" width="208" height="118" rx="2" fill="#0c0804" stroke="#3a2818" stroke-width="2"/><path d="M110,158 L110,78 Q200,42 290,78 L290,158 Z" fill="#0a0602" stroke="#2a1a0a" stroke-width="1.5"/><ellipse cx="200" cy="152" rx="65" ry="8" fill="#1a0c04" stroke="#2a1008" stroke-width="1"/><ellipse cx="200" cy="150" rx="30" ry="4" fill="#280c04"/><ellipse cx="200" cy="120" rx="28" ry="16" fill="#1c1000" stroke="#d4a844" stroke-width="1.5" stroke-dasharray="3,2"/><rect x="185" y="108" width="46" height="9" rx="4" fill="#160e04" stroke="#d4a844" stroke-width="2.5"/><circle cx="191" cy="104" r="8" fill="#0e0a04" stroke="#d4a844" stroke-width="2"/><rect x="213" y="117" width="6" height="7" fill="#160e04" stroke="#d4a844" stroke-width="1"/><rect x="224" y="117" width="6" height="11" fill="#160e04" stroke="#d4a844" stroke-width="1"/><line x1="200" y1="100" x2="200" y2="88" stroke="#d4a844" stroke-width="1" stroke-dasharray="2,2" opacity="0.7"/><line x1="178" y1="108" x2="168" y2="102" stroke="#d4a844" stroke-width="1" stroke-dasharray="2,2" opacity="0.7"/><line x1="222" y1="108" x2="232" y2="102" stroke="#d4a844" stroke-width="1" stroke-dasharray="2,2" opacity="0.7"/><line x1="200" y1="68" x2="200" y2="96" stroke="#22aa55" stroke-width="2" stroke-dasharray="3,2"/><polygon points="196,96 204,96 200,106" fill="#22aa55"/><text x="200" y="62" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">SEARCH FIREPLACE</text><text x="200" y="168" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">HELMET KEY — found in the fireplace ashes after Plant 42 is defeated</text></svg>',
+
+'crest-button':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">CRESTS — PRESS HIDDEN BUTTON</text><text x="100" y="34" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="9">FRONT</text><circle cx="100" cy="98" r="55" fill="#141008" stroke="#4a3020" stroke-width="2"/><circle cx="100" cy="98" r="42" fill="#100c08" stroke="#3a2818" stroke-width="1"/><circle cx="100" cy="88" r="16" fill="#0e0c08" stroke="#886644" stroke-width="1.5"/><circle cx="110" cy="84" r="13" fill="#100c08"/><line x1="100" y1="74" x2="100" y2="102" stroke="#886644" stroke-width="1.5"/><line x1="86" y1="88" x2="114" y2="88" stroke="#886644" stroke-width="1.5"/><text x="100" y="155" text-anchor="middle" fill="#553333" font-family="monospace" font-size="8">Decorative face</text><path d="M165,98 Q200,60 235,98" stroke="#c8b898" stroke-width="2" fill="none" stroke-dasharray="5,3"/><polygon points="231,94 237,101 243,93" fill="#c8b898"/><text x="200" y="62" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="8">EXAMINE IN</text><text x="200" y="74" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="8">INVENTORY</text><text x="300" y="34" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="9">BACK</text><circle cx="300" cy="98" r="55" fill="#141008" stroke="#4a3020" stroke-width="2"/><circle cx="300" cy="98" r="42" fill="#100c08" stroke="#3a2818" stroke-width="1"/><circle cx="300" cy="98" r="14" fill="#160e04" stroke="#d4a844" stroke-width="3"/><circle cx="300" cy="98" r="5" fill="#d4a844"/><circle cx="300" cy="98" r="20" fill="none" stroke="#d4a844" stroke-width="1" stroke-dasharray="2,3" opacity="0.5"/><line x1="362" y1="72" x2="318" y2="92" stroke="#22aa55" stroke-width="2"/><polygon points="319,88 321,95 326,89" fill="#22aa55"/><text x="378" y="68" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">PRESS</text><text x="378" y="80" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">THIS</text><text x="300" y="155" text-anchor="middle" fill="#446633" font-family="monospace" font-size="8">Button on back</text><rect x="20" y="163" width="360" height="26" rx="2" fill="#0e0a00" stroke="#d4a844" stroke-width="1"/><text x="200" y="176" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="9">Do this for Moon, Star, AND Sun crests — all three must be pressed</text><text x="200" y="187" text-anchor="middle" fill="#664444" font-family="monospace" font-size="8">before placing them in the left-side cemetery grave</text></svg>',
+
+'lisa-escape':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">UNDERGROUND PASSAGE — LISA TREVOR</text><rect x="15" y="28" width="370" height="130" fill="#0a0806" stroke="#3a1010" stroke-width="1.5"/><rect x="15" y="28" width="370" height="12" fill="#0e0a06" stroke="#2a1008" stroke-width="1"/><rect x="15" y="146" width="370" height="12" fill="#0e0a06" stroke="#2a1008" stroke-width="1"/><rect x="15" y="50" width="28" height="78" fill="#0a0608" stroke="#3a1010" stroke-width="1.5"/><text x="29" y="92" text-anchor="middle" fill="#3a1a1a" font-family="monospace" font-size="7" transform="rotate(-90 29 92)">ENTRY</text><rect x="357" y="50" width="28" height="78" fill="#0a0a0e" stroke="#22aa55" stroke-width="2.5"/><text x="371" y="88" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="8" transform="rotate(-90 371 88)">EXIT</text><rect x="215" y="40" width="48" height="115" rx="8" fill="#1a0808" stroke="#cc3333" stroke-width="2"/><ellipse cx="239" cy="52" rx="22" ry="24" fill="#1a0808" stroke="#cc3333" stroke-width="2"/><line x1="215" y1="88" x2="192" y2="115" stroke="#553333" stroke-width="1.5" stroke-dasharray="2,2"/><line x1="263" y1="88" x2="286" y2="115" stroke="#553333" stroke-width="1.5" stroke-dasharray="2,2"/><text x="239" y="168" text-anchor="middle" fill="#cc4444" font-family="monospace" font-size="9">LISA TREVOR</text><text x="239" y="180" text-anchor="middle" fill="#663333" font-family="monospace" font-size="8">UNKILLABLE</text><circle cx="112" cy="88" r="10" fill="#0e1408" stroke="#22aa55" stroke-width="2"/><text x="112" y="92" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7">YOU</text><path d="M126,88 Q175,42 205,88 Q240,134 340,88" stroke="#22aa55" stroke-width="2.5" fill="none" stroke-dasharray="6,3"/><polygon points="340,84 340,92 354,88" fill="#22aa55"/><text x="200" y="185" text-anchor="middle" fill="#ee4444" font-family="monospace" font-size="8">&#9888;  SPRINT to exit door — do not fight. She cannot follow through every door.</text></svg>',
+
+'lab-power':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 175"><rect width="400" height="175" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">UNDERGROUND LAB — POWER ROOM</text><rect x="50" y="25" width="300" height="120" rx="4" fill="#0e0c0a" stroke="#3a3020" stroke-width="2"/><rect x="60" y="32" width="280" height="106" rx="3" fill="#0c0a08" stroke="#2a2018" stroke-width="1"/><rect x="143" y="44" width="114" height="16" rx="2" fill="#0a0a00" stroke="#d4a844" stroke-width="1"/><text x="200" y="56" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="9">MAIN POWER</text><rect x="148" y="68" width="44" height="22" rx="2" fill="#1a0404" stroke="#cc3333" stroke-width="2"/><text x="170" y="83" text-anchor="middle" fill="#cc4444" font-family="monospace" font-size="9">OFF</text><rect x="208" y="68" width="44" height="22" rx="2" fill="#081408" stroke="#22aa55" stroke-width="2"/><text x="230" y="83" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">ON</text><rect x="190" y="65" width="22" height="28" rx="5" fill="#14100a" stroke="#886644" stroke-width="2"/><line x1="212" y1="79" x2="228" y2="79" stroke="#22aa55" stroke-width="2.5"/><polygon points="226,75 233,79 226,83" fill="#22aa55"/><text x="108" y="112" text-anchor="middle" fill="#3a3020" font-family="monospace" font-size="8">FUSE A</text><rect x="80" y="116" width="56" height="16" rx="2" fill="#0a0a00" stroke="#2a2818" stroke-width="1"/><text x="200" y="112" text-anchor="middle" fill="#3a3020" font-family="monospace" font-size="8">FUSE B</text><rect x="172" y="116" width="56" height="16" rx="2" fill="#0a0a00" stroke="#2a2818" stroke-width="1"/><text x="292" y="112" text-anchor="middle" fill="#3a3020" font-family="monospace" font-size="8">FUSE C</text><rect x="264" y="116" width="56" height="16" rx="2" fill="#0a0a00" stroke="#2a2818" stroke-width="1"/><text x="200" y="160" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="9">Find MAIN POWER switch — flip OFF to ON to restore lab electricity</text></svg>',
+
+'mo-terminals':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 178"><rect width="400" height="178" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">LAB — THREE MO DISK TERMINALS</text><rect x="18" y="25" width="110" height="125" rx="3" fill="#0c0e0c" stroke="#22aa55" stroke-width="2"/><rect x="28" y="38" width="90" height="52" rx="2" fill="#060e06" stroke="#22aa55" stroke-width="1"/><text x="73" y="58" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">TERMINAL</text><text x="73" y="74" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="12" font-weight="bold">01</text><text x="73" y="88" text-anchor="middle" fill="#446633" font-family="monospace" font-size="7">AWAITING</text><rect x="34" y="98" width="78" height="14" rx="2" fill="#060806" stroke="#22aa55" stroke-width="1.5"/><text x="73" y="109" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7">INSERT DISK</text><text x="73" y="158" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="16" font-weight="bold">&#9312;</text><rect x="145" y="25" width="110" height="125" rx="3" fill="#0c0e0c" stroke="#22aa55" stroke-width="2"/><rect x="155" y="38" width="90" height="52" rx="2" fill="#060e06" stroke="#22aa55" stroke-width="1"/><text x="200" y="58" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">TERMINAL</text><text x="200" y="74" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="12" font-weight="bold">02</text><text x="200" y="88" text-anchor="middle" fill="#446633" font-family="monospace" font-size="7">AWAITING</text><rect x="161" y="98" width="78" height="14" rx="2" fill="#060806" stroke="#22aa55" stroke-width="1.5"/><text x="200" y="109" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7">INSERT DISK</text><text x="200" y="158" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="16" font-weight="bold">&#9313;</text><rect x="272" y="25" width="110" height="125" rx="3" fill="#0c0e0c" stroke="#22aa55" stroke-width="2"/><rect x="282" y="38" width="90" height="52" rx="2" fill="#060e06" stroke="#22aa55" stroke-width="1"/><text x="327" y="58" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">TERMINAL</text><text x="327" y="74" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="12" font-weight="bold">03</text><text x="327" y="88" text-anchor="middle" fill="#446633" font-family="monospace" font-size="7">AWAITING</text><rect x="288" y="98" width="78" height="14" rx="2" fill="#060806" stroke="#22aa55" stroke-width="1.5"/><text x="327" y="109" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="7">INSERT DISK</text><text x="327" y="158" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="16" font-weight="bold">&#9314;</text><rect x="18" y="160" width="364" height="14" rx="2" fill="#0a0c00" stroke="#d4a844" stroke-width="1"/><text x="200" y="170" text-anchor="middle" fill="#d4a844" font-family="monospace" font-size="8">All 3 terminals used = Cell Entrance unlocked (required for best ending)</text></svg>',
+
+'jewelry-box':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 195"><rect width="400" height="195" fill="#070707"/><text x="200" y="13" text-anchor="middle" fill="#553333" font-family="monospace" font-size="10" letter-spacing="2">JEWELRY BOX — READ FILE FIRST</text><rect x="15" y="22" width="170" height="50" rx="3" fill="#1a0808" stroke="#d46858" stroke-width="2"/><rect x="25" y="30" width="36" height="34" rx="2" fill="#120606" stroke="#884444" stroke-width="1.5"/><line x1="29" y1="40" x2="57" y2="40" stroke="#553333" stroke-width="1"/><line x1="29" y1="47" x2="57" y2="47" stroke="#553333" stroke-width="1"/><line x1="29" y1="54" x2="50" y2="54" stroke="#553333" stroke-width="1"/><text x="115" y="38" text-anchor="middle" fill="#ee4444" font-family="monospace" font-size="8">&#9888; READ</text><text x="115" y="50" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="8">nearby file</text><text x="115" y="62" text-anchor="middle" fill="#c8b898" font-family="monospace" font-size="8">BEFORE opening</text><rect x="15" y="85" width="170" height="100" rx="3" fill="#1a0404" stroke="#d46858" stroke-width="1.5"/><text x="100" y="100" text-anchor="middle" fill="#d46858" font-family="monospace" font-size="9">WRONG METHOD</text><rect x="60" y="108" width="80" height="55" rx="4" fill="#120608" stroke="#cc3333" stroke-width="2"/><path d="M60,108 Q100,88 140,108" stroke="#cc3333" stroke-width="2" fill="none"/><line x1="88" y1="118" x2="112" y2="148" stroke="#ee4444" stroke-width="3"/><line x1="112" y1="118" x2="88" y2="148" stroke="#ee4444" stroke-width="3"/><text x="100" y="175" text-anchor="middle" fill="#cc4444" font-family="monospace" font-size="8">REWARD DESTROYED</text><rect x="215" y="85" width="170" height="100" rx="3" fill="#0a1008" stroke="#22aa55" stroke-width="1.5"/><text x="300" y="100" text-anchor="middle" fill="#22aa55" font-family="monospace" font-size="9">CORRECT METHOD</text><rect x="260" y="108" width="80" height="55" rx="4" fill="#0c1208" stroke="#22aa55" stroke-width="2"/><path d="M260,108 Q300,90 340,108" stroke="#22aa55" stroke-width="2" fill="none"/><circle cx="300" cy="133" r="14" fill="#1a2a40" stroke="#4488cc" stroke-width="2.5"/><line x1="300" y1="119" x2="300" y2="147" stroke="#4488cc" stroke-width="1"/><line x1="286" y1="133" x2="314" y2="133" stroke="#4488cc" stroke-width="1"/><text x="300" y="175" text-anchor="middle" fill="#4488cc" font-family="monospace" font-size="8">GEMSTONE OBTAINED</text><text x="200" y="190" text-anchor="middle" fill="#886644" font-family="monospace" font-size="8">Follow file instructions exactly — wrong method destroys the gem inside</text></svg>'
+};
+
+// ===== STATE =====
+var currentGame = null;
+var currentRun = null;
+var progress = {};
+
+// ===== PERSISTENCE =====
+function loadProgress(){
+  try{var s=localStorage.getItem('re-survival-guide');if(s)progress=JSON.parse(s);}catch(e){progress={};}
+}
+function saveProgress(){
+  try{localStorage.setItem('re-survival-guide',JSON.stringify(progress));}catch(e){}
+}
+function pKey(gid,rt){return gid+'__'+rt;}
+function isDone(gid,rt,si,ti){var k=pKey(gid,rt);return !!(progress[k]&&progress[k][si+'_'+ti]);}
+
+function getStats(gid,rt){
+  var d=DATA[gid][rt],total=0,done=0,k=pKey(gid,rt);
+  d.sections.forEach(function(s,si){
+    s.steps.forEach(function(st,ti){
+      total++;
+      if(progress[k]&&progress[k][si+'_'+ti])done++;
+    });
+  });
+  return{total:total,done:done,pct:total?Math.round(done/total*100):0};
+}
+
+// ===== PROGRESS LOG =====
+function getLog(){var k=pKey(currentGame,currentRun)+'__log';try{return JSON.parse(localStorage.getItem(k))||[];}catch(e){return[];}}
+function saveLog(log){var k=pKey(currentGame,currentRun)+'__log';try{localStorage.setItem(k,JSON.stringify(log));}catch(e){}}
+function clearLog(){var k=pKey(currentGame,currentRun)+'__log';try{localStorage.removeItem(k);}catch(e){}}
+
+function syncLog(){
+  // Rebuild log to match current progress — catches steps checked before the log feature existed
+  var d=DATA[currentGame][currentRun],k=pKey(currentGame,currentRun);
+  var log=getLog(),changed=false;
+  d.sections.forEach(function(sec,si){
+    sec.steps.forEach(function(step,ti){
+      if(!step.story)return;
+      var key=si+'-'+ti;
+      var done=!!(progress[k]&&progress[k][si+'_'+ti]);
+      var inLog=log.some(function(e){return e.key===key;});
+      if(done&&!inLog){log.push({key:key,si:si,ti:ti,text:step.story});changed=true;}
+      else if(!done&&inLog){log=log.filter(function(e){return e.key!==key;});changed=true;}
+    });
+  });
+  if(changed)saveLog(log);
+}
+
+function renderProgressLog(){
+  var sec=document.getElementById('progress-log-section');
+  if(!sec)return;
+  var log=getLog();
+  if(!log.length){sec.style.display='none';sec.innerHTML='';return;}
+  sec.style.display='block';
+  var sorted=log.slice().sort(function(a,b){return a.si!==b.si?a.si-b.si:a.ti-b.ti;});
+  var latest=sorted[sorted.length-1];
+  var older=sorted.slice(0,sorted.length-1).reverse();
+  var html='<div class="pl-header"><span class="pl-title">&#128221; Progress Log</span><span class="pl-count">'+sorted.length+' checkpoint'+(sorted.length===1?'':'s')+'</span></div>';
+  html+='<div class="pl-latest"><div class="pl-latest-label">&#9654; Last Checkpoint</div><div class="pl-latest-text">'+escHtml(latest.text)+'</div></div>';
+  if(older.length){
+    html+='<div class="pl-show-more" id="pl-show-more" onclick="toggleLogHistory()">&#9660; Earlier entries ('+older.length+')</div>';
+    html+='<div class="pl-history" id="pl-history">';
+    older.forEach(function(e){html+='<div class="pl-entry">'+escHtml(e.text)+'</div>';});
+    html+='</div>';
+  }
+  sec.innerHTML=html;
+}
+function toggleLogHistory(){
+  var h=document.getElementById('pl-history'),btn=document.getElementById('pl-show-more');
+  if(!h)return;
+  h.classList.toggle('open');
+  if(btn){var c=h.querySelectorAll('.pl-entry').length;btn.innerHTML=h.classList.contains('open')?'&#9650; Hide earlier entries ('+c+')':'&#9660; Earlier entries ('+c+')';}
+}
+
+// ===== NAVIGATION =====
+function showHome(){
+  screens('home-screen');
+  renderCards();
+  scrollTop();
+}
+function showRunTypeScreen(gid){
+  if(gid)currentGame=gid;
+  var g=GAMES.find(function(x){return x.id===currentGame;});
+  document.getElementById('rt-game-title').textContent=g.title;
+  document.getElementById('rt-game-sub').textContent=g.subtitle+' — '+g.year;
+  document.getElementById('rt-tagline').textContent=g.tagline;
+  screens('run-type-screen');
+  scrollTop();
+}
+function showWalkthrough(gid,rt){
+  if(gid)currentGame=gid;
+  currentRun=rt;
+  var g=GAMES.find(function(x){return x.id===currentGame;});
+  var labels={standard:'Standard Play',speedrun:'Speedrun',completionist:'Completionist'};
+  document.getElementById('wt-game-name').textContent=g.title+' — '+g.subtitle;
+  document.getElementById('wt-run-badge').textContent=labels[rt];
+  renderTips();
+  renderSteps();
+  updateProgress();
+  syncLog();
+  renderProgressLog();
+  screens('walkthrough-screen');
+  scrollTop();
+}
+function screens(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+}
+function scrollTop(){window.scrollTo(0,0);}
+
+// ===== RENDERING =====
+function renderCards(){
+  var grid=document.getElementById('games-grid');
+  grid.innerHTML='';
+  GAMES.forEach(function(g){
+    var total=0,done=0;
+    ['standard','speedrun','completionist'].forEach(function(rt){
+      var s=getStats(g.id,rt);total+=s.total;done+=s.done;
+    });
+    var pct=total?Math.round(done/total*100):0;
+    var el=document.createElement('div');
+    el.className='game-card';
+    el.onclick=(function(id){return function(){showRunTypeScreen(id);};})(g.id);
+    el.innerHTML='<div class="game-card-art" style="background:'+g.art+'">'+
+      '<div class="card-glow" style="background:'+g.glow+'"></div>'+
+      '<div class="game-card-symbol" style="color:'+g.glow+'">'+g.symbol+'</div>'+
+      '<div class="card-flavor">'+g.flavor+'</div>'+
+      '</div>'+
+      '<div class="game-card-info">'+
+        '<div class="game-card-year">'+g.year+'</div>'+
+        '<div class="game-card-title">'+g.title+'</div>'+
+        '<div class="game-card-subtitle">'+g.subtitle+'</div>'+
+        '<div class="game-card-progress">'+
+          '<div class="progress-label">Progress — '+pct+'%</div>'+
+          '<div class="progress-bar-outer"><div class="progress-bar-inner" style="width:'+pct+'%"></div></div>'+
+        '</div>'+
+      '</div>';
+    grid.appendChild(el);
+  });
+}
+
+function renderTips(){
+  var d=DATA[currentGame][currentRun];
+  var html=d.tips.map(function(t,i){
+    return '<div class="tip-item"><span class="tip-num">'+(i<9?'0':'')+(i+1)+'</span><span>'+escHtml(t)+'</span></div>';
+  }).join('');
+  document.getElementById('tips-body').innerHTML=html;
+  document.getElementById('tips-body').classList.add('open');
+  document.getElementById('tips-chevron').classList.add('open');
+}
+
+function renderSteps(){
+  var d=DATA[currentGame][currentRun];
+  var k=pKey(currentGame,currentRun);
+  var html='';
+  d.sections.forEach(function(sec,si){
+    var secDone=sec.steps.filter(function(_,ti){return progress[k]&&progress[k][si+'_'+ti];}).length;
+    var stepsHtml=sec.steps.map(function(step,ti){
+      var done=(progress[k]&&progress[k][si+'_'+ti])?'done':'';
+      var isMissable=step.missable&&currentRun==='completionist';
+      var isSR=step.sr&&currentRun==='speedrun';
+      var id='step-'+si+'-'+ti;
+      var out='<li class="step-item '+done+'" id="'+id+'">';
+      if(isMissable){
+        out+='<div class="trophy-flag">⚠ MISSABLE TROPHY — '+escHtml(step.trophy)+'</div>';
+      }
+      out+='<div class="step-main" onclick="toggleStep('+si+','+ti+')">';
+      out+='<div class="step-cb"></div>';
+      out+='<div class="step-txt">'+escHtml(step.t)+'</div>';
+      out+='</div>';
+      if(isSR){
+        out+='<div class="speedrun-note">⏱ '+escHtml(step.sr)+'</div>';
+      }
+      if(step.save){
+        out+='<div class="save-point"><span class="save-point-label">✒ SAVE HERE —</span>'+escHtml(step.save)+'</div>';
+      }
+      if(step.img){
+        if(typeof step.img==='string'&&IMGS[step.img]){
+          out+='<span class="img-toggle" onclick="toggleImg('+si+','+ti+',event)">🖼 View Illustration</span>';
+          out+='<div class="img-placeholder" id="imgph-'+si+'-'+ti+'">'+IMGS[step.img]+'</div>';
+        }else{
+          out+='<span class="img-toggle" onclick="toggleImg('+si+','+ti+',event)">📷 Screenshot needed here</span>';
+          out+='<div class="img-placeholder" id="imgph-'+si+'-'+ti+'"><div class="img-placeholder-inner"><span class="img-ph-icon">📷</span>SCREENSHOT PLACEHOLDER</div></div>';
+        }
+      }
+      if(step.map&&MAPS[step.map]){
+        out+='<span class="map-toggle" onclick="toggleMap('+si+','+ti+',event)">🗺 View Area Map</span>';
+        out+='<div class="map-container" id="mapph-'+si+'-'+ti+'">'+MAPS[step.map]+'<div class="map-caption">Schematic map — room proportions approximate</div></div>';
+      }
+      out+='</li>';
+      return out;
+    }).join('');
+    var allDoneNow=sec.steps.every(function(_,ti2){return progress[k]&&progress[k][si+'_'+ti2];});
+    html+='<div class="wt-section">'+
+      '<div class="sec-hdr'+(allDoneNow?' collapsed':'')+'" id="sechdr-'+si+'" onclick="toggleSection('+si+')">'+
+        '<div class="sec-num">// '+(si<9?'0':'')+(si+1)+'</div>'+
+        '<div class="sec-title">'+escHtml(sec.title)+'</div>'+
+        '<div class="sec-prog" id="secprog-'+si+'">'+secDone+' / '+sec.steps.length+'</div>'+
+        '<span class="sec-chevron">&#9660;</span>'+
+      '</div>'+
+      '<div class="sec-body'+(allDoneNow?' collapsed':'')+'" id="secbody-'+si+'">'+
+      (sec.inv&&sec.inv.length?'<div class="inv-check"><div class="inv-label">&#9654; Required Before This Section</div>'+sec.inv.map(function(it){return '<div class="inv-item">'+escHtml(it)+'</div>';}).join('')+'</div>':'')+
+      '<ul class="step-list">'+stepsHtml+'</ul>'+
+      '</div>'+
+    '</div>';
+  });
+  document.getElementById('wt-content').innerHTML=html;
+}
+
+function updateProgress(){
+  var stats=getStats(currentGame,currentRun);
+  document.getElementById('wt-progress-text').textContent=stats.done+' / '+stats.total+' complete';
+  document.getElementById('op-pct').textContent=stats.pct+'%';
+  var fill=document.getElementById('op-fill');
+  fill.style.width=stats.pct+'%';
+  fill.classList.toggle('has-progress',stats.pct>0);
+
+  // Update section counters
+  var d=DATA[currentGame][currentRun];
+  var k=pKey(currentGame,currentRun);
+  d.sections.forEach(function(sec,si){
+    var done=sec.steps.filter(function(_,ti){return progress[k]&&progress[k][si+'_'+ti];}).length;
+    var el=document.getElementById('secprog-'+si);
+    if(el)el.textContent=done+' / '+sec.steps.length;
+  });
+}
+
+// ===== INTERACTIONS =====
+function toggleStep(si,ti){
+  var k=pKey(currentGame,currentRun);
+  if(!progress[k])progress[k]={};
+  var sk=si+'_'+ti;
+  progress[k][sk]=!progress[k][sk];
+  saveProgress();
+  var el=document.getElementById('step-'+si+'-'+ti);
+  if(el)el.classList.toggle('done',progress[k][sk]);
+  updateProgress();
+  var d=DATA[currentGame][currentRun],sec=d&&d.sections[si],step=sec&&sec.steps[ti];
+  if(step&&step.story){
+    var log=getLog(),key=si+'-'+ti;
+    log=log.filter(function(e){return e.key!==key;});
+    if(progress[k][sk])log.push({key:key,si:si,ti:ti,text:step.story});
+    saveLog(log);
+    renderProgressLog();
+  }
+  if(sec){
+    var allDone=sec.steps.every(function(_,ti2){return progress[k]&&progress[k][si+'_'+ti2];});
+    var sbody=document.getElementById('secbody-'+si);
+    var shdr=document.getElementById('sechdr-'+si);
+    if(sbody&&shdr){
+      if(allDone){sbody.classList.add('collapsed');shdr.classList.add('collapsed');}
+      else{sbody.classList.remove('collapsed');shdr.classList.remove('collapsed');}
+    }
+  }
+}
+
+function toggleSection(si){
+  var body=document.getElementById('secbody-'+si);
+  var hdr=document.getElementById('sechdr-'+si);
+  if(!body)return;
+  body.classList.toggle('collapsed');
+  if(hdr)hdr.classList.toggle('collapsed');
+}
+
+function toggleTips(){
+  document.getElementById('tips-body').classList.toggle('open');
+  document.getElementById('tips-chevron').classList.toggle('open');
+}
+
+function toggleImg(si,ti,e){
+  e.stopPropagation();
+  var ph=document.getElementById('imgph-'+si+'-'+ti);
+  var tog=e.currentTarget;
+  if(!ph)return;
+  ph.classList.toggle('open');
+  tog.textContent=ph.classList.contains('open')?'🖼 Hide':'🖼 View Illustration';
+}
+
+function toggleMap(si,ti,e){
+  e.stopPropagation();
+  var ph=document.getElementById('mapph-'+si+'-'+ti);
+  var tog=e.currentTarget;
+  if(!ph)return;
+  ph.classList.toggle('open');
+  tog.textContent=ph.classList.contains('open')?'🗺 Hide Map':'🗺 View Area Map';
+}
+
+function confirmReset(){
+  if(confirm('Reset all '+currentRun+' progress for this game? This cannot be undone.')){
+    var k=pKey(currentGame,currentRun);
+    delete progress[k];
+    saveProgress();
+    clearLog();
+    renderSteps();
+    updateProgress();
+    renderProgressLog();
+  }
+}
+
+function escHtml(s){
+  if(!s)return'';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ===== INIT =====
+loadProgress();
+showHome();
+</script>
+</body>
+</html>
