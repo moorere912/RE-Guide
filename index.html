@@ -355,6 +355,94 @@ body::before{
   border-top:1px solid #102010;
 }
 
+/* TROPHY TRACKER SCREEN */
+.trophy-screen-header{padding:28px;text-align:center;border-bottom:1px solid #1a0a00}
+.trophy-screen-title{font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:#d4c4a8;margin-bottom:6px}
+.trophy-screen-sub{font-family:'Special Elite',cursive;font-size:11px;letter-spacing:.28em;color:#cc6666;text-transform:uppercase;margin-bottom:12px}
+.trophy-screen-note{font-family:'Crimson Text',serif;font-style:italic;font-size:15px;color:#8a7868;max-width:560px;margin:0 auto}
+.trophy-char-tabs{display:flex;gap:8px;justify-content:center;padding:18px 28px 0;border-bottom:1px solid #1a0505}
+.trophy-char-tab{
+  font-family:'Special Elite',cursive;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  padding:8px 22px;cursor:pointer;border:1px solid #2a0a0a;border-bottom:none;
+  color:#7a6060;background:#040000;transition:all .2s;border-radius:3px 3px 0 0;
+}
+.trophy-char-tab.active{color:#e0c8a8;background:#0a0000;border-color:#660000}
+.trophy-char-tab:hover:not(.active){color:#aa8888;border-color:#440000}
+.trophy-overall{padding:18px 28px 8px;max-width:860px;margin:0 auto}
+.trophy-overall-bar{height:3px;background:#0a0000;border-radius:2px;overflow:hidden;margin-bottom:6px}
+.trophy-overall-fill{height:100%;background:linear-gradient(90deg,#3d0000,#cc8800,#ffcc00);border-radius:2px;transition:width .6s ease}
+.trophy-overall-label{font-family:'Special Elite',cursive;font-size:11px;letter-spacing:.18em;color:#9a8060;text-transform:uppercase;text-align:right}
+.trophy-content{padding:20px 28px 60px;max-width:860px;margin:0 auto}
+.trophy-group{margin-bottom:32px}
+.trophy-group-title{
+  font-family:'Cinzel',serif;font-size:13px;font-weight:600;letter-spacing:.22em;
+  color:#aa8844;text-transform:uppercase;margin-bottom:14px;
+  padding-bottom:8px;border-bottom:1px solid #1a0800;
+}
+.trophy-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:13px 14px;margin-bottom:2px;border-radius:3px;
+  border:1px solid transparent;transition:all .2s;background:#060000;
+}
+.trophy-item:hover{background:#0c0400;border-color:#2a1000}
+.trophy-item.done{background:#030200;opacity:.55}
+.trophy-item.done .trophy-name{text-decoration:line-through;text-decoration-color:#6a5020;color:#6a5830}
+.trophy-item.warning{border-left:3px solid #992200}
+.trophy-cb{
+  flex-shrink:0;width:22px;height:22px;border:2px solid #3d2010;border-radius:3px;
+  margin-top:2px;position:relative;cursor:pointer;transition:all .2s;
+}
+.trophy-cb::after{
+  content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:#ddaa44;opacity:0;transition:opacity .2s;
+}
+.trophy-item.done .trophy-cb{border-color:#5a3a10;background:#2a1a00}
+.trophy-item.done .trophy-cb::after{opacity:1}
+.trophy-info{flex:1}
+.trophy-name{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#d4c4a8;margin-bottom:3px;transition:all .2s}
+.trophy-badge{
+  display:inline-block;font-family:'Special Elite',cursive;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;padding:1px 6px;border-radius:2px;margin-left:7px;vertical-align:middle;
+}
+.trophy-badge.story{background:rgba(0,60,120,.2);color:#4488cc;border:1px solid #1a3a66}
+.trophy-badge.challenge{background:rgba(120,0,0,.2);color:#cc4444;border:1px solid #660000}
+.trophy-badge.collectible{background:rgba(0,80,0,.2);color:#44aa44;border:1px solid #1a5a1a}
+.trophy-desc{font-family:'Crimson Text',serif;font-size:15px;color:#a09080;line-height:1.55;margin-bottom:5px}
+.trophy-hint{
+  font-family:'Crimson Text',serif;font-size:14px;color:#887060;font-style:italic;line-height:1.5;
+}
+.trophy-hint.warn{color:#cc6644;font-style:normal;font-weight:600}
+.trophy-guide-link{
+  display:inline-block;margin-top:6px;font-family:'Special Elite',cursive;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:#885522;cursor:pointer;
+  border:1px solid #442200;padding:3px 10px;border-radius:2px;transition:all .2s;
+}
+.trophy-guide-link:hover{color:#cc8844;border-color:#884400;background:rgba(120,60,0,.1)}
+
+/* TROPHY BTN in run type screen */
+.trophy-tracker-card{
+  background:#060300;border:1px solid #2a1800;border-radius:3px;
+  padding:28px 22px;cursor:pointer;transition:all .25s ease;
+  position:relative;overflow:hidden;grid-column:1/-1;
+  display:flex;align-items:center;gap:22px;
+  justify-content:center;
+}
+.trophy-tracker-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:#2a1800;transition:background .25s;
+}
+.trophy-tracker-card:hover::before{background:#cc8800}
+.trophy-tracker-card:hover{border-color:#885500;box-shadow:0 6px 28px rgba(160,100,0,.25);transform:translateY(-3px);background:#0c0500}
+.trophy-tracker-card:hover .ttc-name{color:#ffcc66}
+.ttc-icon{font-size:28px}
+.ttc-name{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#c8b080;transition:color .25s}
+.ttc-desc{font-family:'Crimson Text',serif;font-size:15px;color:#8a7848}
+.ttc-pct{font-family:'Special Elite',cursive;font-size:11px;letter-spacing:.2em;color:#8a6a30;text-transform:uppercase;margin-left:auto}
+
+/* TROPHY BTN in walkthrough header */
+.btn-trophy{color:#8a6a30;border-color:#3a2a00}
+.btn-trophy:hover{color:#ddaa44;border-color:#776010;background:rgba(160,100,0,.1)}
+
 /* RESPONSIVE */
 @media(max-width:600px){
   .games-grid,.run-types-grid,.wt-content{padding-left:14px;padding-right:14px}
@@ -362,6 +450,9 @@ body::before{
   .overall-progress{padding:14px}
   .wt-header{padding:10px 14px}
   .back-btn{padding:14px}
+  .trophy-content{padding:14px 14px 60px}
+  .trophy-overall{padding:14px}
+  .trophy-char-tabs{padding:14px 14px 0}
 }
 </style>
 </head>
@@ -416,6 +507,36 @@ body::before{
       </div>
     </div>
   </div>
+  <div class="run-types-grid" id="trophy-tracker-row" style="display:none;margin-top:0;padding-top:0">
+    <div class="trophy-tracker-card" onclick="showTrophyScreen()">
+      <span class="ttc-icon">🏅</span>
+      <div>
+        <div class="ttc-name">Trophy / Achievement Tracker</div>
+        <div class="ttc-desc">Track every trophy for this game. See requirements, hints, and which guide to follow for each.</div>
+      </div>
+      <div class="ttc-pct" id="ttc-pct-display"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TROPHY TRACKER SCREEN -->
+<div id="trophy-screen" class="screen">
+  <header class="site-header">
+    <div class="site-logo">Resident Evil</div>
+    <div class="site-subtitle">Survival Guide &mdash; Series Walkthrough Companion</div>
+  </header>
+  <button class="back-btn" onclick="showRunTypeScreen()">Back</button>
+  <div class="trophy-screen-header">
+    <div class="trophy-screen-title">🏅 Trophy &amp; Achievement Tracker</div>
+    <div class="trophy-screen-sub" id="trophy-screen-sub">Resident Evil 2 Remake</div>
+    <div class="trophy-screen-note">Trophy names may vary slightly between PlayStation, Xbox, and Steam. Requirements listed here match the 2019 remake on all platforms.</div>
+  </div>
+  <div class="trophy-char-tabs" id="trophy-char-tabs"></div>
+  <div class="trophy-overall">
+    <div class="trophy-overall-bar"><div class="trophy-overall-fill" id="trophy-overall-fill" style="width:0%"></div></div>
+    <div class="trophy-overall-label" id="trophy-overall-label">0 / 0 Trophies</div>
+  </div>
+  <div class="trophy-content" id="trophy-list"></div>
 </div>
 
 <!-- CHARACTER SELECT SCREEN -->
@@ -446,6 +567,7 @@ body::before{
     </div>
     <div class="wt-header-right">
       <div class="wt-progress-text" id="wt-progress-text">0 / 0</div>
+      <button class="btn btn-trophy" id="wt-trophy-btn" onclick="showTrophyScreen()" style="display:none">🏅 Trophies</button>
       <button class="btn btn-danger" onclick="confirmReset()">Reset Progress</button>
     </div>
   </div>
@@ -811,6 +933,50 @@ function makePlaceholder(name){
 var DATA = {
   re1: RE1,
   re2: {
+    trophies: {
+      leon: [
+        {id:'story_a',   name:'Escape from the City',      type:'story',      desc:'Complete Leon\'s story on any difficulty.',
+         hint:'Cannot be missed — story completion trophy.'},
+        {id:'hardcore_a',name:'Hardcore',                  type:'challenge',  desc:'Complete Leon\'s story on Hardcore difficulty.',
+         hint:'Ink Ribbons are extremely limited on Hardcore. Plan every save. Enemies take far more damage to drop.'},
+        {id:'speed_a',   name:'Speed Demon',               type:'challenge',  desc:'Complete Leon\'s story in under 3 hours on Standard or higher.',
+         hint:'REQUIRES A SEPARATE DEDICATED RUN. This is impossible to earn during a completionist run (which takes 5–7 hours). Use the Speedrun guide for the optimized route, skips, and timing.',
+         warn:true, guideRef:'speedrun'},
+        {id:'frugal_a',  name:'Frugalist',                 type:'challenge',  desc:'Complete Leon\'s story with 3 or fewer saves on Standard or higher.',
+         hint:'Plan your 3 saves: (1) RPD Basement before Birkin Phase 1, (2) Sewer safe room before Cable Car, (3) NEST Lab before Super Tyrant. Skip all other typewriters.'},
+        {id:'minimal_a', name:'Minimalist',                type:'challenge',  desc:'Complete Leon\'s story without ever expanding item storage capacity.',
+         hint:'Never use Hip Pouches to increase inventory size. Leon\'s starting slots are very tight — keep only essentials: pistol, shotgun, herbs, key items. Leave everything else.'},
+        {id:'knives_a',  name:'Knives Out',                type:'challenge',  desc:'Defeat a boss using only the Combat Knife.',
+         hint:'Easiest on the Sewer Crocodile (G-Croc). Use the knife to slash the switch panel on the wall — a single hit activates the electrified water kill. No other boss damage needed.'},
+        {id:'raccoon_a', name:'Raccoon City Native',       type:'collectible',desc:'Find and destroy all 15 Mr. Raccoon collectibles in Leon\'s story.',
+         hint:'All 15 are flagged in the Completionist walkthrough. Use pistol headshots or Grenade Launcher. Missing any requires a new run.',
+         guideRef:'completionist'},
+        {id:'files_a',   name:'A Record of Events',        type:'collectible',desc:'Obtain all files in Leon\'s story (58 total).',
+         hint:'Every file location is noted in the Completionist walkthrough. Check every desk, shelf, locker, and computer terminal. Missing any requires a new run.',
+         guideRef:'completionist'},
+      ],
+      claire: [
+        {id:'story_b',   name:'Escape from the City (Claire)', type:'story',   desc:'Complete Claire\'s story on any difficulty.',
+         hint:'Cannot be missed — story completion trophy.'},
+        {id:'hardcore_b',name:'Hardcore (Claire)',             type:'challenge',desc:'Complete Claire\'s story on Hardcore difficulty.',
+         hint:'Ink Ribbons are scarce on Hardcore. Claire\'s Grenade Launcher is essential — conserve every round for bosses.'},
+        {id:'speed_b',   name:'Speed Demon (Claire)',          type:'challenge',desc:'Complete Claire\'s story in under 3 hours on Standard or higher.',
+         hint:'REQUIRES A SEPARATE DEDICATED RUN. Cannot be earned during a completionist run. Follow the Speedrun guide — Claire\'s route averages 2 hours 20 minutes with Sherry escort optimized.',
+         warn:true, guideRef:'speedrun'},
+        {id:'frugal_b',  name:'Frugalist (Claire)',            type:'challenge',desc:'Complete Claire\'s story with 3 or fewer saves on Standard or higher.',
+         hint:'Plan your 3 saves: (1) RPD 2F before Birkin Phase 1, (2) Sewer safe room before Cable Car with Sherry, (3) NEST Lab before Super Tyrant.'},
+        {id:'minimal_b', name:'Minimalist (Claire)',           type:'challenge',desc:'Complete Claire\'s story without expanding item storage.',
+         hint:'Never use Hip Pouches. Claire\'s inventory is tight — prioritize Browning, Grenade Launcher, herbs, and key items only. Drop everything else.'},
+        {id:'sherry_b',  name:'A Guardian',                   type:'challenge',desc:'Complete Claire\'s story without Sherry taking any damage.',
+         hint:'Sherry joins in the Sewers. Keep her away from all enemies during escort sections. She is most at risk during Birkin Phase 3 — position her behind cover first.'},
+        {id:'raccoon_b', name:'Raccoon City Native (Claire)',  type:'collectible',desc:'Find and destroy all 15 Mr. Raccoon collectibles in Claire\'s story.',
+         hint:'Same locations as Leon\'s run. All flagged in the Completionist walkthrough. Use Grenade Launcher from distance.',
+         guideRef:'completionist'},
+        {id:'files_b',   name:'A Record of Events (Claire)',   type:'collectible',desc:'Obtain all 58 files in Claire\'s story.',
+         hint:'Identical locations to Leon\'s run. All noted in the Completionist walkthrough. Check every room thoroughly.',
+         guideRef:'completionist'},
+      ]
+    },
     characters: {
       leon: {
         name: 'Leon Kennedy',
@@ -916,6 +1082,169 @@ var DATA = {
           {t: 'Fire the Rocket Launcher. The Super Tyrant falls. Victory.', img: false},
           {t: 'A helicopter descends from the sky. Ada and Leon board it. As the helicopter lifts off, they watch Raccoon City and the facility burn below them.', img: false},
           {t: 'The game ends. Leon survived. He escaped Raccoon City. But Umbrella Corporation is still out there, and the outbreak is not contained.', img: false, story: 'Leon Kennedy survived his first day at the Raccoon City Police Department. He descended into Umbrella\'s darkest secrets, faced biological horrors, and fought for his life. Ada Wong appeared at the critical moment — her true allegiance and motives remain unclear. The Rocket Launcher ended the Super Tyrant. The facility burned. But in the helicopter, Ada spoke of other Umbrella operations, other threats. This was not the end. It was only the beginning.'},
+        ]},
+      ]
+    },
+    speedrun: {
+      tips: [
+        '⚠ SPEEDRUN TROPHY NOTE: This guide is designed to earn the Speed Demon trophy (complete in under 3 hours on Standard or higher). Target time: 2 hours 15 minutes. The record is under 1 hour for advanced runners — 2:15 is achievable for first-time speedrunners.',
+        'Leon speedrun targets sub-2.5 hour completion on Standard difficulty. Avoid Hard/Hardcore — they slow you down with tougher enemies and scarce ammo.',
+        'The Matilda pistol is your only safe weapon early. Use it exclusively for zombies until you acquire the W-870 Shotgun at the gun shop on Elm Street.',
+        'Skip every file, document, and non-essential dialogue. Mash through cutscenes. Read only statue puzzle directional clues.',
+        'Medallion statue solutions from memory: Unicorn Statue = Pisces-Scorpio-Aquarius. Lion Statue = Lion-Twig-Bird. Third medallion (sewers) = Woman-Bow-Snake.',
+        'Safe puzzle from memory: West Office left dial = N-E-D, right dial = M-R-G. Muscle memory execution — under 30 seconds.',
+        'Birkin Phase 1 (parking lot): Shotgun only. 4–5 shots to stun eyes, then unload on weak point. Under 60 seconds total.',
+        'Mr. X (Tyrant) appears in the sewers. He cannot be killed — sprint into a side room, close the door, wait 30 seconds. Do NOT waste ammo.',
+        'Ada Wong escort sections are auto-scripted. Do not linger — keep moving forward.',
+        'Total time breakdown: Gas Station (3 min) + Streets (5 min) + RPD 1F/2F (18 min) + Parking (3 min) + Sewers (12 min) + NEST (18 min) + Helipad (2 min) = ~2 hours 10 minutes plus load buffers.',
+      ],
+      sections: [
+        {title: 'Gas Station — Speed Dash', inv: ['Matilda Pistol', '15 rounds of 9mm'], steps: [
+          {t: 'Skip all opening cutscenes immediately.', img: false, sr: 'Mash buttons through all animations'},
+          {t: 'Gas Station zombie: one headshot. Grab Storage Room Key from behind the counter. 3 seconds.', img: false, sr: 'One bullet. Grab key. Move immediately.'},
+          {t: 'Unlock Storage Room. Grab herbs and ammo only. Ignore decorative clutter. 20 seconds in room.', img: false},
+          {t: 'Exit to streets. Total Gas Station time: 3 minutes.', img: false, story: 'Leon Kennedy arrived for his first day. The city was already dying. He is moving now.'},
+        ]},
+        {title: 'Streets — Gun Shop Detour for Shotgun', inv: ['Matilda with ammo', 'Storage items'], steps: [
+          {t: 'Streets toward Gun Shop on Elm Street. Break window or find entry. Sprint to W-870 Shotgun parts immediately.', img: false, sr: 'Gun shop is a 45-second detour that saves several minutes on Birkin Phase 1'},
+          {t: 'Do NOT fight street zombies. Run past everything toward RPD.', img: false, sr: 'Every zombie fight wastes 10–30 seconds. Sprint instead.'},
+          {t: 'Enter RPD main doors. Streets done. Time: 5 minutes.', img: false},
+        ]},
+        {title: 'RPD 1F — Safe & Key Sprint', inv: ['Matilda with ammo', 'W-870 Shotgun parts'], steps: [
+          {t: 'Grab RPD map from counter (2 seconds). Move immediately.', img: false},
+          {t: 'West Office Safe: N-E-D left, M-R-G right. You have memorized this. Execute under 30 seconds. Grab High-Capacity Magazine.', img: false, sr: 'No reading clues. Pure muscle memory.'},
+          {t: 'Sergeant\'s Desk: Spade Key. 3 seconds.', img: false},
+          {t: 'Lounge: Unicorn Statue = Pisces-Scorpio-Aquarius. 30 seconds. Grab Maiden Medallion.', img: false},
+          {t: 'Do NOT save at basement. Skip safe rooms entirely — you are targeting under 3 saves for the run.', img: false, sr: 'Speedrunners do not save on Standard difficulty Leon runs unless sub-optimal'},
+          {t: '1F done. Move to 2F. Time: 8 minutes cumulative.', img: false},
+        ]},
+        {title: 'RPD 2F — Medallion & Licker Skip', inv: ['Spade Key', 'Maiden Medallion'], steps: [
+          {t: '2F stairs: Lickers may spawn on ceiling. Do NOT engage them. Sprint under them toward East Office.', img: false, sr: 'Lickers cost 30–60 seconds each. Run past all of them.'},
+          {t: 'East Office: Lion Statue = Lion-Twig-Bird. 30 seconds. Grab Lion Medallion.', img: false},
+          {t: 'Grab Chess pieces only if directly on your path. Otherwise skip — you will collect them in sewers.', img: false},
+          {t: '2F done. Both medallions in hand. Time: 16 minutes cumulative.', img: false},
+        ]},
+        {title: 'Parking Lot — Birkin Phase 1 Shotgun Kill', inv: ['Matilda with ammo', 'W-870 Shotgun with ammo'], steps: [
+          {t: 'Birkin Phase 1 emerges. Cutscene plays.', img: false},
+          {t: 'Use W-870 Shotgun only. Target his exposed eye clusters (4–5 shots to stun all three eyes). Once weak point opens, dump remaining shells into it. Target time: 45 seconds.', img: false, sr: 'Shotgun is most ammo-efficient for Leon. Do NOT use Matilda on bosses.'},
+          {t: 'Circle-strafe around parking spaces. Avoid grab attacks — they are slow telegraphed grabs.', img: false},
+          {t: 'Birkin retreats. Do NOT loot. Sprint directly to sewers.', img: false, story: 'Birkin fell back into the dark. He was not dead. Leon kept moving.'},
+        ]},
+        {title: 'Sewers — Third Medallion Sprint', inv: ['Matilda', 'Shotgun', 'Two medallions'], steps: [
+          {t: 'Third medallion: Woman-Bow-Snake statue. 30 seconds. Grab it.', img: false},
+          {t: 'Mr. X may spawn in sewers. Run into nearest room and close door. Wait 30 seconds. He will leave.', img: false, sr: 'Never waste ammo on Mr. X. He cannot be killed during the normal game.'},
+          {t: 'Collect Chess pieces as you pass them. You need three total.', img: false},
+          {t: 'Cable Car entrance: verify you have all three medallions and Chess pieces before boarding.', img: false},
+          {t: 'Sewers done. Time: 28 minutes cumulative.', img: false, story: 'Three medallions. The cable car waited below. The worst was still ahead.'},
+        ]},
+        {title: 'NEST Laboratory — Speedrun Final Push', inv: ['Three medallions', 'Chess pieces', 'Weapons with ammo'], steps: [
+          {t: 'Cable Car descent (20 seconds auto-play).', img: false},
+          {t: 'Lab terminals: insert medallions and chess pieces in sequence. You have memorized the order. Each puzzle under 30 seconds.', img: false, sr: 'No reading — pure execution. Input and move.'},
+          {t: 'Birkin Phase 2: Shotgun eyes, then weak point. 45–60 seconds.', img: false},
+          {t: 'Skip all side exploration. No looting. Move directly toward helipad.', img: false},
+          {t: 'Self-destruct: locate control room, activate, sprint.', img: false},
+          {t: 'Birkin Phase 3: dump remaining ammo on eyes and weak point. Stay mobile.', img: false},
+          {t: 'NEST done. Time: 46 minutes (game time — approximately 2 hours 5 minutes real time with loads).', img: false},
+        ]},
+        {title: 'Helipad — Super Tyrant & Victory', inv: ['Matilda with remaining ammo', 'Healing items'], steps: [
+          {t: 'Super Tyrant emerges. Cutscene plays.', img: false},
+          {t: 'Phase 1: Matilda spam. 8–12 shots to stagger it. Keep moving around helipad.', img: false, sr: 'Pistol spam until Rocket Launcher spawns'},
+          {t: 'Rocket Launcher spawns mid-fight. Sprint to grab it immediately.', img: false},
+          {t: 'Aim and fire. One shot. Direct hit. Done.', img: false},
+          {t: 'Helicopter cutscene: auto-play. Leon escapes. Trophy unlocked if under 3 hours.', img: false, story: 'Leon survived. Under 3 hours. The Speed Demon trophy is yours.'},
+        ]},
+      ]
+    },
+    completionist: {
+      tips: [
+        '⚠ SPEEDRUN TROPHY REQUIRES A SEPARATE RUN: The "Speed Demon" trophy (complete in under 3 hours) cannot be earned during this completionist run — which takes 5–7 hours. After finishing this run, switch to the Speedrun guide for that trophy.',
+        'This completionist run earns: all 58 files, all 15 Mr. Raccoons, and story completion trophies. Speed Demon, Frugalist (3 or fewer saves), and Minimalist (no storage expansion) each need their own dedicated runs.',
+        'Leon completionist run targets 100% file collection (58 total documents), all 15 Mr. Raccoon collectibles, and full enemy/room exploration. Recommended on Standard or Hardcore difficulty.',
+        'Files are scattered throughout every area. Do not skip any room. Check every desk, shelf, locker, bulletin board, and computer terminal. Missing one requires a full new run.',
+        'Mr. Raccoons are 15 small plush rabbit toys hidden in specific spots throughout the game. They must be destroyed (shot or knifed). Missing any requires a full new run.',
+        'The W-870 Shotgun is essential. Collect it at the Elm Street gun shop before entering the RPD. You will need it for Licker combat on 2F and Birkin Phase 1.',
+        'Ink Ribbons are your saves. On Standard there are enough for 7–10 saves. Use them liberally — before every boss, after every major room completion.',
+        'Ada Wong appears as a recurring ally. She can bypass electronic locks and security systems. Protect her during these sequences — she is not invulnerable.',
+        'William Birkin mutates three times (Parking Lot, Lab Phase 2, Lab Phase 3). Each encounter uses the same strategy: damage all three eye clusters to stun, then unload on the exposed weak point.',
+        'Open the Trophy Tracker (🏅 button in the header) to track all trophies and see which require additional dedicated runs after this one.',
+      ],
+      sections: [
+        {title: 'Gas Station — Complete Collection', inv: ['Matilda Pistol', '15 rounds of 9mm'], steps: [
+          {t: 'Watch the opening cutscene fully — Leon arrives at the gas station, first day at the RPD. Context for the story.', img: false},
+          {t: 'Interior zombie: headshot. Loot the gas station thoroughly — every shelf and counter for ammo, herbs, and items.', img: false},
+          {t: 'Storage Room Key: behind the counter. Grab it.', img: false},
+          {t: 'Unlock Storage Room. Loot everything: herbs, ammo, and supplies. Leave nothing behind.', img: false},
+          {t: 'Check every corner of the gas station for files or notes. Minimal files here but be thorough.', img: false},
+          {t: 'Exit to streets. Total time: 6–8 minutes for complete collection.', img: false, story: 'Leon Kennedy arrived for his first day as a Raccoon City Police officer. The outbreak had already consumed everything. His career began in the middle of the apocalypse.'},
+        ]},
+        {title: 'Streets — Full Exploration & Gun Shop', inv: ['Matilda with ammo', 'Storage Room items'], steps: [
+          {t: 'Streets are open — take your time. Clear zombies methodically. Every corpse may have dropped items.', img: false},
+          {t: 'Gun Shop on Elm Street: break through front window or find alternate entry. Once inside, explore every corner.', img: false},
+          {t: 'W-870 Shotgun parts: in the gun shop. Grab immediately — assemble the full weapon here.', img: false},
+          {t: 'Check for files in the gun shop (sales records, owner notes, any posted documents).', img: false},
+          {t: 'Look for any Mr. Raccoon collectibles in the streets and gun shop. They are tiny — check unusual spots at low angles.', img: false, save: 'Gun Shop safe room: optional save here. You have basic supplies and the shotgun.'},
+          {t: 'Proceed toward RPD entrance. Continue clearing and looting as you move. Streets time: 12–15 minutes for full exploration.', img: false, story: 'The streets of Raccoon City were a mass grave. Every body, every abandoned car, every broken shop window — evidence of Umbrella\'s catastrophic experiment. Leon searched everything. He would need to understand what happened here.'},
+        ]},
+        {title: 'RPD 1F — Systematic Exploration', inv: ['Matilda', 'W-870 Shotgun', 'Storage items'], steps: [
+          {t: 'Pick up the RPD map from the main hall counter. This is essential for tracking unexplored rooms.', img: false},
+          {t: 'Before the safe puzzle, systematically clear every room on 1F. Kill all zombies. Leave no area unexplored.', img: false},
+          {t: 'Collect every file on 1F — desks, file cabinets, shelves, break rooms. Approximately 8–10 files here. Read each one.', img: false},
+          {t: 'West Office Safe: N-E-D left dial, M-R-G right dial. Grab the High-Capacity Magazine inside.', img: false},
+          {t: 'Spade Key: Sergeant\'s Desk. Critical for unlocking symbol-marked doors throughout the station.', img: false},
+          {t: 'Lounge: Unicorn Statue = Pisces-Scorpio-Aquarius. Solve it. Grab the Maiden Medallion.', img: false},
+          {t: 'Valve Handle and Fuse: various desks on 1F. Collect both — needed for puzzles later.', img: false},
+          {t: 'Look for Mr. Raccoon collectibles in corners, on shelves, and behind furniture throughout 1F. Destroy any you find.', img: false},
+          {t: 'Basement hallway safe room: use first Ink Ribbon here.', img: false, save: 'Safe Room — basement. First save. You have the Maiden Medallion, Spade Key, and basic supplies.'},
+          {t: 'Do NOT proceed to 2F yet. Verify you have looted every room on 1F. Time: 18–22 minutes.', img: false, story: 'The Police Station was a repository of evidence. Every desk held clues about Umbrella Corporation — memos, research reports, internal communications. Someone had been using the RPD as a cover for illegal biological weapons testing. Leon was only beginning to understand the depth of it.'},
+        ]},
+        {title: 'RPD 2F — Licker Combat & Full Search', inv: ['Spade Key', 'Maiden Medallion', 'High-Capacity Magazine', 'Valve Handle', 'Fuse'], steps: [
+          {t: '2F entry: Lickers patrol the ceilings. Use your W-870 Shotgun to kill them — do not skip them. Complete exploration requires clearing these areas.', img: false},
+          {t: 'Systematically clear every room on 2F. Kill all Lickers and zombies. Collect all ammo and herbs.', img: false},
+          {t: 'Collect every file on 2F — offices, bedrooms, hallways. Approximately 10–12 more files. Read each one for story context.', img: false},
+          {t: 'East Office: Lion Statue = Lion-Twig-Bird. Grab the Lion Medallion. Second of three.', img: false},
+          {t: 'Chess Piece Plugs: scattered throughout 2F. Collect all of them. They unlock doors in NEST.', img: false},
+          {t: 'Use Spade Key on all symbol-marked doors to unlock new areas. Each may contain files, ammo, or collectibles.', img: false},
+          {t: 'Mr. Raccoon hunt: search 2F thoroughly. They hide in unexpected locations — on windowsills, shelves, behind equipment.', img: false},
+          {t: '2F safe room: use second Ink Ribbon here.', img: false, save: 'Safe Room — 2F. Two of three medallions. Good checkpoint before the underground.'},
+          {t: 'Verify you have all Chess pieces and both medallions before descending. Time: 20–22 minutes on 2F.', img: false, story: 'Two medallions in hand. The Lickers were the result of T-Virus exposure on humans — the virus rewrote DNA until the host became something barely recognizable. Files described the process in clinical detail. Umbrella called them "successful mutations."'},
+        ]},
+        {title: 'Parking Lot — Birkin Phase 1 & Full Loot', inv: ['Two medallions', 'W-870 Shotgun with ammo', 'Matilda with ammo', 'Healing items'], steps: [
+          {t: 'Parking lot: William Birkin emerges in G Stage 1 form. Unavoidable boss fight.', img: false},
+          {t: 'Birkin Phase 1: Use W-870 on his eye clusters (3–4 shots each). Once all three eyes are stunned, weak point opens — unload remaining shotgun shells. 40–60 seconds.', img: false},
+          {t: 'Circle-strafe to maintain distance. Heal if health drops below half. Avoid grab attacks — they deal massive damage.', img: false},
+          {t: 'Birkin retreats. Now thoroughly explore the parking lot. Check every car, corner, and alcove for items and files.', img: false},
+          {t: 'Collect all Grenade items and healing herbs from the parking lot. You will need maximum supplies for the sewers.', img: false},
+          {t: 'Look for any Mr. Raccoon collectibles in the parking area.', img: false},
+          {t: 'Parking lot safe room (if available): optional save before sewers.', img: false, save: 'Safe Room — parking lot. If no typewriter, proceed to sewers and save at first opportunity.', story: 'William Birkin. The scientist who created the G-Virus. He injected himself with his own creation when Umbrella agents came to take it by force. The mutation was not supposed to happen like this. Nothing was.'},
+        ]},
+        {title: 'Sewers — Third Medallion, Files & Mr. Raccoons', inv: ['Two medallions', 'W-870 Shotgun', 'Matilda', 'Healing items'], steps: [
+          {t: 'Sewers: flooded, dangerous, full of enemies. Move carefully. Collect everything.', img: false},
+          {t: 'Third medallion: Woman-Bow-Snake statue puzzle in the sewer area. Solve it. All three medallions now collected.', img: false},
+          {t: 'Collect every file in the sewers — approximately 5–8 more documents about underground research and bioweapon development.', img: false},
+          {t: 'Mr. X may appear. He cannot be killed. Run into a side room, close the door, wait 30 seconds for him to leave. Do NOT waste ammo.', img: false},
+          {t: 'Mr. Raccoon collectibles: they hide in pipes, alcoves, and under water ledges throughout the sewers. Destroy any you find.', img: false},
+          {t: 'Chess Piece Plugs: collect any remaining ones here. You need three total before the Cable Car.', img: false},
+          {t: 'Clubs Key: located in the sewers. Grab it — unlocks critical doors in NEST.', img: false},
+          {t: 'Sewer safe room: use Ink Ribbon here before the Cable Car. This is your point of no return.', img: false, save: 'Safe Room — sewer. FINAL CHANCE to return to RPD. Confirm: all three medallions, all Chess pieces.', story: 'Three medallions. The sewers connected the police station to something far darker. Files spoke of a laboratory beneath the city — Umbrella\'s primary research site for the G-Virus. Everything had been planned. The outbreak was not an accident.'},
+        ]},
+        {title: 'NEST Laboratory — Full Exploration & Birkin Phase 2/3', inv: ['Three medallions', 'Three Chess plugs', 'Clubs Key', 'All weapons', 'Multiple healing items'], steps: [
+          {t: 'Cable Car descends into NEST — the underground laboratory. You cannot return to the RPD from this point.', img: false},
+          {t: 'NEST entrance: use medallions and Chess pieces on security terminals to unlock lab sections. Take your time.', img: false},
+          {t: 'Systematically explore every lab section. There are approximately 12–15 files here — Umbrella\'s full documented history. Read every one.', img: false},
+          {t: 'File subjects: Umbrella founding, Progenitor Virus discovery in Africa, T-Virus engineering, human experimentation protocols, G-Virus development, Birkin\'s role, and the deliberate outbreak plan.', img: false},
+          {t: 'Birkin Phase 2 boss fight: larger and more dangerous. Same strategy — shotgun the eyes, then unload on the exposed weak point. 45–60 seconds.', img: false},
+          {t: 'Continue through lab. Check every room for Mr. Raccoon collectibles. They are hidden near equipment and in vents.', img: false},
+          {t: 'Main control room: activate self-destruct. Facility countdown begins. You must now escape.', img: false},
+          {t: 'Birkin Phase 3 (final form): grotesque final mutation. Dump all remaining ammo on eyes and weak point. Heal aggressively.', img: false},
+          {t: 'NEST safe room: use Ink Ribbon if available. Last save before the helipad.', img: false, save: 'Safe Room — NEST lab. Your final save. Helipad is next — this is the end.', story: 'The self-destruct sequence was active. Birkin had become something barely remembered from humanity. He threw himself at Leon with the last of his consciousness, driven by something beyond instinct. When he finally fell, Leon understood: Umbrella had done this deliberately. The outbreak, the monsters, Birkin\'s fate — all of it had been planned by men in boardrooms who called it research.'},
+        ]},
+        {title: 'Helipad — Super Tyrant, Escape & Completion', inv: ['All remaining weapons and ammo', 'Healing items'], steps: [
+          {t: 'Helipad: the Super Tyrant (T-002) emerges. Umbrella\'s ultimate biological weapon. Final boss of Leon\'s story.', img: false},
+          {t: 'Phase 1: use remaining Shotgun and Matilda ammo on its weak points (exposed flesh areas). Keep moving. Avoid grabs and stomps.', img: false},
+          {t: 'Rocket Launcher spawns mid-fight on the helipad. Sprint to grab it.', img: false},
+          {t: 'Phase 2: one Rocket Launcher shot. Aim carefully at center mass. Direct hit ends the fight.', img: false},
+          {t: 'Helicopter: Ada and Leon board. Raccoon City burns below. Leon\'s story ends.', img: false},
+          {t: 'COMPLETION: By this point you have read 58 files, destroyed 15 Mr. Raccoons, defeated all three Birkin mutations, and survived the Super Tyrant. Collectible and story trophies are earned. Open the Trophy Tracker for remaining challenge trophies requiring separate runs.', img: false, story: 'Leon Kennedy survived. He had descended into the darkest product of unchecked corporate ambition and emerged. Raccoon City burned behind him. The world outside did not yet know what Umbrella had done. But Leon did. And he would not forget.'},
         ]},
       ]
     }
@@ -1092,6 +1421,8 @@ var DATA = {
       },
       completionist: {
         tips: [
+          '⚠ SPEEDRUN TROPHY REQUIRES A SEPARATE RUN: The "Speed Demon" trophy (complete in under 3 hours) cannot be earned during a completionist run — this guide takes 5–7 hours. After finishing this run, use the Speedrun guide for that trophy. The Trophy Tracker screen has full details.',
+          'This completionist run earns: all 58 files, all 15 Mr. Raccoons, and story completion trophies. It does NOT earn Speed Demon, Frugalist (3 or fewer saves), or Minimalist (no storage expansion) — those need separate dedicated runs.',
           'Claire completionist run targets 100% file collection (58 documents), all Mr. Raccoon collectibles (15 total), and full exploration on Hard or Nightmare difficulty.',
           'File collection is identical to Leon\'s completionist route — 58 documents scattered throughout the game in the same locations as Leon\'s route.',
           'Mr. Raccoons are 15 small plush toys hidden throughout the game. Shooting them unlocks achievements and special items. Use your Grenade Launcher to destroy them from distance.',
@@ -1100,8 +1431,8 @@ var DATA = {
           'Sherry Birkin is a mandatory escort from the Sewers onward. She cannot die — if she does, the run fails. Protect her through all encounters.',
           'Grenade Launcher ammo is critically limited (10–12 rounds). Use it for: Mr. Raccoon destruction, Birkin weak points, and the Super Tyrant only.',
           'Safe locations: Gun Shop (optional), RPD Basement (first save), RPD 2F (second save), Parking Lot (before Birkin Phase 1), Sewers (before Cable Car with Sherry), NEST Lab (before Birkin Phase 2 and Phase 3), Helipad (final save).',
-          'By the end of this run, you will have read 58 files revealing Umbrella\'s complete history: founding, Progenitor Virus, T-Virus engineering, human testing, G-Virus development, Birkin\'s role, the deliberate outbreak, and the escape. The narrative will be comprehensive and complete.',
-          'Claire\'s perspective is different from Leon\'s — she discovers the same facility and faces the same threats, but her encounter with Sherry adds emotional weight. Use this in your story summaries.',
+          'By the end of this run, you will have read 58 files revealing Umbrella\'s complete history: founding, Progenitor Virus, T-Virus engineering, human testing, G-Virus development, Birkin\'s role, the deliberate outbreak, and the escape.',
+          'Claire\'s perspective is different from Leon\'s — her encounter with Sherry adds emotional weight to the same events. Open the Trophy Tracker (🏅 button in the header) to track remaining trophies during this run.',
         ],
       sections: [
         {title: 'Gas Station — Complete Collection', inv: ['Browning HP-9', '12 rounds of .357 ammo'], steps: [
@@ -1361,6 +1692,17 @@ function showRunTypeScreen(gid){
   document.getElementById('rt-game-title').textContent=g.title;
   document.getElementById('rt-game-sub').textContent=g.subtitle+' — '+g.year;
   document.getElementById('rt-tagline').textContent=g.tagline;
+  // Show trophy tracker card only for games with trophy data
+  var hasTrophies=DATA[currentGame]&&DATA[currentGame].trophies;
+  var row=document.getElementById('trophy-tracker-row');
+  if(row){row.style.display=hasTrophies?'grid':'none';}
+  if(hasTrophies){
+    var pctEl=document.getElementById('ttc-pct-display');
+    if(pctEl){
+      var pct=getTrophyOverallPct(currentGame);
+      pctEl.textContent=pct>0?pct+'% Complete':'';
+    }
+  }
   screens('run-type-screen');
   scrollTop();
 }
@@ -1426,6 +1768,9 @@ function showWalkthrough(gid,rt){
   }
   document.getElementById('wt-game-name').textContent=gameName;
   document.getElementById('wt-run-badge').textContent=labels[currentRun||rt];
+  // Show trophy button only for games with trophy data
+  var trophyBtn=document.getElementById('wt-trophy-btn');
+  if(trophyBtn){trophyBtn.style.display=(DATA[currentGame]&&DATA[currentGame].trophies)?'inline-flex':'none';}
   renderTips();
   renderSteps();
   updateProgress();
@@ -1439,6 +1784,124 @@ function screens(id){
   document.getElementById(id).classList.add('active');
 }
 function scrollTop(){window.scrollTo(0,0);}
+
+// ===== TROPHY TRACKER =====
+var trophyProgress={};
+function loadTrophyProgress(){try{var s=localStorage.getItem('re-trophies');if(s)trophyProgress=JSON.parse(s);}catch(e){trophyProgress={};}}
+function saveTrophyProgress(){try{localStorage.setItem('re-trophies',JSON.stringify(trophyProgress));}catch(e){}}
+function trophyKey(gid,charKey){return charKey?gid+'__'+charKey:gid;}
+
+var activeTrophyChar=null;
+
+function getTrophyOverallPct(gid){
+  var t=DATA[gid]&&DATA[gid].trophies;
+  if(!t)return 0;
+  var total=0,done=0;
+  Object.keys(t).forEach(function(ck){
+    var k=trophyKey(gid,ck);
+    t[ck].forEach(function(tr){
+      total++;
+      if(trophyProgress[k]&&trophyProgress[k][tr.id])done++;
+    });
+  });
+  return total?Math.round(done/total*100):0;
+}
+
+function showTrophyScreen(){
+  var g=GAMES.find(function(x){return x.id===currentGame;});
+  var sub=document.getElementById('trophy-screen-sub');
+  if(sub)sub.textContent=g.title+' — '+g.subtitle;
+  var t=DATA[currentGame]&&DATA[currentGame].trophies;
+  if(!t){screens('trophy-screen');scrollTop();return;}
+  var chars=Object.keys(t);
+  activeTrophyChar=currentCharacter||chars[0];
+  renderTrophyCharTabs(chars);
+  renderTrophyList();
+  screens('trophy-screen');
+  scrollTop();
+}
+
+function renderTrophyCharTabs(chars){
+  var tabsEl=document.getElementById('trophy-char-tabs');
+  if(!tabsEl)return;
+  if(chars.length<=1){tabsEl.style.display='none';return;}
+  tabsEl.style.display='flex';
+  var charMeta=DATA[currentGame].characters||{};
+  tabsEl.innerHTML=chars.map(function(ck){
+    var label=charMeta[ck]?charMeta[ck].name:ck.charAt(0).toUpperCase()+ck.slice(1);
+    var k=trophyKey(currentGame,ck);
+    var tlist=DATA[currentGame].trophies[ck];
+    var done=tlist.filter(function(tr){return trophyProgress[k]&&trophyProgress[k][tr.id];}).length;
+    return '<div class="trophy-char-tab'+(activeTrophyChar===ck?' active':'')+'" onclick="switchTrophyChar(\''+ck+'\')">'+
+      label+'<br><span style="font-size:9px;opacity:.7">'+done+' / '+tlist.length+'</span></div>';
+  }).join('');
+}
+
+function switchTrophyChar(ck){
+  activeTrophyChar=ck;
+  var t=DATA[currentGame].trophies;
+  renderTrophyCharTabs(Object.keys(t));
+  renderTrophyList();
+}
+
+function renderTrophyList(){
+  var tlist=DATA[currentGame].trophies[activeTrophyChar];
+  if(!tlist)return;
+  var k=trophyKey(currentGame,activeTrophyChar);
+  var done=tlist.filter(function(tr){return trophyProgress[k]&&trophyProgress[k][tr.id];}).length;
+  var total=tlist.length;
+  var pct=total?Math.round(done/total*100):0;
+  var fill=document.getElementById('trophy-overall-fill');
+  if(fill)fill.style.width=pct+'%';
+  var lbl=document.getElementById('trophy-overall-label');
+  if(lbl)lbl.textContent=done+' / '+total+' Trophies — '+pct+'%';
+  var types=[
+    {key:'story',    label:'📖 Story'},
+    {key:'challenge',label:'⚔ Challenge'},
+    {key:'collectible',label:'🔍 Collectible'},
+  ];
+  var html='';
+  types.forEach(function(tp){
+    var group=tlist.filter(function(tr){return tr.type===tp.key;});
+    if(!group.length)return;
+    html+='<div class="trophy-group"><div class="trophy-group-title">'+tp.label+'</div>';
+    group.forEach(function(tr){
+      var earned=!!(trophyProgress[k]&&trophyProgress[k][tr.id]);
+      var badgeClass=tp.key;
+      html+='<div class="trophy-item'+(earned?' done':'')+(tr.warn?' warning':'')+'">'+
+        '<div class="trophy-cb" onclick="toggleTrophy(\''+tr.id+'\')"></div>'+
+        '<div class="trophy-info">'+
+          '<div class="trophy-name">'+tr.name+'<span class="trophy-badge '+badgeClass+'">'+tp.label.replace(/📖|⚔|🔍/g,'').trim()+'</span></div>'+
+          '<div class="trophy-desc">'+tr.desc+'</div>'+
+          (tr.hint?'<div class="trophy-hint'+(tr.warn?' warn':'')+'">'+tr.hint+'</div>':'')+
+          (tr.guideRef?'<span class="trophy-guide-link" onclick="goToGuide(\''+tr.guideRef+'\')">→ Open '+tr.guideRef.charAt(0).toUpperCase()+tr.guideRef.slice(1)+' Guide</span>':'')+
+        '</div>'+
+      '</div>';
+    });
+    html+='</div>';
+  });
+  var listEl=document.getElementById('trophy-list');
+  if(listEl)listEl.innerHTML=html;
+}
+
+function toggleTrophy(trophyId){
+  var k=trophyKey(currentGame,activeTrophyChar);
+  if(!trophyProgress[k])trophyProgress[k]={};
+  trophyProgress[k][trophyId]=!trophyProgress[k][trophyId];
+  saveTrophyProgress();
+  renderTrophyList();
+  var t=DATA[currentGame].trophies;
+  renderTrophyCharTabs(Object.keys(t));
+}
+
+function goToGuide(rt){
+  currentRun=rt;
+  if(DATA[currentGame].characters){
+    showCharacterSelect();
+  }else{
+    showWalkthrough();
+  }
+}
 
 // ===== RENDERING =====
 function renderCards(){
@@ -1645,6 +2108,7 @@ function escHtml(s){
 
 // ===== INIT =====
 loadProgress();
+loadTrophyProgress();
 showHome();
 </script>
 </body>
