@@ -133,6 +133,37 @@ body::before{
   padding:3px 8px;border:1px solid #2a0a0a;color:#7a5858;text-transform:uppercase;
 }
 
+/* CHARACTER SELECT SCREEN */
+.char-select-header{padding:28px;text-align:center;border-bottom:1px solid #1a0505}
+.char-select-title-main{font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:#d4c4a8;margin-bottom:10px}
+.char-select-subtitle{font-family:'Crimson Text',serif;font-size:16px;color:#9a8888}
+.char-select-container{padding:28px}
+.char-select-title{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:#d4c4a8;margin-bottom:20px;text-align:center}
+.char-select-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin:20px 0}
+.char-select-card{
+  background:#0a0505;border:1px solid #2a0a0a;border-radius:4px;padding:20px;
+  cursor:pointer;transition:all .3s;position:relative;
+}
+.char-select-card::before{
+  content:'';position:absolute;inset:0;background:radial-gradient(circle at top-left,rgba(180,0,0,.05),transparent);
+  border-radius:4px;pointer-events:none;
+}
+.char-select-card:hover{border-color:#660000;box-shadow:0 0 20px rgba(200,0,0,.15);background:#140a0a}
+.char-name{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#d4c4a8;margin-bottom:5px}
+.char-role{font-family:'Special Elite',cursive;font-size:11px;letter-spacing:.12em;color:#aa5555;text-transform:uppercase;margin-bottom:12px}
+.char-description{font-family:'Crimson Text',serif;font-size:15px;color:#b8a898;line-height:1.6;margin-bottom:14px}
+.char-detail{font-family:'Crimson Text',serif;font-size:13px;color:#8a7878;margin:8px 0;line-height:1.5}
+.char-detail strong{color:#c8a878}
+.char-difficulty{color:#a56666;font-style:italic;margin-top:10px}
+.select-btn{
+  width:100%;margin-top:16px;padding:10px 14px;
+  font-family:'Special Elite',cursive;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:#d4c4a8;border:1px solid #2a0a0a;
+  background:rgba(180,0,0,.08);cursor:pointer;border-radius:3px;
+  transition:all .2s;
+}
+.select-btn:hover{color:#ff8888;border-color:#660000;background:rgba(200,0,0,.15)}
+
 /* WALKTHROUGH HEADER */
 .wt-header{
   position:sticky;top:0;z-index:100;
@@ -358,7 +389,7 @@ body::before{
     <div class="rt-prompt">— Select Your Objective —</div>
   </div>
   <div class="run-types-grid">
-    <div class="run-type-card" onclick="showWalkthrough(null,'standard')">
+    <div class="run-type-card" onclick="selectRunType('standard')">
       <span class="rt-card-icon">☣</span>
       <div class="rt-card-name">Standard Play</div>
       <div class="rt-card-desc">Full story walkthrough with item locations, puzzle solutions, and boss strategies.</div>
@@ -366,7 +397,7 @@ body::before{
         <span class="rt-tag">Story Focus</span><span class="rt-tag">Item Locations</span><span class="rt-tag">Boss Tactics</span>
       </div>
     </div>
-    <div class="run-type-card" onclick="showWalkthrough(null,'speedrun')">
+    <div class="run-type-card" onclick="selectRunType('speedrun')">
       <span class="rt-card-icon">⏱</span>
       <div class="rt-card-name">Speedrun</div>
       <div class="rt-card-desc">Optimized route for speed. Skip non-essentials, key time saves, and routing notes.</div>
@@ -374,7 +405,7 @@ body::before{
         <span class="rt-tag">Optimized Route</span><span class="rt-tag">Skips</span><span class="rt-tag">Time Saves</span>
       </div>
     </div>
-    <div class="run-type-card" onclick="showWalkthrough(null,'completionist')">
+    <div class="run-type-card" onclick="selectRunType('completionist')">
       <span class="rt-card-icon">🏆</span>
       <div class="rt-card-name">Completionist</div>
       <div class="rt-card-desc">Every item, file, trophy, and achievement. Missable trophies flagged in red before each relevant step.</div>
@@ -382,6 +413,22 @@ body::before{
         <span class="rt-tag">All Trophies</span><span class="rt-tag">Missables Flagged</span><span class="rt-tag">100% Completion</span>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- CHARACTER SELECT SCREEN -->
+<div id="character-select-screen" class="screen">
+  <header class="site-header">
+    <div class="site-logo">Resident Evil</div>
+    <div class="site-subtitle">Survival Guide &mdash; Series Walkthrough Companion</div>
+  </header>
+  <button class="back-btn" onclick="showRunTypeScreen()">Back</button>
+  <div class="char-select-header">
+    <div class="char-select-title-main">Choose Your Character</div>
+    <div class="char-select-subtitle">Different characters have unique weapons, mechanics, and story elements</div>
+  </div>
+  <div class="char-select-container">
+    <!-- Character cards will be inserted here by showCharacterSelect() -->
   </div>
 </div>
 
@@ -761,7 +808,386 @@ function makePlaceholder(name){
 
 var DATA = {
   re1: RE1,
-  re2: makePlaceholder('Resident Evil 2 Remake'),
+  re2: {
+    characters: {
+      leon: {
+        name: 'Leon Kennedy',
+        role: 'Rookie Police Officer',
+        description: 'Rookie cop arriving for his first day. Access to police-issue weapons and military hardware. Partnerships with Ada Wong. Weapons-focused playstyle.',
+        startWeapon: 'Matilda Pistol (9mm)',
+        keyMechanic: 'Partners with Ada Wong. Professional tactical approach. Access to police resources.',
+        difficulty: 'Easier — good for first-timers'
+      },
+      claire: {
+        name: 'Claire Redfield',
+        role: 'College Student',
+        description: 'Civilian searching for her brother. Limited weapon selection but more ammo variety. Must protect and escort Sherry Birkin (12-year-old). Unique crawlspace access.',
+        startWeapon: 'Browning HP-9 Revolver (.357)',
+        keyMechanic: 'Escorts Sherry Birkin through final sections. Can crawl through tight spaces. Emotional story focus.',
+        difficulty: 'Medium — emotional stakes, escort mechanic'
+      }
+    },
+    leon: {
+      standard: {
+        tips: [
+          'Leon Kennedy is a rookie police officer who arrives at Raccoon City Police Department on his first day. Choose Leon for a weapons-focused playthrough with access to military hardware.',
+        'Ammunition is limited throughout the game. Prioritize headshots and precision over spraying rounds. Conserve ammo for bosses and unavoidable encounters.',
+        'The Police Station (RPD) is the central hub. You will return to it multiple times. Learn the layout carefully — it has locked doors, safe rooms, and shortcuts.',
+        'Safe rooms (green-lit doors) are your refuge. Zombies will not follow you inside. Use them to heal, manage inventory, and plan your next move.',
+        'The three medallions (Fishes/Scorpion/Jug, Lion/Twig/Bird, Woman/Bow/Snake) are required to access secret areas and progress the story. Solve the statue puzzles in the correct order.',
+        'William Birkin will mutate three times throughout the game. Each encounter requires different strategies — learn to target his weak points.',
+        'Mr. X (the Tyrant) is an unstoppable pursuer in the sewers. You cannot kill him. Run, hide, or use flash items to stun him temporarily.',
+        'Ink Ribbons are required to save at typewriters. Do not waste them on trivial checkpoints. Save before major bosses and story transitions.',
+        'Leon will partner with Ada Wong during key sequences. Ada can hack security systems and bypass electronic locks. Protect her during these moments.',
+        'The elevator to the underground facility is your point of no return. Once you descend, you cannot return to the RPD. Ensure you have collected everything you need.',
+      ],
+      sections: [
+        {title: 'Gas Station — Zombie Outbreak', inv: ['Matilda Pistol (starting weapon)', '15 rounds of 9mm ammo'], steps: [
+          {t: 'Leon arrives at the gas station to find it under siege by zombies. A zombie is feasting on a body outside. Draw your Matilda pistol — this is your starting weapon with 15 rounds.', img: false},
+          {t: 'Enter the gas station. You will encounter your first zombie inside. Use measured shots to conserve ammo — one or two headshots will drop a zombie. Avoid prolonged firefights.', img: false},
+          {t: 'Search the gas station thoroughly. Collect the Storage Room Key from behind the counter. Look for any ammo or healing items on the shelves.', img: false},
+          {t: 'Use the Storage Room Key to unlock the door at the back of the gas station. Collect supplies inside: herbs, ammo, and other items.', img: false},
+          {t: 'Exit the gas station through the back. A cutscene plays showing the extent of the outbreak. You are now on your own.', img: false, story: 'Leon Kennedy arrived at Raccoon City Police Department for his first day as a rookie officer. The city was already overrun. The outbreak is everywhere.'},
+        ]},
+        {title: 'Streets of Raccoon City — Journey to RPD', inv: ['Matilda Pistol with ammo', 'Storage Room Key items'], steps: [
+          {t: 'Navigate the zombie-infested streets toward the Police Station. Raccoon City is chaos — vehicles are abandoned, bodies litter the streets, and the undead wander everywhere.', img: false},
+          {t: 'You will encounter several zombies on the street approach. Use your pistol sparingly. Running past enemies is often safer than engaging them.', img: false},
+          {t: 'At the gun shop on Elm Street, stop to collect the shotgun parts. Break the glass window or find an alternative entry. This is optional but highly recommended — the W-870 shotgun is powerful.', img: false, save: 'Safe Room — Gun Shop interior. If you need to heal, this is a defensible location.'},
+          {t: 'Continue toward the Raccoon City Police Department main entrance. You will see the iconic RPD building ahead. A zombie dog or two may appear near the entrance — use your shotgun if you acquired it, or your pistol.', img: false},
+          {t: 'Enter the Police Station through the main doors. Welcome to the RPD.', img: false, story: 'The streets were worse than the gas station. Raccoon City was dying. Leon fought through the undead and reached the Police Station — hoping it would be a refuge. It was not.'},
+        ]},
+        {title: 'Police Station 1F — Initial Exploration & West Wing', inv: ['Matilda Pistol with ammo', 'W-870 Shotgun (if collected)', 'Storage Room items'], steps: [
+          {t: 'You enter the RPD main hall. The station is dark, quiet, and clearly compromised. Zombies patrol the halls. Pick up the RPD map from the counter or a nearby desk — it is essential for navigation.', img: false},
+          {t: 'The 1st floor has several key areas: the Hallway, Waiting Room, Gun Store (underground entrance), and West Wing. Start by exploring systematically.', img: false},
+          {t: 'In the West Office, solve the Safe puzzle. The combination is N-E-D (left dial), M-R-G (right dial). Inside you will find the High-Capacity Magazine and other items. This upgrades your ammo capacity.', img: false},
+          {t: 'Collect the Spade Key from the Sergeant\'s Desk in the main office area. This key unlocks areas with spade symbols throughout the station.', img: false},
+          {t: 'Find the first medallion clue or the Lounge puzzle. The Lounge contains the Unicorn Statue — solve it with the correct symbol combination (Pisces-Scorpio-Aquarius) to acquire the Maiden Medallion.', img: false},
+          {t: 'Collect a Valve Handle and Fuse from various desks and storage areas. These are puzzle items you will need later. Note their locations.', img: false},
+          {t: 'A safe room with a typewriter is located in the basement hallway. This is your first save location. If you have an Ink Ribbon, save here before proceeding deeper.', img: false, save: 'Safe Room — basement. Use your first Ink Ribbon here. You have cleared the initial RPD area — this is a good checkpoint.'},
+          {t: 'Note: Do NOT go down to the sewers yet. The underground facility is accessible from the gun shop, but you are not ready. Complete 1F and 2F first.', img: false, story: 'The Police Station was in chaos. Zombies walked the halls. Leon found maps, keys, and clues about Umbrella Corporation scattered throughout. The Maiden Medallion, the first of three, was hidden in a statue puzzle. This was going to take longer than expected.'},
+        ]},
+        {title: 'Police Station 2F — East Wing & Safe Routes', inv: ['Spade Key', 'Maiden Medallion', 'High-Capacity Magazine', 'Valve Handle', 'Fuse'], steps: [
+          {t: 'Proceed to the second floor. Use the stairwell near the main hall. The 2F is quieter but contains more dangerous enemies — Lickers can appear on the ceiling and walls.', img: false},
+          {t: 'Navigate the East Wing of 2F. Search the hallways and offices for items, ammo, and clues. You will find documents relating to Umbrella Corporation\'s research.', img: false},
+          {t: 'Locate the second medallion puzzle. The Lion Statue puzzle is in the East Office area. Solve it with the correct symbol combination (Lion-Twig-Bird) to acquire the Lion Medallion.', img: false},
+          {t: 'Search for and collect the Chess Piece plugs (part of the later puzzle to unlock the Clubs Key room). There are clues about their locations throughout the station.', img: false},
+          {t: 'Unlock doors with the Spade Key as you explore. Each locked door leads to new areas with items and story clues.', img: false},
+          {t: 'Avoid or carefully eliminate Lickers. They are fast and dangerous. If you hear clicking sounds, a Licker is near — stay quiet and move slowly, or use your shotgun.', img: false},
+          {t: 'Another safe room with a typewriter is located on 2F. This is your second save location.', img: false, save: 'Safe Room — 2F. Save here before proceeding. You have two of the three medallions.'},
+          {t: 'Once you have collected both the Maiden Medallion and the Lion Medallion, you are ready to access the underground areas and face the parking lot.', img: false, story: 'Two medallions in hand. Umbrella\'s corruption ran deeper than Leon realized. Files scattered through the offices spoke of illegal experimentation, viral research, and biological weapons. The RPD was not safe — it was a trap waiting to spring.'},
+        ]},
+        {title: 'Parking Lot & William Birkin — First Encounter', inv: ['Maiden Medallion', 'Lion Medallion', 'W-870 Shotgun with ammo', 'Matilda Pistol with ammo', 'Healing items'], steps: [
+          {t: 'The parking lot is the transition between the RPD and underground facility. Access it from the basement level. You will encounter your first major boss fight here.', img: false},
+          {t: 'William Birkin emerges in his mutated form (G Stage 1). He is a horrific creature — part human, part organic mass. This fight is unavoidable.', img: false},
+          {t: 'Birkin\'s weak point is his three eyes: small eyes on his body and a large eye on his head. Shoot the eyes repeatedly to stun him. Your shotgun is most effective for sustained damage.', img: false},
+          {t: 'Strategy: Use your shotgun to target his eyes. Once all three eyes are damaged, his core weak point (exposed flesh/cavity) appears. Switch to your shotgun and unload on the weak point. Avoid his grab attacks — he can grapple Leon and cause massive damage.', img: false},
+          {t: 'During the fight, move around the parking lot to maintain distance. Grenades (if you have any) or explosive items are useful here.', img: false},
+          {t: 'After dealing enough damage, Birkin will retreat and the fight ends. He does not die — he escapes deeper underground. This is the first of several Birkin encounters.', img: false},
+          {t: 'Collect items from the parking lot area, including ammo and supplies Birkin may have left. Heal yourself fully before proceeding.', img: false, save: 'Safe Room — parking lot side room (if available). If no save room, proceed to the sewers and save at the first opportunity.', story: 'William Birkin was alive. Mutated. Inhuman. He had injected himself with the G-Virus — a weaponized strain derived from Umbrella\'s research. Killing him was not an option. All Leon could do was survive the encounter and descend deeper into the facility.'},
+        ]},
+        {title: 'Sewers — Medallion Collection & Underground Facility', inv: ['Maiden Medallion', 'Lion Medallion', 'Weapons with ammo', 'Healing items', 'Healing herbs'], steps: [
+          {t: 'The sewers connect the RPD to the underground facility (NEST). They are flooded in sections, cramped, and full of enemies — zombies, mutated creatures, and occasionally Mr. X.', img: false},
+          {t: 'Navigate carefully through the sewer tunnels. Look for the third medallion puzzle. The final statue puzzle (Woman-Bow-Snake) is located in the sewer area. Solve it to acquire the third medallion.', img: false},
+          {t: 'Mr. X (the Tyrant) may appear in the sewers. He is unkillable. Do NOT waste ammo trying to fight him. If he appears, run immediately. Find a side passage, hide in a locker or office, or navigate to another tunnel. He will eventually lose track of you.', img: false},
+          {t: 'Collect the Chess Piece plugs you saw clues about earlier. You will need three chess pieces to unlock doors in the lab.', img: false},
+          {t: 'Search for and acquire the Clubs Key. This key unlocks specific doors. There are clues about its location throughout the facility.', img: false},
+          {t: 'Ammo becomes scarce in the sewers. Conserve your rounds. Avoid fights when possible. Your pistol for zombies, shotgun for tougher enemies, and run from Mr. X.', img: false},
+          {t: 'Find the Cable Car entrance. This is the gateway to NEST Laboratory (the final descent). Before boarding, ensure you have enough healing items and ammo for the final stretch.', img: false, save: 'Safe Room — Sewer side room. Save here before the Cable Car. Once you board, you cannot return to the RPD.', story: 'Three medallions collected. The sewers stank of decay and experimentation. Files and clues revealed the truth: Umbrella had built an entire underground facility for biological weapons development. The G-Virus, the creatures, the outbreak — all of it originated here. And Leon was descending directly into it.'},
+        ]},
+        {title: 'NEST Laboratory — Final Descent', inv: ['Three medallions', 'Chess Piece plugs (three)', 'Clubs Key', 'Full ammo', 'Multiple healing items'], steps: [
+          {t: 'The Cable Car descends into NEST — the underground laboratory where Umbrella conducted its most secret research. The laboratory is advanced, sterile, and full of horrors in holding tanks.', img: false},
+          {t: 'Exit the Cable Car and navigate the lab entrance. Collect the security card and any items in the immediate area. The lab is divided into multiple sections — each locked by security doors.', img: false},
+          {t: 'Insert your security cards and chess pieces into the security terminals to unlock doors. The lab layout is linear but requires key items to progress.', img: false},
+          {t: 'William Birkin appears again in his G Stage 2 form — larger, more mutated, more dangerous. Target his eyes again. This encounter follows the same strategy as before but he is faster and stronger.', img: false},
+          {t: 'After the Birkin encounter, continue deeper. Search for computer terminals that display lab data. Read the files and logs — they tell Umbrella\'s dark history.', img: false},
+          {t: 'Ammo and healing items are very limited in the lab. Plan your encounters carefully. If you encounter unnecessary zombies or creatures, avoid them. Your ammo is precious for the final boss.', img: false},
+          {t: 'Locate the main lab control room. Activate the self-destruct sequence. The facility begins counting down — you must escape now.', img: false},
+          {t: 'Navigate toward the helipad exit. The countdown is ticking. Birkin makes a final desperate stand — a third mutation (G Stage 3 or higher). This is your last Birkin fight before the escape.', img: false},
+          {t: 'Use all remaining ammo on this final Birkin encounter. Target his eyes to stun, then unload on his weak point. Healing items are crucial — do not let your health drop below half.', img: false, save: 'Safe Room — lab side room. If you find a typewriter, save here. Your final save before the helipad.', story: 'The self-destruct sequence was active. Birkin mutated one final time — a grotesque final form barely recognizable as once-human. Leon had no choice but to fight through him to reach the helipad. The facility was collapsing around him.'},
+        ]},
+        {title: 'Helipad — Super Tyrant & Escape', inv: ['Matilda Pistol with remaining ammo', 'Healing items', 'Ada\'s support'], steps: [
+          {t: 'Leon reaches the helipad on the roof of the facility. The sun is shining, hope seems possible — then the roof erupts. The Tyrant (T-002), the ultimate biological weapon Umbrella created, emerges in its Super Tyrant form.', img: false},
+          {t: 'The Super Tyrant is the final boss. It is enormous, powerful, and extremely dangerous. A direct firefight is unwinnable. You must damage it enough to progress to the second phase.', img: false},
+          {t: 'Strategy Phase 1: Use your remaining shotgun ammo and pistol rounds on the Super Tyrant. Target its weak points (exposed areas). Avoid its grab and stomp attacks. Keep moving and maintain distance when possible.', img: false},
+          {t: 'Midway through the fight, Ada (your partner throughout the story) takes action. She reveals a Rocket Launcher on the helipad. The launcher arrives just in time.', img: false},
+          {t: 'Strategy Phase 2: Pick up the Rocket Launcher. You now have one shot to end this. Aim carefully at the Super Tyrant. One direct hit will destroy it.', img: false},
+          {t: 'Fire the Rocket Launcher. The Super Tyrant falls. Victory.', img: false},
+          {t: 'A helicopter descends from the sky. Ada and Leon board it. As the helicopter lifts off, they watch Raccoon City and the facility burn below them.', img: false},
+          {t: 'The game ends. Leon survived. He escaped Raccoon City. But Umbrella Corporation is still out there, and the outbreak is not contained.', img: false, story: 'Leon Kennedy survived his first day at the Raccoon City Police Department. He descended into Umbrella\'s darkest secrets, faced biological horrors, and fought for his life. Ada Wong appeared at the critical moment — her true allegiance and motives remain unclear. The Rocket Launcher ended the Super Tyrant. The facility burned. But in the helicopter, Ada spoke of other Umbrella operations, other threats. This was not the end. It was only the beginning.'},
+        ]},
+      ]
+    }
+    },
+    claire: {
+      standard: {
+        tips: [
+          'Claire is shorter than Leon — she can crawl through tight ventilation shafts and gaps he cannot. Learn which areas are Claire-exclusive.',
+          'Her starting weapon is the Browning HP-9 revolver. It is slower to fire than Leon\'s Matilda but more powerful per shot. Ammo is more plentiful than Leon\'s pistol rounds.',
+          'The Grenade Launcher is available earlier for Claire than Leon — typically in the RPD parking structure or gun shop detour. Grab it if you can.',
+          'Claire will partner with Sherry Birkin, a 12-year-old girl infected with the G-Virus. She cannot fight but must be protected and escorted through key sequences.',
+          'The Browning HP-9 and Grenade Launcher form Claire\'s core arsenal. Shotgun is optional — focus ammo conservation on these two weapons.',
+          'Mr. X appears in similar locations to Leon\'s route but with slightly different timing. Your escape strategy remains the same: run, hide, use flash items.',
+          'The three medallions (Fishes/Scorpion/Jug, Lion/Twig/Bird, Woman/Bow/Snake) have identical solutions to Leon\'s route. Solve them in the same order.',
+          'The Cable Car at the sewers is your point of no return — ensure you have Sherry, sufficient ammo, and healing before descent.',
+          'William Birkin mutates three times. Claire\'s fight strategy is identical to Leon\'s: target the eyes, then the weak point.',
+          'The final boss is still the Super Tyrant. Ada is not present — instead, focus on protecting yourself and Sherry during the escape sequence.',
+        ],
+        sections: [
+          {title: 'Gas Station — Civilian Arrival', inv: ['Browning HP-9 Revolver (starting weapon)', '12 rounds of .357 Magnum ammo'], steps: [
+            {t: 'Claire Redfield arrives at the gas station on her motorcycle. Unlike Leon, she is a civilian — there to meet her brother Chris, who works at the RPD. She has no police training.', img: false},
+            {t: 'The gas station is under siege. Zombies are everywhere. Draw the Browning HP-9 — your starting weapon with 12 rounds. It is slower than a pistol but packs more power per shot.', img: false},
+            {t: 'Enter the gas station and eliminate the zombie inside. Use headshots to conserve ammo — the Browning is your primary weapon for most of the game.', img: false},
+            {t: 'Search the station for supplies. Collect the Storage Room Key from behind the counter. Look for herbs and ammo — every round counts for a civilian.', img: false},
+            {t: 'Unlock the Storage Room with the key. Collect supplies inside: more ammo, healing herbs, and other items. Exit through the back.', img: false},
+            {t: 'A cutscene shows the scale of the outbreak. Claire realizes the RPD is her only refuge. She heads there immediately.', img: false, story: 'Claire Redfield came to Raccoon City to find her brother Chris. The city was dying. An outbreak of unprecedented scale was consuming everything.'},
+          ]},
+          {title: 'Streets of Raccoon City — Motorcycle to RPD', inv: ['Browning HP-9 with ammo', 'Storage Room items'], steps: [
+            {t: 'Navigate the zombie-infested streets toward the Police Station on your motorcycle (in cutscenes) and on foot (during gameplay). Raccoon City is chaos.', img: false},
+            {t: 'The gun shop on Elm Street is your opportunity to grab heavy firepower. The Grenade Launcher is available here if you break through or find an alternate entry.', img: false},
+            {t: 'Combat the zombies you encounter. Your Browning is reliable — aim for heads. Running past enemies is viable if you are low on ammo.', img: false},
+            {t: 'Proceed toward the Raccoon City Police Department. The RPD building looms ahead. You may encounter zombie dogs near the entrance — use your Browning or the Grenade Launcher if acquired.', img: false},
+            {t: 'Enter the Police Station through the main doors. You are looking for your brother. Instead, you will find the secrets beneath this building.', img: false, story: 'The streets swallowed motorcyclists whole. Claire abandoned her bike and moved on foot through the undead. The RPD was supposed to be safe. It was not.'},
+          ]},
+          {title: 'Police Station 1F — Exploration & Safe Puzzles', inv: ['Browning HP-9 with ammo', 'Grenade Launcher (if collected)', 'Storage Room items'], steps: [
+            {t: 'You enter the RPD main hall. Zombies patrol the dark corridors. Pick up the RPD map from a desk — it is essential for navigation.', img: false},
+            {t: 'Explore the 1st floor systematically. The main areas are the Hallway, Waiting Room, Gun Store entrance, and West Wing.', img: false},
+            {t: 'In the West Office, solve the Safe puzzle. The combination is N-E-D (left dial), M-R-G (right dial) — same as Leon\'s route. Collect the High-Capacity Magazine.', img: false},
+            {t: 'Grab the Spade Key from the Sergeant\'s Desk. This opens areas with spade symbols throughout the station.', img: false},
+            {t: 'Find the first medallion puzzle. The Lounge contains the Unicorn Statue — solve it (Pisces-Scorpio-Aquarius) to get the Maiden Medallion.', img: false},
+            {t: 'Collect a Valve Handle and Fuse from various desks. Note their locations for later puzzles.', img: false},
+            {t: 'A safe room with a typewriter is in the basement hallway. Save your progress here with an Ink Ribbon before proceeding deeper.', img: false, save: 'Safe Room — basement. Your first save checkpoint. You have the Maiden Medallion and initial supplies.'},
+            {t: 'Do NOT access the sewers or underground facility yet. Complete 1F and 2F exploration first.', img: false, story: 'The Police Station was a tomb. Zombies wandered the offices and halls. Claire found maps, keys, and documents describing Umbrella Corporation. Her brother should be here. She found only silence.'},
+          ]},
+          {title: 'Police Station 2F — Lickers & Medallion Collection', inv: ['Spade Key', 'Maiden Medallion', 'High-Capacity Magazine', 'Valve Handle', 'Fuse'], steps: [
+            {t: 'Proceed to 2F via the stairwell. The second floor is quieter but more dangerous — Lickers patrol the ceilings and walls.', img: false},
+            {t: 'Navigate the East Wing of 2F. Search hallways and offices for items, ammo, and documents about Umbrella.', img: false},
+            {t: 'Locate the second medallion puzzle. The Lion Statue puzzle is in the East Office area. Solve it (Lion-Twig-Bird) to acquire the Lion Medallion.', img: false},
+            {t: 'Search for Chess Piece plugs. They are scattered throughout the station and unlock doors later.', img: false},
+            {t: 'Use your Spade Key to unlock doors as you explore. Each unlocked door reveals new areas.', img: false},
+            {t: 'Lickers are extremely dangerous. They are fast, attack from unexpected angles, and deal massive damage. Avoid them if possible. Use your Grenade Launcher or Browning for self-defense only.', img: false},
+            {t: 'Another safe room with a typewriter is on 2F. Use your second Ink Ribbon here to save.', img: false, save: 'Safe Room — 2F. You have two of three medallions. This is a good checkpoint before the underground.'},
+            {t: 'Once you have both the Maiden Medallion and Lion Medallion, you are ready to access the underground areas and encounter the first Birkin fight.', img: false, story: 'Two medallions in hand. Umbrella Corporation\'s shadow grew longer with each document Claire read. Illegal experimentation. Biological weapons. Viral research. The RPD was their facility. Chris had never worked here. Claire was beginning to understand why.'},
+          ]},
+          {title: 'Parking Lot & William Birkin — First Encounter', inv: ['Maiden Medallion', 'Lion Medallion', 'Browning HP-9 with ammo', 'Grenade Launcher with ammo', 'Healing items'], steps: [
+            {t: 'The parking lot is the threshold between the RPD and the underground facility. You will face your first major boss here.', img: false},
+            {t: 'William Birkin emerges in his mutated G Stage 1 form. He is horrific and unstoppable. This encounter is unavoidable.', img: false},
+            {t: 'Birkin\'s weak points are his three eyes: two small ones on his body, one large one on his head. Your Grenade Launcher is most effective for sustained damage. The Browning works for precision shots on the eyes.', img: false},
+            {t: 'Strategy: Use your Grenade Launcher to target his weak point (exposed flesh cavity) after damaging his eyes. Maintain distance and avoid his grab attacks. He deals massive damage if he catches you.', img: false},
+            {t: 'During the fight, move around the parking lot to keep distance. Use healing items if your health drops below half.', img: false},
+            {t: 'Birkin will retreat after taking enough damage. He does not die — he escapes deeper into the facility. This is the first of several Birkin encounters.', img: false},
+            {t: 'Collect ammo and supplies from the parking lot. Heal yourself fully before proceeding to the sewers.', img: false, save: 'Safe Room — parking lot side room (if available). If none, proceed to the sewers and save at the first opportunity.', story: 'William Birkin was alive. Mutated. Not human. He had injected himself with the G-Virus — Umbrella\'s ultimate bioweapon. Claire realized her brother was not just missing. He was part of this nightmare.'},
+          ]},
+          {title: 'Sewers — Medallion Collection & Meeting Sherry', inv: ['Maiden Medallion', 'Lion Medallion', 'Browning HP-9 with ammo', 'Grenade Launcher with ammo', 'Healing items'], steps: [
+            {t: 'The sewers connect the RPD to the underground facility (NEST). They are flooded, cramped, and full of enemies. Your destination is to collect the third medallion and find Sherry Birkin.', img: false},
+            {t: 'Navigate through the sewer tunnels carefully. Look for the third medallion puzzle. The Woman-Bow-Snake statue puzzle is located in the sewer area. Solve it to get the final medallion.', img: false},
+            {t: 'Mr. X may appear in the sewers. He is unkillable — do not engage. If he appears, run immediately. Find a side passage, hide, or navigate to another tunnel. He will eventually lose your trail.', img: false},
+            {t: 'Search for the Chess Piece plugs you saw clues about earlier throughout the station.', img: false},
+            {t: 'Locate and collect the Clubs Key. This key unlocks specific doors in the facility.', img: false},
+            {t: 'SHERRY BIRKIN: You will encounter Sherry Birkin, a 12-year-old girl infected with the G-Virus, hiding in the sewers. She is frightened but not hostile. Escort her through the remaining sections. She will follow you and trust you.', img: false},
+            {t: 'Ammo is scarce in the sewers. Conserve your rounds. Avoid unnecessary fights. Your Browning for zombies, Grenade Launcher for tougher enemies, and run from Mr. X.', img: false},
+            {t: 'Find the Cable Car entrance. This is your gateway to NEST Laboratory. Before boarding, ensure you have sufficient ammo and healing items for the final stretch. Confirm Sherry is with you.', img: false, save: 'Safe Room — sewer side room. Save here before the Cable Car. Once you board, you cannot return to the RPD.', story: 'All three medallions collected. In the sewers, Claire found Sherry Birkin, a child infected with her father\'s creation. Sherry had nowhere to go. Claire decided to protect her. Together, they descended toward the source of everything: the NEST Laboratory.'},
+          ]},
+          {title: 'NEST Laboratory — Final Descent with Sherry', inv: ['Three medallions', 'Chess Piece plugs (three)', 'Clubs Key', 'Full ammo', 'Multiple healing items', 'Sherry Birkin (escort)'], steps: [
+            {t: 'The Cable Car descends into NEST — the underground laboratory where Umbrella conducted its most secretive research. Sherry is with you. Keep her safe.', img: false},
+            {t: 'Exit the Cable Car and navigate the lab entrance. Collect security cards and items. The lab is divided into multiple locked sections.', img: false},
+            {t: 'Insert security cards and chess pieces into terminals to unlock doors. Sherry can fit through tight spaces you cannot — use her to reach items or solve certain puzzles.', img: false},
+            {t: 'William Birkin appears again in his G Stage 2 form — larger, more mutated, far more dangerous. Target his eyes with your Browning, then unleash Grenade Launcher rounds on his weak point.', img: false},
+            {t: 'After the Birkin encounter, continue deeper into the lab. Read files and logs at computer terminals — they reveal Umbrella\'s dark history. Sherry stays close.', img: false},
+            {t: 'Ammo and healing items are critically limited in the lab. Plan your encounters carefully. Avoid unnecessary fights — your ammo is precious for the final boss.', img: false},
+            {t: 'Reach the main lab control room. Activate the self-destruct sequence. The facility begins counting down — you must escape. Sherry is counting on you.', img: false},
+            {t: 'Navigate toward the helipad exit with Sherry. The countdown is ticking. Birkin makes a final stand — a third mutation (G Stage 3 or higher). This is your last Birkin fight before escape.', img: false},
+            {t: 'Use all remaining ammo on this final Birkin encounter. Target his eyes, then his weak point. Healing items are crucial — do not let your health drop below half. Keep Sherry away from the fight.', img: false, save: 'Safe Room — lab side room. If you find a typewriter, save here. Your final save before the helipad escape.', story: 'The self-destruct sequence was active. Sherry was trembling, but she had stopped crying. Birkin mutated one final time — barely recognizable as once-human. Claire had no choice but to fight through him. For Sherry. For escape.'},
+          ]},
+          {title: 'Helipad — Super Tyrant & Escape with Sherry', inv: ['Browning HP-9 with remaining ammo', 'Healing items', 'Sherry Birkin'], steps: [
+            {t: 'Claire reaches the helipad on the facility roof. The sun is visible — hope seems possible. Then the roof erupts. The Super Tyrant (T-002), Umbrella\'s ultimate bioweapon, emerges in full form.', img: false},
+            {t: 'The Super Tyrant is the final boss. It is enormous, powerful, and extremely dangerous. Sherry is with you — protect her while fighting.', img: false},
+            {t: 'Strategy Phase 1: Use your remaining Grenade Launcher and Browning ammo on the Super Tyrant. Target its weak points (exposed areas on its body). Avoid its grab and stomp attacks. Use the helipad environment to maintain distance.', img: false},
+            {t: 'Midway through the fight, a Rocket Launcher appears on the helipad. This is your critical advantage. Grab it.', img: false},
+            {t: 'Strategy Phase 2: Pick up the Rocket Launcher. You have one shot. Aim carefully at the Super Tyrant.', img: false},
+            {t: 'Fire the Rocket Launcher. Direct hit. The Super Tyrant falls.', img: false},
+            {t: 'A helicopter descends. Claire grabs Sherry and boards with her. As the helicopter lifts off, they watch the facility burn below them.', img: false},
+            {t: 'The helicopter climbs higher. Sherry looks up at Claire. The worst is over. She is safe. They both are.', img: false, story: 'Claire Redfield came to Raccoon City looking for her brother Chris. She found Sherry Birkin instead — a child infected, orphaned, and doomed. Together, they descended into Umbrella\'s darkest facility and emerged alive. The Super Tyrant fell. The facility burned. Sherry survived her infection — or at least her symptoms stabilized. The helicopter carried them toward an uncertain future. But they were free. Umbrella was not finished, but this nightmare was over.'},
+          ]},
+        ]
+      },
+      speedrun: {
+        tips: [
+          'Claire speedrun targets sub-2.5 hour completion on Easy/Standard difficulty. Avoid Hard/Nightmare — they slow you down significantly.',
+          'Claire\'s Browning HP-9 is her primary weapon. Ammo is more abundant than Leon\'s pistol rounds. Use it freely for zombie trash.',
+          'The Grenade Launcher is Claire\'s damage dealer. Ammo is limited (10–12 rounds total). Reserve it for: Mr. Raccoons (optional if targeting speed over completion), Birkin weak points, and Super Tyrant.',
+          'Skip every file, document, and non-essential dialogue. Read only puzzle directional clues.',
+          'Sherry Birkin follows Claire through the final sections (Sewers onward). She cannot fight but must be kept alive. Do NOT let her die — if she does, the run is failed.',
+          'Memorize puzzle solutions: Safe (N-E-D, M-R-G), medallion statue combinations (Pisces-Scorpio-Aquarius, Lion-Twig-Bird, Woman-Bow-Snake), Chess piece sequences.',
+          'Birkin Phase 1 (Parking Lot): Use Grenade Launcher exclusively. 4–6 rounds to eyes, 2–3 to weak point = Phase 1 kill in ~45 seconds.',
+          'Mr. X spawning is random in sewers. If he appears, run into a side room and close the door. Wait 30 seconds for him to leave.',
+          'Claire has a unique mechanic: she can crawl through tight ventilation shafts Leon cannot. Use this to skip certain enemy encounters or reach shortcuts.',
+          'Total time: Gas Station (3 min) + Streets (5 min) + RPD 1F/2F (16 min) + Parking (3 min) + Sewers with Sherry (12 min) + NEST with Sherry (18 min) + Helipad (2 min) = ~2 hours 20 minutes plus load buffers.',
+        ],
+        sections: [
+          {title: 'Gas Station — Speed Dash', inv: ['Browning HP-9 (starting weapon)', '12 rounds of .357 Magnum'], steps: [
+            {t: 'Skip all cutscenes immediately.', img: false, sr: 'Mash buttons through opening animations'},
+            {t: 'Gas Station zombie: one headshot. Grab Storage Room Key behind counter in 3 seconds.', img: false, sr: 'One bullet, grab key, move'},
+            {t: 'Unlock Storage Room. Grab herbs and ammo only. Ignore clutter. 20 seconds in room.', img: false, sr: 'Speed loot: grab visible items, ignore decorative clutter'},
+            {t: 'Exit to streets. Done. Total: 3 minutes.', img: false, story: 'Claire Redfield came to find her brother. The city was dying. She is running toward the RPD now.'},
+          ]},
+          {title: 'Streets — Direct Route, Gun Shop Detour', inv: ['Browning with ammo', 'Storage Room items'], steps: [
+            {t: 'Streets movement is automatic via cutscene. Once gameplay starts, move toward gun shop.', img: false},
+            {t: 'Gun Shop entry: break window or find entry point. Sprint to Grenade Launcher parts. Grab immediately.', img: false, sr: 'Gun shop is not far off-route. 30 sec detour saves time later on Birkin Phase 1'},
+            {t: 'Do NOT fight unnecessary street zombies. Run past them toward RPD.', img: false, sr: 'Zombies on streets = wasted time. Sprint instead.'},
+            {t: 'Zombie dogs near RPD: if you have Grenade Launcher assembled, use one round to kill both. Otherwise, Browning them down (3 shots per dog).', img: false},
+            {t: 'Enter RPD main doors. Streets done. Time: 5 minutes.', img: false, story: 'The streets consumed her. Claire moved through them like a ghost.'},
+          ]},
+          {title: 'RPD 1F — Safe & Spade Key Sprint', inv: ['Browning with ammo', 'Grenade Launcher parts'], steps: [
+            {t: 'Grab RPD map from counter (2 seconds). Move.', img: false},
+            {t: 'West Office: Safe puzzle is N-E-D (left), M-R-G (right). Muscle memory — 30 seconds to solve. Grab High-Capacity Magazine.', img: false, sr: 'You have memorized this. Execute cleanly.'},
+            {t: 'Sergeant\'s Desk: Spade Key. 3 seconds.', img: false},
+            {t: 'Lounge puzzle: Unicorn Statue is Pisces-Scorpio-Aquarius. 30 seconds. Grab Maiden Medallion.', img: false},
+            {t: 'Do NOT save at basement. Skip the safe room entirely — you have enough health to reach 2F.', img: false, sr: 'Speedrunners do not save on standard difficulty Claire runs'},
+            {t: '1F done. Time: 8 minutes cumulative. Move to 2F.', img: false, story: 'One medallion. Keys in hand. Claire is not looking for her brother anymore — she is looking for a way out.'},
+          ]},
+          {title: 'RPD 2F — Lion Medallion & Licker Skip', inv: ['Spade Key', 'Maiden Medallion', 'High-Capacity Magazine'], steps: [
+            {t: '2F stairs: Lickers may spawn. Do NOT fight them. Sprint under them toward the East Office.', img: false, sr: 'Lickers = wasted ammo. Run past them.'},
+            {t: 'East Office: Lion Statue is Lion-Twig-Bird. 30 seconds. Grab Lion Medallion.', img: false},
+            {t: 'Grab Chess pieces opportunistically as you pass them. Do NOT route specifically for them — you will collect them naturally while moving.', img: false, sr: 'If Chess piece is directly on your path, grab it. Otherwise, skip and collect later at Cable Car.'},
+            {t: 'Avoid all Lickers. Do NOT engage. Sprint past.', img: false},
+            {t: '2F done. Time: 8 minutes (16 minutes cumulative). You have both medallions. Head underground.', img: false, story: 'Two medallions. Lickers everywhere. Claire is getting close to answers.'},
+          ]},
+          {title: 'Parking Lot — Birkin Phase 1 Grenade Kill', inv: ['Maiden Medallion', 'Lion Medallion', 'Browning with ammo', 'Grenade Launcher with ammo'], steps: [
+            {t: 'Birkin Phase 1 emerges. Cutscene plays.', img: false},
+            {t: 'Use Grenade Launcher exclusively. Target his eyes first (4–6 grenades to stun all three eyes). Once weak point exposed, dump remaining grenades into it.', img: false, sr: 'Grenade Launcher = fastest DPS. 6–9 grenades total. Clean execution: 45 sec.'},
+            {t: 'Movement: circle around parking spaces. Avoid grab attacks.', img: false},
+            {t: 'Birkin retreats after ~45 seconds. Phase 1 complete.', img: false},
+            {t: 'Do NOT loot — you have enough health to continue. Sprint to sewers.', img: false, story: 'Birkin mutated. Grenades spoke. He was not dead. He descended deeper.'},
+          ]},
+          {title: 'Sewers — Medallion & Sherry Escort Sprint', inv: ['Maiden Medallion', 'Lion Medallion', 'Browning', 'Remaining Grenade Launcher ammo', 'Healing items'], steps: [
+            {t: 'Third medallion puzzle: Woman-Bow-Snake. 30 seconds. Grab medallion.', img: false},
+            {t: 'SHERRY BIRKIN: You will meet Sherry in the sewers. She is frightened. Speak to her to make her follow you. She will stay with you from now on.', img: false},
+            {t: 'Mr. X spawn: If he appears, run into the nearest room and close the door. Wait 30 seconds for him to lose your trail.', img: false},
+            {t: 'Collect Chess pieces as you route. You need three total before Cable Car.', img: false},
+            {t: 'Clubs Key: grab if on your path. If not, note location and skip.', img: false},
+            {t: 'Cable Car entrance: confirm you have three medallions and three Chess pieces before boarding. Sherry is with you.', img: false},
+            {t: 'Sewers done. Time: 10 minutes. Total: 26 minutes.', img: false, story: 'Claire found Sherry in the darkness. A child infected, orphaned. Claire made a decision: protect her. Escape together. Survive.'},
+          ]},
+          {title: 'NEST Laboratory — Speedrun with Sherry', inv: ['Three medallions', 'Three Chess pieces', 'Clubs Key', 'Browning with ammo', 'Remaining grenades', 'Healing items', 'Sherry Birkin (escort)'], steps: [
+            {t: 'Cable Car descent (~20 seconds auto-play).', img: false},
+            {t: 'Lab entrance: use medallions and Chess pieces on terminals. You have memorized the sequence. Each puzzle <30 seconds.', img: false, sr: 'No reading — muscle memory. Input and move.'},
+            {t: 'Birkin Phase 2: Use remaining Grenade Launcher ammo. Eyes → weak point. 45–60 seconds.', img: false},
+            {t: 'Skip all side exploration. Do NOT collect supplies. Move directly toward helipad.', img: false},
+            {t: 'Sherry follows you through the lab. Keep her alive. Do NOT let her die.', img: false},
+            {t: 'Self-destruct activation: locate control room, activate, move.', img: false},
+            {t: 'Helipad sprint: move through remaining lab sections as fast as possible. No combat except Birkin Phase 3.', img: false},
+            {t: 'NEST done. Time: 18 minutes. Total: 44 minutes (game time).', img: false, story: 'The countdown was ticking. Sherry held onto Claire\'s arm. Birkin mutated again. The facility was collapsing. They had to escape.'},
+          ]},
+          {title: 'Helipad — Super Tyrant & Escape with Sherry', inv: ['Browning with remaining ammo', 'Healing items', 'Sherry Birkin'], steps: [
+            {t: 'Super Tyrant emerges. Cutscene plays.', img: false},
+            {t: 'Phase 1: Use your remaining Browning ammo. 8–12 shots. Stagger the Super Tyrant.', img: false, sr: 'Pistol spam until Rocket Launcher arrives'},
+            {t: 'Rocket Launcher spawns mid-fight. Sprint to grab it immediately.', img: false},
+            {t: 'Aim and fire. One shot. Direct hit.', img: false, sr: 'Clean aim. One bullet.'},
+            {t: 'Helicopter cutscene: auto-play. Claire and Sherry board. Game ends.', img: false},
+            {t: 'Total game time: 2 hours 20 minutes to 2 hours 30 minutes including load times.', img: false, story: 'Claire held Sherry as the helicopter lifted off. The city burned below. Sherry was alive. Infected, but alive. Claire had kept her promise. They escaped.'},
+          ]},
+        ]
+      },
+      completionist: {
+        tips: [
+          'Claire completionist run targets 100% file collection (58 documents), all Mr. Raccoon collectibles (15 total), and full exploration on Hard or Nightmare difficulty.',
+          'File collection is identical to Leon\'s completionist route — 58 documents scattered throughout the game in the same locations as Leon\'s route.',
+          'Mr. Raccoons are 15 small plush toys hidden throughout the game. Shooting them unlocks achievements and special items. Use your Grenade Launcher to destroy them from distance.',
+          'Claire has access to tight crawl spaces (ventilation shafts) that Leon cannot fit through. These may contain files, items, or Mr. Raccoons.',
+          'Hard or Nightmare difficulty is recommended for trophies. This significantly increases enemy health and ammo scarcity — plan your ammo budget carefully.',
+          'Sherry Birkin is a mandatory escort from the Sewers onward. She cannot die — if she does, the run fails. Protect her through all encounters.',
+          'Grenade Launcher ammo is critically limited (10–12 rounds). Use it for: Mr. Raccoon destruction, Birkin weak points, and the Super Tyrant only.',
+          'Safe locations: Gun Shop (optional), RPD Basement (first save), RPD 2F (second save), Parking Lot (before Birkin Phase 1), Sewers (before Cable Car with Sherry), NEST Lab (before Birkin Phase 2 and Phase 3), Helipad (final save).',
+          'By the end of this run, you will have read 58 files revealing Umbrella\'s complete history: founding, Progenitor Virus, T-Virus engineering, human testing, G-Virus development, Birkin\'s role, the deliberate outbreak, and the escape. The narrative will be comprehensive and complete.',
+          'Claire\'s perspective is different from Leon\'s — she discovers the same facility and faces the same threats, but her encounter with Sherry adds emotional weight. Use this in your story summaries.',
+        ],
+      sections: [
+        {title: 'Gas Station — Complete Collection', inv: ['Browning HP-9', '12 rounds of .357 ammo'], steps: [
+          {t: 'Gas Station opening cutscene: watch it fully. Claire\'s arrival and the outbreak context.', img: false},
+          {t: 'Interior zombie: kill it with headshots (1 shot). Loot the area thoroughly: grab ammo, herbs, and any items on shelves.', img: false},
+          {t: 'Storage Room Key: located behind the counter. Grab it.', img: false},
+          {t: 'Unlock Storage Room. Thoroughly loot: all herbs, ammo, and items. Leave nothing behind.', img: false},
+          {t: 'Check every shelf, counter, and corner for files or documents. The Gas Station has minimal files but check anyway.', img: false},
+          {t: 'Exit to streets. Optional: use the Gas Station safe room to save if you took unexpected damage.', img: false, story: 'Leon Kennedy arrived at Raccoon City Police Department for his first day. The outbreak had already consumed the city. His first moment alive in this place was a zombie attack.'},
+        ]},
+        {title: 'Streets — File Collection & Gun Shop', inv: ['Matilda Pistol with ammo', 'Storage Room items'], steps: [
+          {t: 'Streets environment: open-world-style exploration. Zombies are scattered. Take your time and clear methodically.', img: false},
+          {t: 'Every zombie corpse may have dropped items. Check every body for ammo, herbs, or documents.', img: false},
+          {t: 'Gun Shop: Break through the front window or find an alternate entry (side door or alley). Once inside, thoroughly explore every corner.', img: false},
+          {t: 'Grenade Launcher parts: in the gun shop. Grab them. You will assemble the full weapon later.', img: false},
+          {t: 'Gun Shop safe room: use this to save and organize your inventory if needed. It is defensible.', img: false},
+          {t: 'Check for files or documents in the gun shop (any sales records, owner\'s notes, etc.).', img: false},
+          {t: 'Search for any Mr. Raccoon collectibles in the streets and gun shop. They are tiny plush toys — look carefully.', img: false, save: 'Gun Shop safe room — optional save. You have basic supplies and the first Grenade Launcher parts.'},
+          {t: 'Proceed toward RPD main entrance. Continue zombie clearing and loot collection as you move. Time in streets: 12–15 minutes for complete exploration.', img: false, story: 'The streets of Raccoon City were a graveyard. Leon searched every body, every shop, every corner. Umbrella\'s reach was everywhere.'},
+        ]},
+        {title: 'RPD 1F — Comprehensive Exploration & Safe Puzzle', inv: ['Matilda Pistol', 'Grenade Launcher parts', 'Storage Room items'], steps: [
+          {t: 'RPD main hall: pick up the map. This unlocks the full layout display.', img: false},
+          {t: 'Before approaching the safe, systematically clear every room on 1F. Eliminate all zombies and Lickers.', img: false},
+          {t: 'Collect every file and document on 1F. They are on desks, in file cabinets, on shelves, and in break rooms. There are approximately 8–10 files on this floor alone. Do not skip any.', img: false},
+          {t: 'West Office Safe Puzzle: Combination is N-E-D (left dial), M-R-G (right dial). Open it. Grab the High-Capacity Magazine inside.', img: false},
+          {t: 'Spade Key: on the Sergeant\'s Desk in the main office area. Critical for unlocking symbol-marked doors.', img: false},
+          {t: 'Lounge Puzzle: The Unicorn Statue puzzle. Correct combination is Pisces-Scorpio-Aquarius. Solve it to get the Maiden Medallion. Take your time reading the clues on the statue.', img: false},
+          {t: 'Valve Handle and Fuse: located in various desks throughout 1F. Collect both. They unlock the mechanism puzzles later.', img: false},
+          {t: 'Look for Mr. Raccoon collectibles hidden in corners, on shelves, or behind furniture on 1F. Shoot them to unlock items.', img: false},
+          {t: 'Basement hallway safe room: located via the basement stairs. Use your first Ink Ribbon here to save your progress.', img: false, save: 'Safe Room — basement. You have the Maiden Medallion, Spade Key, and basic supplies. First save checkpoint.'},
+          {t: 'Do NOT proceed to 2F or the underground yet. Make sure you have looted every single corner of 1F. Time: 18–20 minutes.', img: false, story: 'The Police Station was a monument to Umbrella\'s reach. Every desk held evidence of illegal research. Files documented viral studies, human experimentation, weapons development. The Maiden Medallion — first of three — was a puzzle within a statue, a secret within a secret.'},
+        ]},
+        {title: 'RPD 2F — Licker Combat & Lion Medallion', inv: ['Spade Key', 'Maiden Medallion', 'High-Capacity Magazine', 'Valve Handle', 'Fuse'], steps: [
+          {t: 'RPD 2F entry: expect Lickers on the ceiling. They are dangerous. Use your shotgun (if acquired at gun shop) or Grenade Launcher to kill them. Do NOT skip them — they are part of complete exploration.', img: false},
+          {t: 'Systematically clear every room on 2F. Kill all Lickers and zombies. Collect all ammo and herbs.', img: false},
+          {t: 'Collect every file on 2F. They are scattered throughout offices, bedrooms, and hallways. Approximately 10–12 more files are on this floor. Read each one for story context.', img: false},
+          {t: 'East Office: Lion Statue puzzle. Correct combination is Lion-Twig-Bird. Solve it to acquire the Lion Medallion. This is your second of three medallions.', img: false},
+          {t: 'Chess Piece Plugs: These are hidden throughout 2F. Collect all of them as you explore. They unlock doors and puzzles in NEST.', img: false},
+          {t: 'Use the Spade Key on symbol-marked doors throughout 2F to unlock new areas. Each area may contain additional files, ammo, or Mr. Raccoon collectibles.', img: false},
+          {t: 'Mr. Raccoon hunt: Look for collectibles throughout 2F. They are small plush toys in unexpected locations. Use your Grenade Launcher to destroy them from distance.', img: false},
+          {t: '2F safe room: located on the floor. Use your second Ink Ribbon to save your progress. You now have both Maiden and Lion medallions.', img: false, save: 'Safe Room — 2F. You have two of three medallions, multiple files, and critical items. Good checkpoint before the underground.'},
+          {t: 'Confirm you have all Chess pieces and both medallions. Time: 20–22 minutes on 2F.', img: false, story: 'Two medallions now. The RPD was a fortress of secrets. Lickers prowled the hallways — bioweapon dogs, barely animal anymore. The files detailed T-Virus progression, viral mutation rates, and human test subjects whose names were listed as catalog entries. This was science without ethics.'},
+        ]},
+        {title: 'Parking Lot — Birkin Phase 1 & Exploration', inv: ['Maiden Medallion', 'Lion Medallion', 'W-870 Shotgun with ammo', 'Grenade Launcher', 'Healing items'], steps: [
+          {t: 'Parking lot entry: William Birkin emerges in his mutated G Stage 1 form. Prepare for combat.', img: false},
+          {t: 'Birkin Phase 1 Boss Fight: Use your shotgun on his eyes (3–4 shots to stun all three). Once all eyes are damaged, his weak point (exposed flesh cavity) appears. Dump remaining shotgun shells or Grenade Launcher rounds into the weak point until he retreats.', img: false},
+          {t: 'Strategy: Circle-strafe around parking spaces. Maintain distance. Heal if health drops below half. Avoid grab attacks — they deal massive damage.', img: false},
+          {t: 'Birkin retreats after ~40–60 seconds of sustained fire. He does not die — he escapes deeper.', img: false},
+          {t: 'After the fight, thoroughly explore the parking lot area. Check every car, every corner, every alcove for dropped items, ammo, and files.', img: false},
+          {t: 'Collect all Grenade Launcher ammo and healing items from the parking lot. You need maximum supplies for the next phase.', img: false},
+          {t: 'Look for any Mr. Raccoon collectibles in the parking lot. They are hidden in unusual spots.', img: false},
+          {t: 'Parking lot safe room (if available): optional save. If no typewriter, proceed directly to sewers and save at the first opportunity.', img: false, story: 'William Birkin transformed before Leon\'s eyes. He was once human — a scientist working for Umbrella. He injected himself with the G-Virus, a weaponized strain he created. The mutation was horrifying and incomplete. He would not stay dead. He would evolve again.'},
+        ]},
+        {title: 'Sewers — Medallion Hunt & Mr. X Confrontation', inv: ['Maiden Medallion', 'Lion Medallion', 'Browning with ammo', 'Shotgun', 'Grenade Launcher with ammo', 'Healing items'], steps: [
+          {t: 'Sewer entry: navigate carefully. The sewers are flooded in sections and contain dangerous enemies.', img: false},
+          {t: 'Third Medallion Puzzle: The Woman-Bow-Snake statue puzzle is located in the sewer area. Solve it to acquire the final medallion. All three medallions are now in your possession.', img: false},
+          {t: 'Thoroughly explore the sewers. Collect every file, note, and document. The sewers contain approximately 5–8 more files about underground research and bioweapon development.', img: false},
+          {t: 'Mr. X (the Tyrant): The unstoppable pursuer may spawn in the sewers. If he appears, he cannot be killed with conventional weapons. Your options: run, hide, or use flash items to stun him temporarily. Do NOT waste ammo trying to kill him.', img: false},
+          {t: 'Chess Piece Plugs: Continue collecting. You need three total before the Cable Car.', img: false},
+          {t: 'Clubs Key: located somewhere in the sewers. Grab it. It unlocks critical doors in NEST.', img: false},
+          {t: 'Mr. Raccoon collectibles: They hide in the sewers. Look under water, in pipes, in alcoves. Destroy them with your Grenade Launcher for items.', img: false},
+          {t: 'Sewer safe room (if available): Use your third Ink Ribbon to save before the Cable Car. The Cable Car is your point of no return — confirm you have all medallions and Chess pieces before boarding.', img: false, save: 'Safe Room — sewer side room. Before Cable Car. Once you board, no return to RPD.', story: 'The sewers reeked of decay and experimentation. Files revealed the truth: Umbrella had built an entire underground facility beneath Raccoon City for biological weapons development. The T-Virus originated here. The G-Virus was born here. Everything had been planned.'},
+        ]},
+        {title: 'NEST Laboratory — Birkin Phase 2 & 3, Full File Collection', inv: ['Three medallions', 'Three Chess plugs', 'Clubs Key', 'Weapons with ammo', 'Multiple healing items'], steps: [
+          {t: 'Cable Car descent: watch the animation. You are now committed.', img: false},
+          {t: 'NEST Lab entrance: use your medallions and Chess pieces on security terminals in the correct sequence. Each puzzle grants access to new lab sections.', img: false},
+          {t: 'Lab exploration: NEST is divided into multiple sections. Systematically clear every section. Every corner may contain files or equipment.', img: false},
+          {t: 'File collection in NEST: There are approximately 12–15 more files in the lab. They detail Umbrella\'s founding, the Progenitor Virus discovery, viral engineering, human experimentation protocols, and the G-Virus project. Read each one.', img: false},
+          {t: 'Birkin Phase 2 Boss Fight: William Birkin appears again, larger and more mutated. Use the same strategy: target his eyes with your shotgun or Browning (stun), then unleash Grenade Launcher rounds on the weak point. This fight takes 45–60 seconds.', img: false},
+          {t: 'Continue through lab sections toward the main control room. Defeat any additional Birkin encounters using the same eye-weak point strategy.', img: false},
+          {t: 'Main control room: activate the self-destruct sequence. The facility begins counting down. You must escape.', img: false},
+          {t: 'Birkin Phase 3 (final mutation): Birkin makes one last stand — an even more mutated, grotesque form. Dump all remaining ammo into his eyes and weak point. Healing items are critical. Do not let health drop below half.', img: false},
+          {t: 'After Phase 3, move toward the helipad exit. Check every room you pass for Mr. Raccoon collectibles.', img: false},
+          {t: 'NEST safe room (before final exit): Use your fourth and final Ink Ribbon here if available. This is your last save before the Super Tyrant.', img: false, save: 'Safe Room — lab side room. Before helipad. Last save of the game.', story: 'The self-destruct sequence was active. Birkin mutated beyond recognition — a writhing mass barely remembering its human origin. He fought Leon with the last of his consciousness, desperate and fading. When Birkin finally fell, Leon realized the truth: Umbrella had done this to him. Umbrella had done this to the entire city.'},
+        ]},
+        {title: 'Helipad — Super Tyrant, Final Escape & Completion', inv: ['Browning with remaining ammo', 'Healing items', 'Full file collection'], steps: [
+          {t: 'Helipad entry: The Super Tyrant (T-002) emerges in full form on the roof. It is Umbrella\'s ultimate biological weapon.', img: false},
+          {t: 'Super Tyrant Phase 1: Use your remaining Browning and Grenade Launcher ammo on it. Target exposed weak points. Move around the helipad to maintain distance. Avoid grab and stomp attacks.', img: false},
+          {t: 'Phase 2 transition: The Rocket Launcher appears on the helipad mid-fight. Sprint to grab it immediately.', img: false},
+          {t: 'Super Tyrant Phase 2: Pick up the Rocket Launcher. You have one shot. Aim for the Super Tyrant\'s center mass.', img: false},
+          {t: 'Fire the Rocket Launcher. One direct hit. The Super Tyrant falls.', img: false},
+          {t: 'Helicopter escape: A helicopter descends. Ada Wong and Leon board. As the helicopter lifts off, they watch Raccoon City burn below them.', img: false},
+          {t: 'Final narrative summary: By this point, your cumulative story should encompass the full RE2 plot. You know: Umbrella\'s founding by Oswell Spencer, the Progenitor Virus discovery in Africa, the T-Virus development, William Birkin\'s genius and desperation, the G-Virus creation, the deliberate outbreak, Birkin\'s self-injection and mutation, Leon\'s survival, and Ada\'s presence throughout. The game ends with this knowledge — the facility destroyed, but Umbrella still operational elsewhere.', img: false, story: 'Leon Kennedy survived Raccoon City. He discovered Umbrella Corporation: a global bioweapon manufacturer hiding behind pharmaceutical research. The T-Virus was their creation. The G-Virus was their future. William Birkin, infected by his own weapon, mutated beyond human recognition but refused to die. Sherry was missing — or escaped with a different survivor. Ada Wong\'s true allegiance remained unclear. The city was ash. Umbrella was still out there. This was only the beginning of a much larger nightmare.'},
+        ]},
+      ]
+    }
+    }
+  },
   re3: makePlaceholder('Resident Evil 3 Remake'),
   re4: makePlaceholder('Resident Evil 4 Remake'),
   re7: makePlaceholder('Resident Evil 7: Biohazard'),
@@ -826,6 +1252,7 @@ var IMGS = {
 // ===== STATE =====
 var currentGame = null;
 var currentRun = null;
+var currentCharacter = null;
 var progress = {};
 
 // ===== PERSISTENCE =====
@@ -839,13 +1266,36 @@ function pKey(gid,rt){return gid+'__'+rt;}
 function isDone(gid,rt,si,ti){var k=pKey(gid,rt);return !!(progress[k]&&progress[k][si+'_'+ti]);}
 
 function getStats(gid,rt){
-  var d=DATA[gid][rt],total=0,done=0,k=pKey(gid,rt);
-  d.sections.forEach(function(s,si){
-    s.steps.forEach(function(st,ti){
-      total++;
-      if(progress[k]&&progress[k][si+'_'+ti])done++;
+  var gameData=DATA[gid];
+  var total=0,done=0;
+
+  // Handle multi-character games (e.g., RE2 with Leon/Claire)
+  if(gameData.characters){
+    // For multi-character games, aggregate stats from all characters
+    Object.keys(gameData.characters).forEach(function(char){
+      if(gameData[char]&&gameData[char][rt]&&gameData[char][rt].sections){
+        var k=pKey(gid,rt);
+        gameData[char][rt].sections.forEach(function(s,si){
+          s.steps.forEach(function(st,ti){
+            total++;
+            if(progress[k]&&progress[k][si+'_'+ti])done++;
+          });
+        });
+      }
     });
-  });
+  }else{
+    // Single-character games: access directly
+    if(gameData[rt]&&gameData[rt].sections){
+      var k=pKey(gid,rt);
+      gameData[rt].sections.forEach(function(s,si){
+        s.steps.forEach(function(st,ti){
+          total++;
+          if(progress[k]&&progress[k][si+'_'+ti])done++;
+        });
+      });
+    }
+  }
+
   return{total:total,done:done,pct:total?Math.round(done/total*100):0};
 }
 
@@ -856,7 +1306,7 @@ function clearLog(){var k=pKey(currentGame,currentRun)+'__log';try{localStorage.
 
 function syncLog(){
   // Rebuild log to match current progress — catches steps checked before the log feature existed
-  var d=DATA[currentGame][currentRun],k=pKey(currentGame,currentRun);
+  var d=getGameData(),k=pKey(currentGame,currentRun);
   var log=getLog(),changed=false;
   d.sections.forEach(function(sec,si){
     sec.steps.forEach(function(step,ti){
@@ -912,13 +1362,68 @@ function showRunTypeScreen(gid){
   screens('run-type-screen');
   scrollTop();
 }
+function selectRunType(rt){
+  currentRun=rt;
+  // Check if current game has multiple characters (e.g., RE2)
+  var gameData=DATA[currentGame];
+  if(gameData.characters){
+    // Show character selection
+    showCharacterSelect();
+  }else{
+    // No character selection needed, load walkthrough
+    showWalkthrough();
+  }
+}
+
+function showCharacterSelect(){
+  var chars=DATA[currentGame].characters;
+  var charSelectHtml='<div class="char-select-grid">';
+
+  Object.keys(chars).forEach(function(charKey){
+    var c=chars[charKey];
+    charSelectHtml+='<div class="char-select-card" onclick="selectCharacter(\''+charKey+'\')">'+
+      '<div class="char-name">'+c.name+'</div>'+
+      '<div class="char-role">'+c.role+'</div>'+
+      '<div class="char-description">'+c.description+'</div>'+
+      '<div class="char-detail"><strong>Starting Weapon:</strong> '+c.startWeapon+'</div>'+
+      '<div class="char-detail"><strong>Key Mechanic:</strong> '+c.keyMechanic+'</div>'+
+      '<div class="char-detail char-difficulty">'+c.difficulty+'</div>'+
+      '<button class="select-btn">Select '+c.name+'</button>'+
+    '</div>';
+  });
+
+  charSelectHtml+='</div>';
+  // Find the container div and insert cards into it
+  var container=document.querySelector('#character-select-screen .char-select-container');
+  if(!container){
+    // If container doesn't exist, create it
+    var screen=document.getElementById('character-select-screen');
+    container=document.createElement('div');
+    container.className='char-select-container';
+    screen.appendChild(container);
+  }
+  container.innerHTML=charSelectHtml;
+  screens('character-select-screen');
+  scrollTop();
+}
+
+function selectCharacter(charKey){
+  currentCharacter=charKey;
+  showWalkthrough();
+}
+
 function showWalkthrough(gid,rt){
   if(gid)currentGame=gid;
-  currentRun=rt;
+  if(rt)currentRun=rt;
   var g=GAMES.find(function(x){return x.id===currentGame;});
   var labels={standard:'Standard Play',speedrun:'Speedrun',completionist:'Completionist'};
-  document.getElementById('wt-game-name').textContent=g.title+' — '+g.subtitle;
-  document.getElementById('wt-run-badge').textContent=labels[rt];
+  var gameName=g.title+' — '+g.subtitle;
+  // Add character name if selected
+  if(currentCharacter&&DATA[currentGame].characters){
+    gameName+=' — '+DATA[currentGame].characters[currentCharacter].name;
+  }
+  document.getElementById('wt-game-name').textContent=gameName;
+  document.getElementById('wt-run-badge').textContent=labels[currentRun||rt];
   renderTips();
   renderSteps();
   updateProgress();
@@ -964,8 +1469,17 @@ function renderCards(){
   });
 }
 
+function getGameData(){
+  // Helper to get data from either single-character or multi-character game structure
+  var gameData=DATA[currentGame];
+  if(currentCharacter&&gameData[currentCharacter]){
+    return gameData[currentCharacter][currentRun];
+  }
+  return gameData[currentRun];
+}
+
 function renderTips(){
-  var d=DATA[currentGame][currentRun];
+  var d=getGameData();
   var html=d.tips.map(function(t,i){
     return '<div class="tip-item"><span class="tip-num">'+(i<9?'0':'')+(i+1)+'</span><span>'+escHtml(t)+'</span></div>';
   }).join('');
@@ -975,7 +1489,7 @@ function renderTips(){
 }
 
 function renderSteps(){
-  var d=DATA[currentGame][currentRun];
+  var d=getGameData();
   var k=pKey(currentGame,currentRun);
   var html='';
   d.sections.forEach(function(sec,si){
@@ -1041,7 +1555,7 @@ function updateProgress(){
   fill.classList.toggle('has-progress',stats.pct>0);
 
   // Update section counters
-  var d=DATA[currentGame][currentRun];
+  var d=getGameData();
   var k=pKey(currentGame,currentRun);
   d.sections.forEach(function(sec,si){
     var done=sec.steps.filter(function(_,ti){return progress[k]&&progress[k][si+'_'+ti];}).length;
@@ -1060,7 +1574,7 @@ function toggleStep(si,ti){
   var el=document.getElementById('step-'+si+'-'+ti);
   if(el)el.classList.toggle('done',progress[k][sk]);
   updateProgress();
-  var d=DATA[currentGame][currentRun],sec=d&&d.sections[si],step=sec&&sec.steps[ti];
+  var d=getGameData(),sec=d&&d.sections[si],step=sec&&sec.steps[ti];
   if(step&&step.story){
     var log=getLog(),key=si+'-'+ti;
     log=log.filter(function(e){return e.key!==key;});
