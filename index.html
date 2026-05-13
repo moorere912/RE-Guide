@@ -933,50 +933,146 @@ function makePlaceholder(name){
 var DATA = {
   re1: RE1,
   re2: {
-    trophies: {
-      leon: [
-        {id:'story_a',   name:'Escape from the City',      type:'story',      desc:'Complete Leon\'s story on any difficulty.',
-         hint:'Cannot be missed — story completion trophy.'},
-        {id:'hardcore_a',name:'Hardcore',                  type:'challenge',  desc:'Complete Leon\'s story on Hardcore difficulty.',
-         hint:'Ink Ribbons are extremely limited on Hardcore. Plan every save. Enemies take far more damage to drop.'},
-        {id:'speed_a',   name:'Speed Demon',               type:'challenge',  desc:'Complete Leon\'s story in under 3 hours on Standard or higher.',
-         hint:'REQUIRES A SEPARATE DEDICATED RUN. This is impossible to earn during a completionist run (which takes 5–7 hours). Use the Speedrun guide for the optimized route, skips, and timing.',
-         warn:true, guideRef:'speedrun'},
-        {id:'frugal_a',  name:'Frugalist',                 type:'challenge',  desc:'Complete Leon\'s story with 3 or fewer saves on Standard or higher.',
-         hint:'Plan your 3 saves: (1) RPD Basement before Birkin Phase 1, (2) Sewer safe room before Cable Car, (3) NEST Lab before Super Tyrant. Skip all other typewriters.'},
-        {id:'minimal_a', name:'Minimalist',                type:'challenge',  desc:'Complete Leon\'s story without ever expanding item storage capacity.',
-         hint:'Never use Hip Pouches to increase inventory size. Leon\'s starting slots are very tight — keep only essentials: pistol, shotgun, herbs, key items. Leave everything else.'},
-        {id:'knives_a',  name:'Knives Out',                type:'challenge',  desc:'Defeat a boss using only the Combat Knife.',
-         hint:'Easiest on the Sewer Crocodile (G-Croc). Use the knife to slash the switch panel on the wall — a single hit activates the electrified water kill. No other boss damage needed.'},
-        {id:'raccoon_a', name:'Raccoon City Native',       type:'collectible',desc:'Find and destroy all 15 Mr. Raccoon collectibles in Leon\'s story.',
-         hint:'All 15 are flagged in the Completionist walkthrough. Use pistol headshots or Grenade Launcher. Missing any requires a new run.',
-         guideRef:'completionist'},
-        {id:'files_a',   name:'A Record of Events',        type:'collectible',desc:'Obtain all files in Leon\'s story (58 total).',
-         hint:'Every file location is noted in the Completionist walkthrough. Check every desk, shelf, locker, and computer terminal. Missing any requires a new run.',
-         guideRef:'completionist'},
-      ],
-      claire: [
-        {id:'story_b',   name:'Escape from the City (Claire)', type:'story',   desc:'Complete Claire\'s story on any difficulty.',
-         hint:'Cannot be missed — story completion trophy.'},
-        {id:'hardcore_b',name:'Hardcore (Claire)',             type:'challenge',desc:'Complete Claire\'s story on Hardcore difficulty.',
-         hint:'Ink Ribbons are scarce on Hardcore. Claire\'s Grenade Launcher is essential — conserve every round for bosses.'},
-        {id:'speed_b',   name:'Speed Demon (Claire)',          type:'challenge',desc:'Complete Claire\'s story in under 3 hours on Standard or higher.',
-         hint:'REQUIRES A SEPARATE DEDICATED RUN. Cannot be earned during a completionist run. Follow the Speedrun guide — Claire\'s route averages 2 hours 20 minutes with Sherry escort optimized.',
-         warn:true, guideRef:'speedrun'},
-        {id:'frugal_b',  name:'Frugalist (Claire)',            type:'challenge',desc:'Complete Claire\'s story with 3 or fewer saves on Standard or higher.',
-         hint:'Plan your 3 saves: (1) RPD 2F before Birkin Phase 1, (2) Sewer safe room before Cable Car with Sherry, (3) NEST Lab before Super Tyrant.'},
-        {id:'minimal_b', name:'Minimalist (Claire)',           type:'challenge',desc:'Complete Claire\'s story without expanding item storage.',
-         hint:'Never use Hip Pouches. Claire\'s inventory is tight — prioritize Browning, Grenade Launcher, herbs, and key items only. Drop everything else.'},
-        {id:'sherry_b',  name:'A Guardian',                   type:'challenge',desc:'Complete Claire\'s story without Sherry taking any damage.',
-         hint:'Sherry joins in the Sewers. Keep her away from all enemies during escort sections. She is most at risk during Birkin Phase 3 — position her behind cover first.'},
-        {id:'raccoon_b', name:'Raccoon City Native (Claire)',  type:'collectible',desc:'Find and destroy all 15 Mr. Raccoon collectibles in Claire\'s story.',
-         hint:'Same locations as Leon\'s run. All flagged in the Completionist walkthrough. Use Grenade Launcher from distance.',
-         guideRef:'completionist'},
-        {id:'files_b',   name:'A Record of Events (Claire)',   type:'collectible',desc:'Obtain all 58 files in Claire\'s story.',
-         hint:'Identical locations to Leon\'s run. All noted in the Completionist walkthrough. Check every room thoroughly.',
-         guideRef:'completionist'},
-      ]
-    },
+    trophies: [
+      // ── PLATINUM ──
+      {id:'plat',         name:'Raccoon City Native',                 type:'platinum',  char:'both', grade:'P',
+       desc:'Obtain all trophies.',
+       hint:'Unlocks automatically once every other trophy is earned.'},
+      // ── STORY — cannot be missed ──
+      {id:'hero',         name:'A Hero Emerges',                      type:'story',     char:'leon', grade:'S',
+       desc:'Complete Leon\'s story.',
+       hint:'Cannot be missed — story completion trophy.'},
+      {id:'heroine',      name:'A Heroine Emerges',                   type:'story',     char:'claire',grade:'S',
+       desc:'Complete Claire\'s story.',
+       hint:'Cannot be missed — story completion trophy.'},
+      {id:'true_end',     name:'Broken Umbrella',                     type:'story',     char:'both', grade:'S',
+       desc:'Witness the true ending.',
+       hint:'Complete both Leon\'s and Claire\'s stories. The true ending plays after the second campaign ends.'},
+      {id:'ada_seg',      name:'Hack Complete',                       type:'story',     char:'leon', grade:'B',
+       desc:'Complete Ada\'s gameplay segment.',
+       hint:'Cannot be missed during Leon\'s story.'},
+      {id:'sherry_seg',   name:'Hide and Seek',                       type:'story',     char:'claire',grade:'B',
+       desc:'Complete Sherry\'s gameplay segment.',
+       hint:'Cannot be missed during Claire\'s story.'},
+      {id:'rpd_arrive',   name:'Welcome to the City of the Dead',     type:'story',     char:'any',  grade:'B',
+       desc:'Make it to the police station.',
+       hint:'Cannot be missed.'},
+      {id:'goddess',      name:'Path to the Goddess',                 type:'story',     char:'any',  grade:'B',
+       desc:'Solve the Goddess Statue puzzle.',
+       hint:'Cannot be missed. Insert all three medallions into the statue in the main hall.'},
+      {id:'escape_rpd',   name:'Never-Ending Rain',                   type:'story',     char:'any',  grade:'B',
+       desc:'Escape the police station.',
+       hint:'Cannot be missed.'},
+      {id:'escape_sewers',name:'A Great Need for a Shower',           type:'story',     char:'any',  grade:'B',
+       desc:'Escape from the sewers.',
+       hint:'Cannot be missed.'},
+      // ── CHALLENGE — require specific conditions ──
+      {id:'leon_hc',      name:'Hardcore Rookie',                     type:'challenge', char:'leon', grade:'G',
+       desc:'Complete Leon\'s story on Hardcore game mode.',
+       hint:'Ink Ribbons are very scarce on Hardcore. Plan every save. Enemies absorb far more damage. Best attempted after completing Standard first.'},
+      {id:'claire_hc',    name:'Hardcore College Student',            type:'challenge', char:'claire',grade:'G',
+       desc:'Complete Claire\'s story on Hardcore game mode.',
+       hint:'Claire\'s Grenade Launcher is essential on Hardcore — conserve every round for bosses and unavoidable encounters.'},
+      {id:'leon_srank',   name:'Leon "S." Kennedy',                   type:'challenge', char:'leon', grade:'G',
+       desc:'Complete Leon\'s story on Standard or Hardcore with an S rank.',
+       hint:'S Rank requires completing under roughly 3.5 hours with limited saves and no continues. Study the in-game rank screen for exact conditions. Follow the Speedrun guide for the fastest route.',
+       warn:true, guideRef:'speedrun'},
+      {id:'claire_srank', name:'Sizzling Scarlet Hero',               type:'challenge', char:'claire',grade:'G',
+       desc:'Complete Claire\'s story on Standard or Hardcore with an S rank.',
+       hint:'Same S Rank conditions as Leon — fast completion, limited saves, no continues. Use the Speedrun guide for the optimized Claire route.',
+       warn:true, guideRef:'speedrun'},
+      {id:'frugalist',    name:'Frugalist',                           type:'challenge', char:'any',  grade:'S',
+       desc:'Complete the game without using any recovery item (herbs, sprays, etc.).',
+       hint:'Never heal using First Aid Sprays or combined herbs. Manage damage by avoiding enemies and using the knife defensively. Easier on Standard difficulty with careful play.'},
+      {id:'minimalist',   name:'Minimalist',                          type:'challenge', char:'any',  grade:'S',
+       desc:'Clear the game without ever opening the item box.',
+       hint:'Never interact with the item storage box. You must carry everything you need at all times. Plan your inventory carefully — only take what you need for your current objective.'},
+      {id:'footprint',    name:'A Small Carbon Footprint',            type:'challenge', char:'any',  grade:'S',
+       desc:'Take 14,000 steps or fewer in one playthrough.',
+       hint:'Move directly and efficiently. Avoid all backtracking. Plan your route in advance so you never retrace steps unnecessarily. Pairs well with a speedrun attempt.'},
+      {id:'ada_emf',      name:'One Slick Super-spy',                 type:'challenge', char:'leon', grade:'B',
+       desc:'Complete Ada\'s segment using only the EMF Visualizer.',
+       hint:'During Ada\'s stealth section, rely exclusively on the EMF Visualizer gadget. Do not use sub-weapons or other tools during her playable sequence.'},
+      {id:'sherry_escape',name:'Young Escape',                        type:'challenge', char:'claire',grade:'B',
+       desc:'Escape the bedroom within 60 seconds during Sherry\'s segment.',
+       hint:'Memorize the bedroom puzzle solution before the timer starts. The clues are on the dresser and desk — know them in advance so you can solve it immediately.'},
+      // ── BOSSES ──
+      {id:'gotcha',       name:'Gotcha!',                             type:'boss',      char:'any',  grade:'S',
+       desc:'Defeat Stage 2 G (Birkin) using the crane only once.',
+       hint:'In the sewers, activate the crane mechanism only once to drop the container on Birkin. You must deal enough damage beforehand to weaken him so the single crane hit is sufficient.'},
+      {id:'g4_timer',     name:'With Time to Spare',                  type:'boss',      char:'any',  grade:'B',
+       desc:'Defeat Stage 4 G with 4 or more minutes remaining on the countdown timer.',
+       hint:'Bring your strongest weapons and ample healing items. Fight efficiently — target the exposed weak point immediately. Do not explore or waste time before this fight.'},
+      {id:'tyrant_timer', name:'In the Blink of an Eye',              type:'boss',      char:'any',  grade:'B',
+       desc:'Defeat the Super Tyrant with 5 or more minutes remaining on the countdown timer.',
+       hint:'When Ada\'s Rocket Launcher drops on the helipad mid-fight, sprint to grab it immediately and fire. One direct hit ends the fight instantly with plenty of time to spare.'},
+      // ── COLLECTIBLES ──
+      {id:'one_raccoon',  name:'Vermin Extermination',                type:'collectible',char:'any', grade:'B',
+       desc:'Destroy one Mr. Raccoon collectible.',
+       hint:'Shoot or knife any one of the 15 Mr. Raccoon plush toys hidden throughout the game. The first one is in the RPD main hall — look at the reception desk.'},
+      {id:'all_raccoons', name:'Complete Vermin Extermination',       type:'collectible',char:'any', grade:'S',
+       desc:'Destroy all 15 Mr. Raccoon collectibles.',
+       hint:'All 15 locations are flagged in the Completionist walkthrough. Missing any in a run requires a full new playthrough — do not skip them.',
+       guideRef:'completionist'},
+      {id:'all_files',    name:'Lore Explorer',                       type:'collectible',char:'any', grade:'B',
+       desc:'Read all of the files.',
+       hint:'All 58 file locations are noted in the Completionist walkthrough. Check every desk, shelf, locker, bulletin board, and computer terminal throughout the game.',
+       guideRef:'completionist'},
+      {id:'all_locks',    name:'Master of Unlocking',                 type:'collectible',char:'any', grade:'S',
+       desc:'Open all safes and combination locks in the game.',
+       hint:'Includes all dial safes, combination padlocks, and portable safes. Solutions are: West Office safe = N-E-D / M-R-G. Other solutions found throughout the Completionist walkthrough.'},
+      {id:'photo_items',  name:'Treasure Hunter',                     type:'collectible',char:'any', grade:'B',
+       desc:'Using photo hints, find 2 hidden items.',
+       hint:'Polaroid photos found in the game hint at hidden item locations. Find and examine 2 photos, then locate the items they reveal nearby.'},
+      // ── COMBAT ──
+      {id:'knife_kill',   name:'Don\'t Need No Stinkin\' Gun',        type:'combat',    char:'any',  grade:'B',
+       desc:'Defeat an enemy with a knife.',
+       hint:'Easiest: knife a downed zombie to finish it off, or use the knife on the Sewer Crocodile\'s switch panel — a single hit triggers the electrified water kill.'},
+      {id:'subweapon',    name:'Eat This!',                           type:'combat',    char:'any',  grade:'B',
+       desc:'Counterattack with a sub-weapon when grabbed by an enemy.',
+       hint:'When a zombie grabs you, a prompt appears to use a sub-weapon. Flash Grenades are most common. Keep one in your inventory specifically for this.'},
+      {id:'board_window', name:'That\'ll Hold \'Em',                  type:'combat',    char:'any',  grade:'B',
+       desc:'Use Wooden Boards to board up a window.',
+       hint:'Wooden boards are found throughout the RPD. Pick one up and interact with any broken window to board it, preventing zombies from climbing through.'},
+      {id:'bon_appetit',  name:'Bon Appétit',                         type:'combat',    char:'any',  grade:'B',
+       desc:'Shoot the grenade after feeding it to an enemy.',
+       hint:'Push a grenade into a slow-moving zombie\'s mouth using the interaction prompt (they must be slightly stunned). Then shoot the grenade with your pistol to detonate it.'},
+      {id:'roundup',      name:'Zombie Roundup',                      type:'combat',    char:'any',  grade:'B',
+       desc:'Kill 3 enemies simultaneously with a sub-weapon.',
+       hint:'Cluster 3 zombies in a tight area, then throw a Hand Grenade to kill all three at once. The streets of Raccoon City or tight RPD corridors work well.'},
+      {id:'skeet',        name:'Like Skeet Shooting',                 type:'combat',    char:'any',  grade:'B',
+       desc:'Shoot a zombie dog or Licker out of the air.',
+       hint:'Lickers leap from ceilings — shoot one mid-jump. Zombie dogs also pounce — a shotgun blast as they jump is the easiest method. Both count.'},
+      {id:'licker_stun',  name:'Keep Their Heads Ringin\'',           type:'combat',    char:'any',  grade:'B',
+       desc:'Paralyze a Licker\'s sense of hearing.',
+       hint:'Lickers are blind but detect sound. Shoot at one to trigger its hearing-paralysis state, or use a Flash Grenade near one.'},
+      {id:'tyrant_hat',   name:'Hats Off!',                           type:'combat',    char:'any',  grade:'B',
+       desc:'Shoot Tyrant\'s hat off his head.',
+       hint:'Mr. X wears a fedora hat. Land a pistol shot on it while he is walking toward you and it falls off. Purely cosmetic — but satisfying.'},
+      // ── INVENTORY / MISC ──
+      {id:'combine',      name:'The Basics of Survival',              type:'misc',      char:'any',  grade:'B',
+       desc:'Combine two items together.',
+       hint:'Cannot be missed — combine an herb with another herb or ammo components early on.'},
+      {id:'hip_pouch',    name:'Hip to Add Squares',                  type:'misc',      char:'any',  grade:'B',
+       desc:'Increase your inventory slots using a Hip Pouch.',
+       hint:'Hip Pouches are found throughout the game. Pick one up and use it to expand your inventory.'},
+      {id:'customize',    name:'Customizer',                          type:'misc',      char:'any',  grade:'B',
+       desc:'Customize a weapon using a weapon part.',
+       hint:'Weapon parts are found throughout the game. Attach any part to a compatible weapon at the item box.'},
+      {id:'max_inv',      name:'A Waist of Space',                    type:'misc',      char:'any',  grade:'B',
+       desc:'Expand inventory slots to the maximum.',
+       hint:'Collect all Hip Pouches across the game to reach max inventory capacity. The Completionist walkthrough notes all Hip Pouch locations.'},
+      {id:'port_safe',    name:'A Vault-like Mind',                   type:'misc',      char:'any',  grade:'B',
+       desc:'Open a portable safe.',
+       hint:'Portable safes drop from certain special zombies. Solve the sliding puzzle inside to claim the reward. The sewers and lab areas have the highest chance of portable safe drops.'},
+      {id:'dial_safe',    name:'First Break-in',                      type:'misc',      char:'any',  grade:'B',
+       desc:'Open a dial safe.',
+       hint:'The first dial safe is in the West Office of the RPD. Combination: left dial N-E-D, right dial M-R-G. Cannot be missed on the Completionist route.'},
+      // ── EXTRA MODE ──
+      {id:'grim_reaper',  name:'Grim Reaper',                         type:'extra',     char:'any',  grade:'B',
+       desc:'Complete "The 4th Survivor" extra mode.',
+       hint:'Unlocked after completing both Leon\'s and Claire\'s stories. Play as HUNK and escape the sewers with very limited supplies. Know your route and conserve every item — no room for mistakes.'},
+    ],
     characters: {
       leon: {
         name: 'Leon Kennedy',
@@ -1087,7 +1183,7 @@ var DATA = {
     },
     speedrun: {
       tips: [
-        '⚠ SPEEDRUN TROPHY NOTE: This guide is designed to earn the Speed Demon trophy (complete in under 3 hours on Standard or higher). Target time: 2 hours 15 minutes. The record is under 1 hour for advanced runners — 2:15 is achievable for first-time speedrunners.',
+        '⚠ S RANK TROPHY NOTE: This guide is designed to earn the S Rank trophies — "Leon \'S.\' Kennedy" (Leon) / "Sizzling Scarlet Hero" (Claire). S Rank requires finishing on Standard in roughly 3.5 hours or fewer with 3 or fewer saves and no continues. Target time: 2 hours 30 minutes to give yourself a comfortable buffer.',
         'Leon speedrun targets sub-2.5 hour completion on Standard difficulty. Avoid Hard/Hardcore — they slow you down with tougher enemies and scarce ammo.',
         'The Matilda pistol is your only safe weapon early. Use it exclusively for zombies until you acquire the W-870 Shotgun at the gun shop on Elm Street.',
         'Skip every file, document, and non-essential dialogue. Mash through cutscenes. Read only statue puzzle directional clues.',
@@ -1151,14 +1247,14 @@ var DATA = {
           {t: 'Phase 1: Matilda spam. 8–12 shots to stagger it. Keep moving around helipad.', img: false, sr: 'Pistol spam until Rocket Launcher spawns'},
           {t: 'Rocket Launcher spawns mid-fight. Sprint to grab it immediately.', img: false},
           {t: 'Aim and fire. One shot. Direct hit. Done.', img: false},
-          {t: 'Helicopter cutscene: auto-play. Leon escapes. Trophy unlocked if under 3 hours.', img: false, story: 'Leon survived. Under 3 hours. The Speed Demon trophy is yours.'},
+          {t: 'Helicopter cutscene: auto-play. Leon escapes. If S Rank conditions met (under ~3.5 hrs, ≤3 saves, no continues), the trophy unlocks on the results screen.', img: false, story: 'Leon survived. Check the results screen — if S Rank conditions were met, "Leon \'S.\' Kennedy" is yours.'},
         ]},
       ]
     },
     completionist: {
       tips: [
-        '⚠ SPEEDRUN TROPHY REQUIRES A SEPARATE RUN: The "Speed Demon" trophy (complete in under 3 hours) cannot be earned during this completionist run — which takes 5–7 hours. After finishing this run, switch to the Speedrun guide for that trophy.',
-        'This completionist run earns: all 58 files, all 15 Mr. Raccoons, and story completion trophies. Speed Demon, Frugalist (3 or fewer saves), and Minimalist (no storage expansion) each need their own dedicated runs.',
+        '⚠ S RANK TROPHY REQUIRES A SEPARATE RUN: The S Rank trophies ("Leon \'S.\' Kennedy" for Leon, "Sizzling Scarlet Hero" for Claire) require finishing under ~3.5 hours with ≤3 saves and no continues. This completionist run takes 5–7 hours — they are incompatible. After finishing here, use the Speedrun guide for those trophies.',
+        'This completionist run earns: all 58 files, all 15 Mr. Raccoons, and story completion trophies. S Rank, Frugalist (no recovery items used), and Minimalist (never open the item box) each require their own dedicated runs.',
         'Leon completionist run targets 100% file collection (58 total documents), all 15 Mr. Raccoon collectibles, and full enemy/room exploration. Recommended on Standard or Hardcore difficulty.',
         'Files are scattered throughout every area. Do not skip any room. Check every desk, shelf, locker, bulletin board, and computer terminal. Missing one requires a full new run.',
         'Mr. Raccoons are 15 small plush rabbit toys hidden in specific spots throughout the game. They must be destroyed (shot or knifed). Missing any requires a full new run.',
@@ -1421,8 +1517,8 @@ var DATA = {
       },
       completionist: {
         tips: [
-          '⚠ SPEEDRUN TROPHY REQUIRES A SEPARATE RUN: The "Speed Demon" trophy (complete in under 3 hours) cannot be earned during a completionist run — this guide takes 5–7 hours. After finishing this run, use the Speedrun guide for that trophy. The Trophy Tracker screen has full details.',
-          'This completionist run earns: all 58 files, all 15 Mr. Raccoons, and story completion trophies. It does NOT earn Speed Demon, Frugalist (3 or fewer saves), or Minimalist (no storage expansion) — those need separate dedicated runs.',
+          '⚠ S RANK TROPHY REQUIRES A SEPARATE RUN: The "Sizzling Scarlet Hero" S Rank trophy (and "Leon \'S.\' Kennedy" for Leon) cannot be earned during a completionist run — this guide takes 5–7 hours, far over the ~3.5-hour limit. After finishing here, use the Speedrun guide for those trophies. The Trophy Tracker screen has full details on S Rank conditions.',
+          'This completionist run earns: all 58 files, all 15 Mr. Raccoons, and story completion trophies. It does NOT earn the S Rank trophies, Frugalist (no recovery items used), or Minimalist (never open the item box) — those need separate dedicated runs.',
           'Claire completionist run targets 100% file collection (58 documents), all Mr. Raccoon collectibles (15 total), and full exploration on Hard or Nightmare difficulty.',
           'File collection is identical to Leon\'s completionist route — 58 documents scattered throughout the game in the same locations as Leon\'s route.',
           'Mr. Raccoons are 15 small plush toys hidden throughout the game. Shooting them unlocks achievements and special items. Use your Grenade Launcher to destroy them from distance.',
@@ -1789,92 +1885,97 @@ function scrollTop(){window.scrollTo(0,0);}
 var trophyProgress={};
 function loadTrophyProgress(){try{var s=localStorage.getItem('re-trophies');if(s)trophyProgress=JSON.parse(s);}catch(e){trophyProgress={};}}
 function saveTrophyProgress(){try{localStorage.setItem('re-trophies',JSON.stringify(trophyProgress));}catch(e){}}
-function trophyKey(gid,charKey){return charKey?gid+'__'+charKey:gid;}
 
-var activeTrophyChar=null;
+var activeTrophyFilter='all';
+
+function getTrophyList(gid){
+  var t=DATA[gid]&&DATA[gid].trophies;
+  return(t&&Array.isArray(t))?t:[];
+}
 
 function getTrophyOverallPct(gid){
-  var t=DATA[gid]&&DATA[gid].trophies;
-  if(!t)return 0;
-  var total=0,done=0;
-  Object.keys(t).forEach(function(ck){
-    var k=trophyKey(gid,ck);
-    t[ck].forEach(function(tr){
-      total++;
-      if(trophyProgress[k]&&trophyProgress[k][tr.id])done++;
-    });
-  });
-  return total?Math.round(done/total*100):0;
+  var list=getTrophyList(gid);
+  if(!list.length)return 0;
+  var done=list.filter(function(tr){return trophyProgress[gid]&&trophyProgress[gid][tr.id];}).length;
+  return Math.round(done/list.length*100);
 }
 
 function showTrophyScreen(){
   var g=GAMES.find(function(x){return x.id===currentGame;});
   var sub=document.getElementById('trophy-screen-sub');
   if(sub)sub.textContent=g.title+' — '+g.subtitle;
-  var t=DATA[currentGame]&&DATA[currentGame].trophies;
-  if(!t){screens('trophy-screen');scrollTop();return;}
-  var chars=Object.keys(t);
-  activeTrophyChar=currentCharacter||chars[0];
-  renderTrophyCharTabs(chars);
+  var list=getTrophyList(currentGame);
+  if(!list.length){screens('trophy-screen');scrollTop();return;}
+  activeTrophyFilter=currentCharacter||'all';
+  renderTrophyFilterTabs();
   renderTrophyList();
   screens('trophy-screen');
   scrollTop();
 }
 
-function renderTrophyCharTabs(chars){
+function renderTrophyFilterTabs(){
   var tabsEl=document.getElementById('trophy-char-tabs');
   if(!tabsEl)return;
-  if(chars.length<=1){tabsEl.style.display='none';return;}
+  var list=getTrophyList(currentGame);
+  var hasChar=list.some(function(tr){return tr.char==='leon'||tr.char==='claire';});
+  if(!hasChar){tabsEl.style.display='none';return;}
   tabsEl.style.display='flex';
-  var charMeta=DATA[currentGame].characters||{};
-  tabsEl.innerHTML=chars.map(function(ck){
-    var label=charMeta[ck]?charMeta[ck].name:ck.charAt(0).toUpperCase()+ck.slice(1);
-    var k=trophyKey(currentGame,ck);
-    var tlist=DATA[currentGame].trophies[ck];
-    var done=tlist.filter(function(tr){return trophyProgress[k]&&trophyProgress[k][tr.id];}).length;
-    return '<div class="trophy-char-tab'+(activeTrophyChar===ck?' active':'')+'" onclick="switchTrophyChar(\''+ck+'\')">'+
-      label+'<br><span style="font-size:9px;opacity:.7">'+done+' / '+tlist.length+'</span></div>';
+  var filters=[{key:'all',label:'All Trophies'},{key:'leon',label:'Leon'},{key:'claire',label:'Claire'}];
+  tabsEl.innerHTML=filters.map(function(f){
+    var sub=list.filter(function(tr){return f.key==='all'||(tr.char===f.key||tr.char==='any'||tr.char==='both');});
+    var done=sub.filter(function(tr){return trophyProgress[currentGame]&&trophyProgress[currentGame][tr.id];}).length;
+    return '<div class="trophy-char-tab'+(activeTrophyFilter===f.key?' active':'')+'" onclick="switchTrophyFilter(\''+f.key+'\')">'+
+      f.label+'<br><span style="font-size:9px;opacity:.7">'+done+' / '+sub.length+'</span></div>';
   }).join('');
 }
 
-function switchTrophyChar(ck){
-  activeTrophyChar=ck;
-  var t=DATA[currentGame].trophies;
-  renderTrophyCharTabs(Object.keys(t));
+function switchTrophyFilter(f){
+  activeTrophyFilter=f;
+  renderTrophyFilterTabs();
   renderTrophyList();
 }
 
 function renderTrophyList(){
-  var tlist=DATA[currentGame].trophies[activeTrophyChar];
-  if(!tlist)return;
-  var k=trophyKey(currentGame,activeTrophyChar);
-  var done=tlist.filter(function(tr){return trophyProgress[k]&&trophyProgress[k][tr.id];}).length;
-  var total=tlist.length;
+  var list=getTrophyList(currentGame);
+  if(!list.length)return;
+  var filtered=list.filter(function(tr){
+    if(activeTrophyFilter==='all')return true;
+    return tr.char===activeTrophyFilter||tr.char==='any'||tr.char==='both';
+  });
+  var done=filtered.filter(function(tr){return trophyProgress[currentGame]&&trophyProgress[currentGame][tr.id];}).length;
+  var total=filtered.length;
   var pct=total?Math.round(done/total*100):0;
   var fill=document.getElementById('trophy-overall-fill');
   if(fill)fill.style.width=pct+'%';
   var lbl=document.getElementById('trophy-overall-label');
   if(lbl)lbl.textContent=done+' / '+total+' Trophies — '+pct+'%';
   var types=[
-    {key:'story',    label:'📖 Story'},
-    {key:'challenge',label:'⚔ Challenge'},
-    {key:'collectible',label:'🔍 Collectible'},
+    {key:'platinum',   label:'🌟 Platinum',        badge:'story'},
+    {key:'story',      label:'📖 Story',           badge:'story'},
+    {key:'challenge',  label:'⚔ Challenge',        badge:'challenge'},
+    {key:'boss',       label:'💀 Bosses',          badge:'challenge'},
+    {key:'collectible',label:'🔍 Collectibles',    badge:'collectible'},
+    {key:'combat',     label:'🔫 Combat',          badge:'challenge'},
+    {key:'misc',       label:'🏹 Inventory & Misc',badge:'story'},
+    {key:'extra',      label:'🎮 Extra Modes',     badge:'collectible'},
   ];
+  var charTag={leon:' <span style="font-size:9px;font-family:monospace;opacity:.5">LEON</span>',
+               claire:' <span style="font-size:9px;font-family:monospace;opacity:.5">CLAIRE</span>',
+               any:'',both:''};
   var html='';
   types.forEach(function(tp){
-    var group=tlist.filter(function(tr){return tr.type===tp.key;});
+    var group=filtered.filter(function(tr){return tr.type===tp.key;});
     if(!group.length)return;
     html+='<div class="trophy-group"><div class="trophy-group-title">'+tp.label+'</div>';
     group.forEach(function(tr){
-      var earned=!!(trophyProgress[k]&&trophyProgress[k][tr.id]);
-      var badgeClass=tp.key;
+      var earned=!!(trophyProgress[currentGame]&&trophyProgress[currentGame][tr.id]);
       html+='<div class="trophy-item'+(earned?' done':'')+(tr.warn?' warning':'')+'">'+
         '<div class="trophy-cb" onclick="toggleTrophy(\''+tr.id+'\')"></div>'+
         '<div class="trophy-info">'+
-          '<div class="trophy-name">'+tr.name+'<span class="trophy-badge '+badgeClass+'">'+tp.label.replace(/📖|⚔|🔍/g,'').trim()+'</span></div>'+
+          '<div class="trophy-name">'+tr.name+'<span class="trophy-badge '+tp.badge+'">'+tp.key+'</span>'+(charTag[tr.char]||'')+'</div>'+
           '<div class="trophy-desc">'+tr.desc+'</div>'+
           (tr.hint?'<div class="trophy-hint'+(tr.warn?' warn':'')+'">'+tr.hint+'</div>':'')+
-          (tr.guideRef?'<span class="trophy-guide-link" onclick="goToGuide(\''+tr.guideRef+'\')">→ Open '+tr.guideRef.charAt(0).toUpperCase()+tr.guideRef.slice(1)+' Guide</span>':'')+
+          (tr.guideRef?'<span class="trophy-guide-link" onclick="goToGuide(\''+tr.guideRef+'\')">&#8594; Open '+tr.guideRef.charAt(0).toUpperCase()+tr.guideRef.slice(1)+' Guide</span>':'')+
         '</div>'+
       '</div>';
     });
@@ -1885,13 +1986,11 @@ function renderTrophyList(){
 }
 
 function toggleTrophy(trophyId){
-  var k=trophyKey(currentGame,activeTrophyChar);
-  if(!trophyProgress[k])trophyProgress[k]={};
-  trophyProgress[k][trophyId]=!trophyProgress[k][trophyId];
+  if(!trophyProgress[currentGame])trophyProgress[currentGame]={};
+  trophyProgress[currentGame][trophyId]=!trophyProgress[currentGame][trophyId];
   saveTrophyProgress();
   renderTrophyList();
-  var t=DATA[currentGame].trophies;
-  renderTrophyCharTabs(Object.keys(t));
+  renderTrophyFilterTabs();
 }
 
 function goToGuide(rt){
