@@ -600,7 +600,7 @@ var GAMES = [
   {id:'re2',title:'Resident Evil 2',subtitle:'Remake',year:'2019',
    tagline:'"Remember me?"',
    art:'linear-gradient(140deg,#010510 0%,#030d1e 45%,#010510 100%)',
-   glow:'#0a2d6b',symbol:'✦',flavor:'Raccoon City P.D.',hasContent:false},
+   glow:'#0a2d6b',symbol:'✦',flavor:'Raccoon City P.D.',hasContent:true},
   {id:'re3',title:'Resident Evil 3',subtitle:'Remake',year:'2020',
    tagline:'"S.T.A.R.S..."',
    art:'linear-gradient(140deg,#06010d 0%,#100320 45%,#06010d 100%)',
@@ -621,6 +621,123 @@ var GAMES = [
 
 // ===== RE1 WALKTHROUGH DATA =====
 var RE1 = {
+  trophies:[
+    // ── PLATINUM ──
+    {id:'plat',name:'Platinum Splattin\' \'Em!',type:'platinum',char:'both',grade:'P',
+     desc:'Obtain all trophies.',hint:'Unlocks automatically once every other trophy is earned. Requires completing the game as both Jill and Chris.'},
+    // ── STORY ──
+    {id:'jill_clr',name:'Alpha Team\'s Finest',type:'story',char:'jill',grade:'S',
+     desc:'Finish the game as Jill Valentine.',hint:'Cannot be missed on Jill\'s playthrough. Unlocks on the results screen after the credits.'},
+    {id:'chris_clr',name:'You da Man, Chris',type:'story',char:'chris',grade:'S',
+     desc:'Finish the game as Chris Redfield.',hint:'Cannot be missed on Chris\'s playthrough. Complete the game to the ending screen.'},
+    {id:'both_clr',name:'We\'re in This Together',type:'story',char:'both',grade:'G',
+     desc:'Finish the game with both Jill Valentine and Chris Redfield.',hint:'Complete one full run as Jill AND one full run as Chris. Order does not matter.'},
+    {id:'jill_lab',name:'Where the Magic Happens',type:'story',char:'jill',grade:'S',
+     desc:'Access the laboratory using Jill.',hint:'Cannot be missed on Jill\'s route — you must descend into the underground Arklay lab to reach the final sequences.'},
+    {id:'chris_stone',name:'Not Just Any Object',type:'story',char:'chris',grade:'S',
+     desc:'Obtain the Stone & Metal Object using Chris.',hint:'A Chris-exclusive key item found in the Residence Aqua Ring area. Cannot be obtained as Jill.'},
+    {id:'jill_helmet',name:'The Key Master',type:'story',char:'jill',grade:'S',
+     desc:'Obtain the Helmet Key using Jill.',hint:'Found in the Residence fireplace after Plant 42 is defeated via V-JOLT. Cannot be missed on Jill\'s main story path.'},
+    {id:'jill_best',name:'I\'m a Member of S.T.A.R.S.',type:'story',char:'jill',grade:'B',
+     desc:'Finish saving Chris and Barry as Jill.',hint:'Jill\'s best ending — both Chris and Barry must survive. Use V-JOLT on Plant 42 AND return Barry\'s weapon during the Lisa Trevor encounter.'},
+    {id:'chris_best',name:'The Nightmare Ends',type:'story',char:'chris',grade:'B',
+     desc:'Finish saving Rebecca and Jill as Chris.',hint:'Chris\'s best ending — Rebecca and Jill must both survive. Keep Rebecca alive throughout and find Jill in the lab cell.'},
+    // ── CHALLENGE ──
+    {id:'very_easy',name:'Like Taking Candy from a Baby',type:'challenge',char:'any',grade:'G',
+     desc:'Finish the game on Very Easy difficulty or higher.',hint:'Select Very Easy at new game start. All difficulty trophies stack upward — completing Normal also earns Very Easy and Easy trophies.'},
+    {id:'easy_diff',name:'Not in the Mood to Die',type:'challenge',char:'any',grade:'G',
+     desc:'Finish the game on Easy difficulty or higher.',hint:'Selectable at new game. Difficulty trophies stack upward.'},
+    {id:'normal_diff',name:'Take that, Zombies!',type:'challenge',char:'any',grade:'G',
+     desc:'Finish the game on Normal difficulty or higher.',hint:'Recommended starting difficulty. Completing Normal earns Very Easy, Easy, and Normal trophies simultaneously.'},
+    {id:'hard_diff',name:'Oh, the Horror',type:'challenge',char:'any',grade:'G',
+     desc:'Finish the game on Hard difficulty.',hint:'Hard does NOT stack down — completing Hard does not grant Normal. Must be selected specifically. Ammo is scarcer and enemies absorb more damage.'},
+    {id:'real_surv',name:'The Survival Horror',type:'challenge',char:'any',grade:'G',
+     desc:'Finish the game in Real Survival mode.',hint:'Item boxes are fully disconnected — items stored in one cannot be retrieved from another. Plan every box deposit and withdrawal. Unlocked after finishing Hard.',warn:true},
+    {id:'invisible',name:'Ghost of a Chance',type:'challenge',char:'any',grade:'G',
+     desc:'Finish the game in Invisible Enemy mode.',hint:'All enemies are invisible. Detect them by audio and hit reactions only. Pre-aim at chokepoints and memorize patrol patterns. Very difficult.',warn:true},
+    {id:'under_3hr',name:'Don\'t Stop Running',type:'challenge',char:'any',grade:'S',
+     desc:'Finish the game in three hours.',hint:'Skip all non-essential rooms, files, and backtracking. Memorize key item and puzzle locations before starting. Three hours is comfortable with a clean route.',warn:true,guideRef:'speedrun'},
+    {id:'under_5hr',name:'Racing and Pacing',type:'challenge',char:'any',grade:'S',
+     desc:'Finish the game in five hours.',hint:'Achievable on any run if you avoid excessive backtracking and detours. Focus on forward progress.'},
+    {id:'knife_only',name:'CQC FTW',type:'challenge',char:'any',grade:'S',
+     desc:'Complete the game using only the knife.',hint:'Never fire any firearm. The knife is effective on downed enemies. Yawn and most bosses can be knifed with patience. Avoid combat entirely whenever possible.',warn:true},
+    {id:'no_save',name:'Ink is for Squids',type:'challenge',char:'any',grade:'S',
+     desc:'Finish the game without saving.',hint:'Do not interact with any typewriter. Complete the entire game in one session. Requires thorough knowledge of every room and enemy position. ~2-3 hours for an experienced player.',warn:true},
+    // ── BOSS ──
+    {id:'plant42_c',name:'Herbicide',type:'boss',char:'chris',grade:'S',
+     desc:'Defeat Plant 42 using Chris.',hint:'Chris fights Plant 42 in the Residence. Use the Flamethrower for maximum damage, or apply V-JOLT first to weaken it. Target the exposed root mass with sustained flame.'},
+    {id:'crimson_j',name:'Grave Digger',type:'boss',char:'jill',grade:'S',
+     desc:'Defeat the Crimson Head Prototype using Jill.',hint:'The original Crimson Head sealed in the north wing crypt. Incendiary Grenades from the Grenade Launcher are most effective — two direct hits. Clear your inventory for the reward.'},
+    {id:'yawn_j',name:'Giant Snake Got Nothin\'',type:'boss',char:'jill',grade:'S',
+     desc:'Defeat Yawn using Jill.',hint:'Use Acid Rounds from the Grenade Launcher. Dodge the lunge, fire into the open mouth. First phase ends with retreat — continue to the final encounter.'},
+    {id:'lisa_c',name:'An End to a Poor Girl\'s Misery',type:'boss',char:'chris',grade:'S',
+     desc:'Defeat Lisa Trevor using Chris.',hint:'Lisa is invincible to all weapons. During Chris\'s route, navigate to the tomb mechanism in the underground area and use it. Do not fire at her.'},
+    {id:'hunter_k',name:'Who\'s the Hunter Now?',type:'boss',char:'any',grade:'B',
+     desc:'Defeat a Hunter.',hint:'Hunters appear after the Hunter event (around the Shield Key). They are fast and can instantly kill you at low health. Keep health high — shotgun blasts to the body are most reliable.'},
+    {id:'neptune',name:'Deep Sixed',type:'boss',char:'any',grade:'B',
+     desc:'Defeat mother Neptune.',hint:'The shark boss in the Residence Aqua Ring. Drain the tank, push the generator in, restore power to electrocute it. No direct combat needed.'},
+    {id:'b_tiger',name:'Spider Sense',type:'boss',char:'any',grade:'B',
+     desc:'Defeat Black Tiger.',hint:'A giant infected spider in the mansion basement/forest area. Use Shotgun or Grenade Launcher rounds. Have Blue Herb ready — its poison is dangerous.'},
+    {id:'yawn_surv',name:'Not Waiting to Exhale',type:'boss',char:'any',grade:'B',
+     desc:'Survive your first encounter with Yawn.',hint:'The first Yawn encounter in the mansion library is scripted. Survive long enough for the cutscene — you do not need to defeat it on first meeting.'},
+    // ── COLLECTIBLES ──
+    {id:'starsenal',name:'Starsenal',type:'collectible',char:'any',grade:'S',
+     desc:'Obtain all weapons (must load the Grenade Launcher with all shell types).',hint:'Requires both characters\' runs — Jill for Grenade Launcher (with Explosive, Acid, and Incendiary shells all loaded), Chris for Flamethrower and Bazooka. Load all three shell types on Jill\'s run.',guideRef:'completionist'},
+    {id:'costumes',name:'Passion for Fashion',type:'collectible',char:'any',grade:'S',
+     desc:'Obtain all costumes.',hint:'Costumes unlock by completing the game under specific conditions (e.g., under 3 hours, finishing Invisible Enemy mode). Check the in-game costume select screen for each outfit\'s unlock condition.',guideRef:'completionist'},
+    {id:'all_rooms',name:'Every Nook and Cranny',type:'collectible',char:'any',grade:'S',
+     desc:'Visit all places on all maps.',hint:'Every room on every map must be entered at least once. Visited rooms fill in on your map display. Includes all mansion floors, courtyard, residence, underground passage, and laboratory.',guideRef:'completionist'},
+    {id:'chris_book',name:'Written Word is Dead',type:'collectible',char:'chris',grade:'S',
+     desc:'Obtain the "Last Book Vol. 2" using Chris.',hint:'A Chris-exclusive readable item in the Residence. Pick it up and examine it in inventory — it contains a puzzle clue unique to Chris\'s route. Cannot be collected as Jill.',guideRef:'completionist'},
+    // ── MISC ──
+    {id:'first_death',name:'Get Used To It',type:'misc',char:'any',grade:'B',
+     desc:'Die for the first time.',hint:'Unavoidable eventually. To earn it early, let a zombie drain your health completely. You respawn from your last save.'},
+    {id:'first_kill',name:'First Kills Are Special',type:'misc',char:'any',grade:'B',
+     desc:'Defeat a zombie.',hint:'Cannot be missed. Kill your first zombie in the opening mansion area. Aim for the head with your starting pistol.'},
+    {id:'burn_1',name:'Not Taking Any Chances',type:'misc',char:'any',grade:'B',
+     desc:'Burn up a zombie.',hint:'Use the Lighter on a downed zombie body. Requires Kerosene in your inventory. Do this consistently throughout the game to prevent Crimson Head spawns.'},
+    {id:'seeing_red',name:'Seeing Red',type:'misc',char:'any',grade:'B',
+     desc:'Defeat a Crimson Head.',hint:'A zombie that was not burned rises as a faster red-tinted Crimson Head. To earn this intentionally, skip burning one zombie body and return to that room later.'},
+    {id:'burn_2',name:'Break Out the Marshmallows!',type:'misc',char:'any',grade:'B',
+     desc:'Burn two zombies simultaneously.',hint:'Cluster two corpses together and use one Grenade (Explosive or Incendiary) to ignite both at once. A Grenade Launcher Incendiary Round works too.'},
+    {id:'save_richard',name:'Delaying the Inevitable',type:'misc',char:'any',grade:'B',
+     desc:'Save Richard with the serum.',hint:'Richard Aiken is found poisoned in the mansion. Find the Serum (2F area) and bring it to him within the time limit. Move quickly.',guideRef:'completionist'},
+    {id:'bravo_reb',name:'Bravo, Rebecca',type:'misc',char:'chris',grade:'B',
+     desc:'Have Rebecca heal Chris after the snake bite.',hint:'Chris is bitten and poisoned by Yawn in the library. Rebecca Chambers heals him automatically if she is alive and you reach her. Follow Chris\'s main path.'},
+    {id:'barry_j',name:'What a Great Guy',type:'misc',char:'jill',grade:'B',
+     desc:'Have Barry save Jill from the trap.',hint:'Barry saves Jill from the falling ceiling trap in the Armor Key corridor. Trigger the trap without the Imitation Key swap ready and Barry\'s scripted rescue fires automatically.'},
+    {id:'reb_hunter',name:'That Was Nice of You',type:'misc',char:'jill',grade:'B',
+     desc:'Save Rebecca from a Hunter.',hint:'After the Hunter event, Rebecca is attacked in a specific room. Get to her before the Hunter kills her — time-sensitive. Prioritize her location when Hunters first appear.'},
+    {id:'barry_lisa',name:'Trust Him',type:'misc',char:'chris',grade:'B',
+     desc:'Save Barry from Lisa Trevor.',hint:'In Chris\'s route, Barry is captured in the underground passage. Free him by following the main Chris story path through the underground area.'},
+    {id:'chris_saves_jill',name:'Sorry I Made You Wait',type:'misc',char:'chris',grade:'B',
+     desc:'Save Jill from confinement using Chris.',hint:'Jill is found locked in a lab cell during Chris\'s underground laboratory section. Free her as part of the main story — cannot be missed if you fully explore the lab.'},
+    {id:'jill_saves_chris',name:'Sorry About the Wait',type:'misc',char:'jill',grade:'B',
+     desc:'Save Chris from confinement using Jill.',hint:'Chris is found locked in a lab cell during Jill\'s laboratory section. Free him as part of the main story. Cannot be missed with full lab exploration.'},
+    {id:'chris_solo',name:'Every Man for Himself',type:'misc',char:'chris',grade:'B',
+     desc:'Finish without saving anyone using Chris.',hint:'Let Rebecca, Richard, and Barry all die or fail to trigger their save events. Incompatible with best-ending and NPC-save trophies — plan a dedicated separate run.'},
+    {id:'jill_solo',name:'Every Woman for Herself',type:'misc',char:'jill',grade:'B',
+     desc:'Finish without saving anyone using Jill.',hint:'Let Barry, Richard, and Rebecca all die or go unsaved. Incompatible with best-ending trophies — plan a dedicated run.'},
+  ],
+  characters:{
+    jill:{
+      name:'Jill Valentine',
+      role:'S.T.A.R.S. Alpha Team',
+      description:'Alpha Team\'s most experienced operative. Her Lockpick bypasses all lockboxes without keys, and 8 inventory slots give her a major advantage in resource management. Partners with Barry Burton throughout.',
+      startWeapon:'Samurai Edge (9mm semi-auto)',
+      keyMechanic:'Lockpick — opens all lock-boxes automatically. 8 inventory slots. Barry Burton partnership.',
+      difficulty:'Recommended first run — more accessible with extra inventory and lockpick'
+    },
+    chris:{
+      name:'Chris Redfield',
+      role:'S.T.A.R.S. Alpha Team',
+      description:'Point man with superior stamina — 1400 HP vs Jill\'s 960. No Lockpick and only 6 inventory slots demand strict resource discipline. Access to exclusive weapons: Flamethrower and Bazooka. Partners with Rebecca Chambers.',
+      startWeapon:'M92F Beretta (9mm semi-auto)',
+      keyMechanic:'Rebecca Chambers heals him when poisoned. Exclusive Flamethrower & Bazooka. 6 inventory slots.',
+      difficulty:'Harder — recommend completing Jill\'s route first'
+    }
+  },
+  jill:{
   standard:{
     tips:[
       'Play as Jill Valentine for your first run — she has 8 inventory slots vs. Chris\'s 6. Chris has more HP (1400 vs 960) but Jill\'s extra space makes the game much more manageable.',
@@ -909,9 +1026,213 @@ var RE1 = {
         {t:'Tyrant Round 1 (T-002): avoid or deal damage with your best weapon to stagger it. Focus on reaching the helipad.',img:false},
         {t:'Super Tyrant: dump remaining Grenade Launcher or Magnum rounds. Brad drops the Rocket Launcher from the helicopter — grab it immediately and fire once to end the fight.',img:false},
         {t:'Fire Rocket Launcher at Super Tyrant. Board helicopter with Barry and Chris. This is the best ending.',img:false,story:'The Spencer Estate is gone. The Arklay Research Facility — over two decades of T-Virus development, B.O.W. engineering, and human experimentation built beneath a Victorian mansion in the Raccoon Mountains — burned with it. Albert Wesker was Umbrella\'s mole inside S.T.A.R.S. from the beginning. He triggered the self-destruct to bury the evidence and released T-002 to eliminate his own team. On the helipad, T-002 mutated into the Super Tyrant. Brad Vickers, who had abandoned them at the mission\'s start, came back. His Rocket Launcher ended it in one shot. Jill Valentine, Barry Burton, and Chris Redfield escaped as the estate fell. Lisa Trevor found peace in the tomb her father designed, decades too late. The mountains are ash. Umbrella Corporation is not. Raccoon City is still out there.'},
-        {missable:true,trophy:'TROPHY — BOTH CHARACTERS: Start a new game as Chris Redfield after completing Jill\'s route. Chris has a Flamethrower (exclusive weapon), different scripted partner moments with Rebecca Chambers, different puzzle item names, and 1400 HP vs Jill\'s 960 HP.',t:'After completing Jill\'s route, begin a NEW GAME as Chris Redfield for all character-exclusive content, files, and trophies.',img:false},
+        {missable:true,trophy:'TROPHY — BOTH CHARACTERS: Start a new game as Chris Redfield after completing Jill\'s route. Chris has a Flamethrower (exclusive weapon), different scripted partner moments with Rebecca Chambers, different puzzle item names, and 1400 HP vs Jill\'s 960 HP.',t:'After completing Jill\'s route, return to the main menu and select Chris Redfield from the character select screen for all character-exclusive content, files, and trophies.',img:false},
       ]},
     ]
+  }
+  },
+  chris:{
+    standard:{
+      tips:[
+        'Chris has 1400 HP versus Jill\'s 960 — he survives more punishment, but only 6 inventory slots demand strict discipline. Carry only what you need right now. Drop everything else into Item Boxes.',
+        'Your M92F Beretta gets the job done with headshots. Two to the head staggers a zombie, three drops it. Never spray rounds.',
+        'No Lockpick. Locked boxes and drawers that Jill opens freely require physical keys for Chris. Do not waste time trying locked containers without the right key.',
+        'Rebecca Chambers is your partner. She appears at scripted moments and will heal Chris after the Yawn snake bite. Keep her alive — she matters for the best ending.',
+        'The Flamethrower is in the Residence chemical storage area. It is Chris\'s best weapon. Pick it up immediately and conserve its fuel for Plant 42, Hunters, and Crimson Heads.',
+        'Lisa Trevor is a mandatory encounter on Chris\'s route. She is completely invincible. Navigate to the tomb mechanism — do not fire a single round at her.',
+        'Stone & Metal Object is a Chris-exclusive key item in the Residence Aqua Ring. Required for story progression. Do not leave without it.',
+        'The Bazooka is found in the laboratory. Save every round for the final boss sequence — it fires Explosive, Acid, and Incendiary rounds.',
+        'Last Book Vol. 2 is in the Residence. Pick it up and examine it in inventory — puzzle clue unique to Chris\'s route. Cannot be collected as Jill.',
+        'Burn every zombie corpse with Lighter + Kerosene. Crimson Heads are especially dangerous with 6-slot inventory — Chris cannot carry the supplies to handle surprise respawns efficiently.',
+      ],
+      sections:[
+        {title:'Spencer Mansion — Orientation',inv:['M92F Beretta (starting)','Combat Knife','Lighter'],steps:[
+          {t:'Chris arrives with fewer inventory slots than Jill. Organize immediately — keep only what you need. Equip the Lighter and keep Kerosene in a slot at all times.',img:false},
+          {t:'Collect the MANSION MAP from near the entrance. Essential for navigation.',img:false,map:'mansion1f'},
+          {t:'You cannot pick locks. Locked boxes that Jill opens automatically require physical keys for Chris. Note locked containers and return when you have the right key.',img:false},
+          {t:'Rebecca Chambers will find you early — a scripted scene establishes your partnership. She will heal you after the Yawn bite later.',img:false},
+          {t:'Your first goal is the Sword Key. Follow the Golden Arrow → Arrowhead → Cemetery path.',img:false,story:'S.T.A.R.S. Alpha Team was stranded when Brad Vickers fled the helicopter. Chris Redfield entered the Spencer Estate alongside Jill Valentine and Albert Wesker. Inside, the dead walked. M92F Beretta, six inventory slots, no lockpick — Chris would work for everything.',save:'Main Hall Save Room — 1F. Save after your initial mansion sweep.'},
+        ]},
+        {title:'Forest Speyer & Early Exploration',steps:[
+          {t:'Proceed to the 2F East Terrace. Forest Speyer\'s body is here — he has turned. Dispatch him carefully.',img:false,map:'mansion2f'},
+          {t:'Forest Speyer does NOT have a Grenade Launcher — that is Jill\'s exclusive. Chris\'s heavy weapon (Flamethrower) is in the Residence, much later.',img:false},
+          {t:'Barry Burton does not appear in Chris\'s story. Several scripted rescues Jill has with Barry are replaced by equivalent moments with Rebecca.',img:false},
+          {t:'Search 2F east rooms for ammo and note locked doors for when you have appropriate keys.',img:false,save:'East Save Room — 2F. Save after Forest Speyer.'},
+        ]},
+        {title:'Key Route — Sword Key & Armor Key',inv:['Golden Arrow — examine to get Arrowhead (1F area)','Dog Whistle — 2F east area'],steps:[
+          {t:'Golden Arrow → examine → Arrowhead → Cemetery → Angel statue → Crypt → Book of Curses (examine back) → Sword Key. Same path as Jill.',img:false},
+          {t:'Use Sword Key on Sword-crested doors to continue exploring.',img:false},
+          {t:'Dog Whistle → Cerberus → Dog Collar → examine → Imitation of Key → Armor Key corridor swap. The Dog Whistle trick works for Chris.',img:false},
+          {t:'Chris\'s ceiling trap rescue is handled by Rebecca Chambers instead of Barry Burton. The scripted save plays out automatically.',img:false,story:'Two keys. Jill has a Lockpick that opens everything — Chris has to earn each door. The Keeper\'s Diary and Suicide Note are still in the same rooms. Rebecca is keeping watch where Barry would have been.',save:'Main Hall Save Room — 1F. Save after Armor Key. Piano sequence ahead.'},
+        ]},
+        {title:'Shield Key & Piano',inv:['Armor Key','Musical Score + Missing Music — combine before piano'],steps:[
+          {t:'Musical Score + Missing Music → combine in inventory → take to piano → play → Gold Emblem → Dining Room clock at 6:00 → Shield Key. Same sequence as Jill.',img:false},
+          {t:'JEWELRY BOX: collect from west wing, read the associated file first, then open correctly to retrieve the gemstone without destroying it.',img:false},
+          {t:'Without Jill\'s Grenade Launcher, use your Beretta or knife on mansion enemies at this stage.',img:false,save:'2F Save Room — CRITICAL SAVE. Hunters spawn shortly after Shield Key. Save with full health before proceeding.'},
+        ]},
+        {title:'Lisa Trevor — Underground Passage',steps:[
+          {t:'Lisa Trevor\'s underground passage is a mandatory encounter on Chris\'s route. She is invincible. Do not fire a single round.',img:false},
+          {t:'Navigate the underground passage while avoiding Lisa. She moves predictably — stay aware of her position and keep toward the exit.',img:false},
+          {t:'BARRY BURTON is captured in this area. Free him as part of story progression — earns the "Trust Him" trophy.',img:false},
+          {t:'Note the TOMB MECHANISM location as you pass through — you will need it for Lisa\'s final resolution.',img:false,story:'Lisa Trevor — Umbrella\'s longest-running test subject. She cannot die. In the underground passage she had Barry. Chris freed him. George\'s Diary and the Lisa Trevor Medical Report are in this passage — the architect\'s family, sealed inside their own creation.',save:'Residence Save Room — 1F. Save after the underground passage. Flamethrower is close.'},
+        ]},
+        {title:'Hunters Appear',inv:['Shotgun','Health at Fine or Good'],steps:[
+          {t:'Hunters appear after the Hunter event (roughly after Shield Key). Fast and lethal — they can instantly kill Chris at Caution or lower health. Stay topped off.',img:false},
+          {t:'Alpha Hunters patrol mansion corridors. Gamma Hunters are in outdoor and pool areas. Kill at least one of each type.',img:false},
+          {t:'Unburned zombie bodies from earlier may now be Crimson Heads. Approach previously cleared rooms with caution.',img:false,story:'The Hunter trigger has fired. Umbrella deployed Alpha and Gamma Hunters — engineered predators. Wesker has been absent for too long. His clearance level in this estate\'s restricted files is starting to mean something.'},
+        ]},
+        {title:'Residence — Neptune & Stone & Metal Object',inv:['Shield Key','Residence Map — collect near entrance'],steps:[
+          {t:'Enter the Residence and collect the RESIDENCE MAP immediately.',img:false,save:'Residence Save Room — 1F. Save on arrival. Flamethrower is one room away.'},
+          {t:'Aqua Ring: drain tank → push generator into water → restore power → Neptune dies. No direct combat.',img:false},
+          {t:'After Neptune, search the Aqua Ring area for the STONE & METAL OBJECT — Chris-exclusive, required for story. Do not leave without it.',img:false},
+          {t:'FLAMETHROWER is in chemical storage. Pick it up and load it. This is your primary heavy weapon from here forward.',img:false},
+          {t:'LAST BOOK VOL. 2 is somewhere in the Residence rooms. Pick it up and examine it in inventory.',img:false,story:'The Stone and Metal Object. The Flamethrower. Two things Jill will never find. The researchers\' files tell ordinary stories from an extraordinary facility: people going to work every day to manufacture the end of the world.',save:'Residence Save Room — 2F. Flamethrower and Stone & Metal Object secured. Neptune dead.'},
+        ]},
+        {title:'V-JOLT & Plant 42 — Flamethrower',inv:['Chemical reagents (Water, UMB No.3, Yellow-6)','Flamethrower'],steps:[
+          {t:'Chemical storage: read every file BEFORE mixing V-JOLT.',img:false},
+          {t:'Mix V-JOLT: Water+UMB No.3 → NP-004; NP-004+Yellow-6 → UMB No.10; Water+Yellow-6 → UMB No.7; UMB No.10+UMB No.7 → VP-017; VP-017+UMB No.3 → V-JOLT.',img:false},
+          {t:'Apply V-JOLT to Plant 42\'s roots. Finish with sustained Flamethrower fire on the root mass.',img:false,story:'Plant 42 is dead. V-JOLT and the Flamethrower made short work of it. Helmet Key from the fireplace. The laboratory is next.',save:'Residence Save Room — 2F. Save with Helmet Key. Confirm Rebecca is alive.'},
+          {t:'HELMET KEY from the fireplace after Plant 42 falls.',img:false},
+        ]},
+        {title:'Laboratory — Bazooka, Jill\'s Cell & Ending',inv:['Helmet Key','MO Disk #1 (Tiger Statue area, Mansion 1F — collect before descending)','Shotgun + Flamethrower ammo','2+ healing items'],steps:[
+          {t:'Enter the lab with Helmet Key. Collect LAB MAP near entrance.',img:false,save:'Lab Save Room — near entrance. Last typewriter. Confirm MO Disk #1 is in hand.'},
+          {t:'BAZOOKA is in the laboratory. Find it, load Explosive rounds, and save every shot for the helipad.',img:false},
+          {t:'JILL is found locked in a lab cell. Free her — earns "Sorry I Made You Wait" trophy.',img:false},
+          {t:'Collect all three MO DISKS and use them on Pass Code Output Terminals to unlock the Cell Entrance.',img:false},
+          {t:'Activate self-destruct. Helipad: Bazooka rounds on Super Tyrant, then Brad\'s Rocket Launcher mid-fight — sprint for it immediately and fire once.',img:false,story:'The Arklay Research Facility. T-Virus development, B.O.W. engineering, human experimentation records. Wesker\'s clearance is in every directory. He was Umbrella\'s operative from the start — triggered the self-destruct to bury the evidence. Brad came back. His Rocket Launcher ended the Super Tyrant. Chris, Rebecca, and Jill escaped as the estate fell.'},
+        ]},
+      ]
+    },
+    speedrun:{
+      tips:[
+        '⚠ S RANK TROPHY NOTE: "Don\'t Stop Running" requires finishing in under 3 hours. Chris\'s route takes slightly longer than Jill\'s without lockpick shortcuts. Target under 2 hours 15 minutes for comfortable margin.',
+        'Skip every non-essential room, file, and item. With 6 slots, decisions are fast — drop anything you won\'t need in the next five minutes.',
+        'Rebecca\'s scripted healing scene after Yawn cannot be skipped. Account for ~90 seconds at that moment.',
+        'Lisa Trevor: move directly to the free-Barry event, proceed to the tomb mechanism. No detours. No combat.',
+        'Flamethrower solves Plant 42 faster without V-JOLT — skip the chemical mixing on a speedrun and use sustained flame directly on the root mass.',
+        'Stone & Metal Object cannot be skipped — know its exact location in the Aqua Ring before your run.',
+        'Tomb mechanism for Lisa\'s final resolution: know the exact location. This encounter can waste 3-5 minutes if you don\'t have it memorized.',
+        'Bazooka: grab it in the lab, load Explosive rounds, save for helipad. One or two shots plus the Rocket Launcher ends Super Tyrant.',
+        'Target breakdown: Mansion (40 min) + Residence (20 min) + Lab + Helipad (15 min) + transitions = ~1:45 core. Under 2:15 is your buffer.',
+        'Chris cannot pick locks, so some shortcuts Jill takes are unavailable. Know which rooms need keys and skip locked boxes entirely.',
+      ],
+      sections:[
+        {title:'Mansion — Speed Entry',inv:['M92F Beretta','Lighter'],steps:[
+          {t:'Skip all dialogue and cutscenes immediately.',img:false,sr:'Mash through all opening animations'},
+          {t:'Grab the Mansion Map. Skip all non-essential rooms on 1F.',img:false},
+          {t:'Sword Key: Golden Arrow → Arrowhead → Cemetery → Crypt → Book of Curses → Sword Key. Direct route.',img:false,sr:'Cemetery to Crypt under 3 minutes'},
+          {t:'Armor Key: Dog Whistle → Cerberus → Dog Collar → Imitation Key → corridor swap. Practiced execution.',img:false},
+        ]},
+        {title:'Shield Key & Piano',steps:[
+          {t:'Musical Score + Missing Music → combine → piano → Gold Emblem → clock 6:00 → Shield Key.',img:false,sr:'Piano with solutions memorized — under 2 minutes'},
+          {t:'Skip all locked rooms. No time for locked containers without the right key.',img:false},
+          {t:'ONE save: 2F Save Room before Hunters. No other saves needed for a sub-3hr run.',img:false,save:'2F Save Room — one save before Hunters. Budget remaining saves.'},
+        ]},
+        {title:'Lisa Trevor — Navigate and Resolve',steps:[
+          {t:'Enter underground passage. Move directly to Barry — free him quickly.',img:false,sr:'Underground passage under 4 minutes'},
+          {t:'Do NOT fight Lisa. Move around her patrol pattern.',img:false},
+          {t:'Note tomb mechanism location as you pass — you return to use it.',img:false},
+          {t:'Resolve Lisa at tomb mechanism. No weapons needed.',img:false,sr:'Lisa encounter total under 6 minutes'},
+        ]},
+        {title:'Hunters — Speed Through',steps:[
+          {t:'Avoid all Hunters where possible. No kills required for speedrun.',img:false},
+          {t:'Shotgun any blocking Hunter: two shots, keep moving.',img:false},
+          {t:'Enter Residence as fast as possible after Hunter corridors.',img:false,sr:'Hunters area under 8 minutes'},
+        ]},
+        {title:'Residence — Neptune + Stone & Metal',steps:[
+          {t:'Neptune: drain → push generator → restore power. Fast execution.',img:false,sr:'Neptune under 3 minutes'},
+          {t:'Stone & Metal Object: grab it immediately. Know the exact spot.',img:false},
+          {t:'Flamethrower: grab from chemical storage. No V-JOLT mixing on speedrun — use Flamethrower directly on Plant 42.',img:false},
+          {t:'Last Book Vol. 2: grab on the way — brief detour, do not linger.',img:false,save:'Second save if needed — Residence 1F. Maximum 2 saves total.'},
+        ]},
+        {title:'Plant 42 — Direct Flame',steps:[
+          {t:'Apply sustained Flamethrower fire directly to Plant 42\'s root mass. No V-JOLT mixing required.',img:false,sr:'Plant 42 under 90 seconds with Flamethrower'},
+          {t:'Grab Helmet Key from fireplace. Head directly to lab entrance.',img:false},
+        ]},
+        {title:'Lab — Bazooka + Escape',steps:[
+          {t:'Confirm MO Disk #1 from Tiger Statue area is in hand. Descend with Helmet Key.',img:false},
+          {t:'Grab Bazooka immediately. Load Explosive rounds.',img:false},
+          {t:'Free Jill from lab cell. Collect MO Disks #2 and #3. Activate Cell Entrance.',img:false},
+          {t:'Activate self-destruct. Sprint to helipad.',img:false,sr:'Lab to helipad under 15 minutes'},
+          {t:'Helipad: Bazooka on Super Tyrant, then Brad\'s Rocket Launcher as soon as it drops. One shot ends it.',img:false,story:'Under 3 hours. "Don\'t Stop Running" trophy unlocked if the timer ran clean. Chris, Rebecca, and Jill escaped. The estate burns.'},
+        ]},
+      ]
+    },
+    completionist:{
+      tips:[
+        '⚠ TWO RUNS REQUIRED: Chris-exclusive content (Flamethrower, Bazooka, Last Book Vol. 2, Stone & Metal Object, all Chris trophies) requires a dedicated Chris run. Jill\'s run covers her exclusive content.',
+        '⚠ S RANK TROPHY NOTE: "Don\'t Stop Running" (under 3 hours) requires a separate dedicated speedrun — this completionist run takes 4-6 hours. Use the Speedrun guide for that trophy.',
+        'REBECCA MUST SURVIVE: Chris\'s best ending ("The Nightmare Ends") requires Rebecca alive at the helipad. Track her status carefully — she can die during the Hunter scripted encounter if you are not nearby.',
+        'ALL ROOMS: Chris must enter every room on every map — mansion, courtyard, residence, underground, and lab. The Lisa Trevor cabin in the courtyard is often missed. Visit it.',
+        'WRITTEN WORD IS DEAD: collect Last Book Vol. 2 in the Residence and examine it in inventory. Chris-exclusive.',
+        'BRAVO, REBECCA: let Rebecca heal Chris after Yawn bites him. Scripted healing event — happens automatically if she is alive and you follow the main path.',
+        'TRUST HIM: free Barry from Lisa Trevor\'s captivity in the underground passage. Cannot be missed on the main Chris path.',
+        'Defense Items: set to Automatic in Options. Let a zombie grab Chris to trigger Dagger, Electric Shocker, or Flash Grenade. Each type has its own trophy.',
+        'STONE & METAL OBJECT: Chris-exclusive in the Residence Aqua Ring. Do not leave without it.',
+        'Burn all zombie bodies from the very first kill. Crimson Heads with 6-slot inventory are extremely dangerous — establish the habit immediately.',
+      ],
+      sections:[
+        {title:'Pre-Run Planning',inv:['No inventory requirements — start of game'],steps:[
+          {t:'This is Chris\'s completionist run. Goals: all Chris-exclusive items (Flamethrower, Bazooka, Last Book Vol. 2, Stone & Metal Object), all Chris-specific trophies, all rooms visited, Rebecca kept alive.',img:false},
+          {t:'Set Defense Item mode to AUTOMATIC in Options. Dagger, Electric Shocker, and Flash Grenade each have their own trophy — Automatic fires them when Chris is grabbed.',img:false},
+          {t:'Burn every zombie body from the first kill. Establish the habit immediately.',img:false},
+          {missable:true,trophy:'CHRIS\'S BEST ENDING — REBECCA MUST SURVIVE: She can die during a Hunter scripted encounter in the mansion. If she dies, Chris\'s best ending (The Nightmare Ends) is lost for this run. Save before that sequence and be ready to intervene.',t:'REBECCA SURVIVAL: Track her status. Save before any high-risk scripted sequence involving her.',img:false},
+          {t:'Plan both character runs together: Jill (Grenade Launcher + all shell types + Jill trophies) and Chris (Flamethrower + Bazooka + Chris trophies). You cannot get everything in one character\'s run.',img:false},
+        ]},
+        {title:'Sword Key Area — Files',inv:['Golden Arrow → Arrowhead (1F rooms)'],steps:[
+          {t:'Golden Arrow → Arrowhead → Cemetery → Crypt → Book of Curses → Sword Key.',img:false},
+          {missable:true,trophy:'MISSABLE — ALL FILES: KEEPER\'S DIARY on 1F study desk.',t:'1F STUDY: Collect the KEEPER\'S DIARY.',img:false},
+          {missable:true,trophy:'MISSABLE — ALL FILES: SUICIDE NOTE in 2F bathroom bathtub.',t:'2F BATHROOM: Read the SUICIDE NOTE from the bathtub.',img:false},
+          {t:'Burn all bodies in entrance hall, dining room, and 1F east corridors.',img:false,save:'Main Hall Save Room — 1F. Sword Key and early files secured.'},
+        ]},
+        {title:'Armor Key — Rebecca Events',inv:['Dog Whistle (2F east)'],steps:[
+          {t:'Dog Whistle → Cerberus → Dog Collar → examine → Imitation Key → Armor corridor swap.',img:false},
+          {t:'REBECCA SCRIPTED RESCUE: Rebecca saves Chris from the ceiling trap instead of Barry. Automatic — no action required.',img:false},
+          {missable:true,trophy:'BRAVO, REBECCA: After the Yawn library encounter, Yawn bites Chris and poisons him. Rebecca heals him automatically if she is alive. KEEP HER ALIVE until this moment.',t:'YAWN ENCOUNTER: Allow the bite (scripted). Rebecca heals Chris afterward — "Bravo, Rebecca" trophy unlocks.',img:false},
+          {missable:true,trophy:'MISSABLE — ALL FILES: RESEARCHER\'S MEMO on 2F study desk.',t:'2F STUDY DESK: Read the RESEARCHER\'S MEMO.',img:false},
+          {t:'Broken Shotgun swap at wall mount.',img:false,save:'East Wing Save Room — 1F. Armor Key, Shotgun, and Rebecca healing confirmed.'},
+        ]},
+        {title:'Shield Key — Files',inv:['Armor Key','Musical Score + Missing Music — combine first'],steps:[
+          {t:'Musical Score + Missing Music → combine → piano → Gold Emblem → clock 6:00 → Shield Key.',img:false},
+          {missable:true,trophy:'MISSABLE ITEM: JEWELRY BOX — read the associated file before opening. Wrong method destroys the gemstone inside.',t:'JEWELRY BOX: Read the nearby file, THEN open it correctly.',img:false},
+          {t:'DEFENSE ITEM TROPHY CHECK: if Dagger or Shocker has not triggered yet, let a weakened zombie grab Chris once.',img:false,save:'2F Save Room — CRITICAL. Hunters spawn soon. Save with Shield Key and full health.'},
+        ]},
+        {title:'Hunters — All Enemy Types',inv:['Shotgun','Health at Fine or Good'],steps:[
+          {t:'Walk through every room affected by Hunter spawns. Do not skip areas.',img:false},
+          {missable:true,trophy:'ENEMY TYPES: Kill at least one Alpha Hunter (mansion corridors) AND one Gamma Hunter (outdoor/pool). They are separate enemy types.',t:'HUNTER VARIANTS: At least one Alpha and one Gamma. Both required for full enemy completion.',img:false},
+          {t:'REBECCA CRITICAL MOMENT: Rebecca is attacked by a Hunter in a specific room. Reach her quickly — she can die here. "That Was Nice of You" equivalent: killing the Hunter that threatens her.',img:false},
+          {t:'TRUST HIM (underground): Barry is held by Lisa Trevor. Free him as part of the story path.',img:false,story:'Hunters deployed. Rebecca is being hunted. Save her. The Crimson Heads from unburned bodies complicate everything. Wesker\'s absence is no longer ambiguous.'},
+        ]},
+        {title:'Residence — All Files, Neptune & Stone & Metal Object',inv:['Shield Key','Lighter + Kerosene'],steps:[
+          {t:'RESIDENCE MAP near entrance. Save immediately.',img:false,save:'Residence Save Room — 1F. Save on arrival.'},
+          {missable:true,trophy:'MISSABLE — ALL FILES: Residence bedroom files in Rooms 001, 002, and 003. Open every door, check every desk.',t:'RESIDENCE BEDROOMS: Files in Rooms 001, 002, 003 — open and check all three.',img:false},
+          {t:'Aqua Ring: drain → push generator → restore power → Neptune dead. Then grab STONE & METAL OBJECT from the Aqua Ring area immediately after.',img:false,story:'Stone and Metal Object secured. Neptune dead. The Flamethrower is one room away. The researchers\'s bedroom files: ordinary people in an extraordinary machine.',save:'Residence Save Room — 2F. Stone & Metal Object and Neptune confirmed.'},
+          {t:'FLAMETHROWER from chemical storage. Load it. This is your primary weapon now.',img:false},
+          {missable:true,trophy:'WRITTEN WORD IS DEAD: LAST BOOK VOL. 2 is in the Residence rooms. Pick it up and examine it in inventory.',t:'LAST BOOK VOL. 2: Find it and examine it in inventory — "Written Word is Dead" trophy.',img:false},
+        ]},
+        {title:'V-JOLT & Plant 42 — Files',inv:['Chemical reagents','Flamethrower'],steps:[
+          {missable:true,trophy:'MISSABLE — ALL FILES: V-JOLT research notes in chemical storage. Read every document BEFORE mixing anything.',t:'CHEMICAL STORAGE: Read ALL documents first, THEN mix V-JOLT.',img:false},
+          {t:'Mix V-JOLT (Water+UMB No.3 → NP-004; NP-004+Yellow-6 → UMB No.10; Water+Yellow-6 → UMB No.7; UMB No.10+UMB No.7 → VP-017; VP-017+UMB No.3 → V-JOLT).',img:false},
+          {t:'Apply V-JOLT to roots. Finish with Flamethrower. Helmet Key from fireplace.',img:false,save:'Residence Save Room — 2F. Save with Helmet Key. Rebecca confirmed alive.'},
+        ]},
+        {title:'Lisa Trevor — Underground Files',inv:['Non-essentials cleared for file space'],steps:[
+          {t:'SAVE before entering underground passage.',img:false,save:'SAVE BEFORE — Residence 2F. Last clear save before underground.'},
+          {missable:true,trophy:'MISSABLE — ALL FILES: GEORGE\'S DIARY and LISA TREVOR MEDICAL REPORT in the underground passage. Force yourself to stop and grab both.',t:'UNDERGROUND PASSAGE: GEORGE\'S DIARY and LISA TREVOR MEDICAL REPORT. Grab both.',img:false},
+          {t:'TRUST HIM: free Barry Burton from Lisa\'s captivity. Follow the main path.',img:false,story:'George\'s Diary. The Medical Report. Jessica Trevor — Umbrella\'s test subject for thirty years. She wanders still, looking for her mother. In the passage, she had Barry. Chris freed him.',},
+          {t:'Lisa is invincible. Do not fire. Navigate to the tomb mechanism location.',img:false},
+          {t:'Lisa Trevor\'s CABIN in the courtyard: visit it for additional files. Do not skip — required for full room and file completion.',img:false},
+          {t:'Resolve Lisa at the tomb mechanism when available.',img:false},
+        ]},
+        {title:'Laboratory — All Files, Bazooka & Best Ending',inv:['Helmet Key','MO Disk #1 (Tiger Statue, Mansion 1F)','Flamethrower','2+ healing items'],steps:[
+          {t:'LAB MAP near entrance. Methodically clear every room.',img:false,save:'Lab Save Room — near entrance. Last typewriter. Confirm MO Disk #1 in hand.'},
+          {t:'BAZOOKA: find it in the lab. Load Explosive rounds. Save all ammo for helipad.',img:false},
+          {t:'JILL found in lab cell. Free her — "Sorry I Made You Wait" trophy.',img:false},
+          {missable:true,trophy:'MISSABLE — ALL FILES: RESEARCHER\'S DIARY and EXPERIMENT LOG in lab office rooms.',t:'LAB OFFICES: RESEARCHER\'S DIARY and EXPERIMENT LOG — check every desk and terminal.',img:false},
+          {t:'All three MO DISKS → Pass Code Output Terminals → Cell Entrance. Kill every Chimera for enemy type completion.',img:false},
+          {t:'Self-destruct activated. Helipad: Bazooka on Super Tyrant, Brad\'s Rocket Launcher finishes it. Rebecca and Jill board the helicopter. Best ending.',img:false,story:'The Arklay Research Facility. Tyrant Programme files. Human experimentation logs. Wesker\'s clearance in every directory. He was Umbrella\'s operative from the start. T-002 was the prototype Tyrant. Brad came back. His Rocket Launcher ended it. Chris, Rebecca, and Jill escaped as the estate fell. Both best-ending conditions met — Rebecca alive, Jill freed from the lab cell.'},
+        ]},
+      ]
+    }
   }
 };
 
@@ -1691,7 +2012,10 @@ function loadProgress(){
 function saveProgress(){
   try{localStorage.setItem('re-survival-guide',JSON.stringify(progress));}catch(e){}
 }
-function pKey(gid,rt){return gid+'__'+rt;}
+function pKey(gid,rt){
+  var char=(DATA[gid]&&DATA[gid].characters&&currentCharacter)?currentCharacter:'';
+  return gid+(char?'__'+char:'')+'__'+rt;
+}
 function isDone(gid,rt,si,ti){var k=pKey(gid,rt);return !!(progress[k]&&progress[k][si+'_'+ti]);}
 
 function getStats(gid,rt){
@@ -1703,7 +2027,7 @@ function getStats(gid,rt){
     // For multi-character games, aggregate stats from all characters
     Object.keys(gameData.characters).forEach(function(char){
       if(gameData[char]&&gameData[char][rt]&&gameData[char][rt].sections){
-        var k=pKey(gid,rt);
+        var k=gid+'__'+char+'__'+rt;
         gameData[char][rt].sections.forEach(function(s,si){
           s.steps.forEach(function(st,ti){
             total++;
@@ -1917,10 +2241,12 @@ function renderTrophyFilterTabs(){
   var tabsEl=document.getElementById('trophy-char-tabs');
   if(!tabsEl)return;
   var list=getTrophyList(currentGame);
-  var hasChar=list.some(function(tr){return tr.char==='leon'||tr.char==='claire';});
+  var chars=DATA[currentGame]&&DATA[currentGame].characters?Object.keys(DATA[currentGame].characters):[];
+  var hasChar=chars.length>0&&list.some(function(tr){return chars.indexOf(tr.char)>=0;});
   if(!hasChar){tabsEl.style.display='none';return;}
   tabsEl.style.display='flex';
-  var filters=[{key:'all',label:'All Trophies'},{key:'leon',label:'Leon'},{key:'claire',label:'Claire'}];
+  var cData=DATA[currentGame].characters;
+  var filters=[{key:'all',label:'All Trophies'}].concat(chars.map(function(c){return{key:c,label:cData[c].name.split(' ')[0]};}));
   tabsEl.innerHTML=filters.map(function(f){
     var sub=list.filter(function(tr){return f.key==='all'||(tr.char===f.key||tr.char==='any'||tr.char==='both');});
     var done=sub.filter(function(tr){return trophyProgress[currentGame]&&trophyProgress[currentGame][tr.id];}).length;
@@ -1959,9 +2285,12 @@ function renderTrophyList(){
     {key:'misc',       label:'🏹 Inventory & Misc',badge:'story'},
     {key:'extra',      label:'🎮 Extra Modes',     badge:'collectible'},
   ];
-  var charTag={leon:' <span style="font-size:9px;font-family:monospace;opacity:.5">LEON</span>',
-               claire:' <span style="font-size:9px;font-family:monospace;opacity:.5">CLAIRE</span>',
-               any:'',both:''};
+  var charTag={any:'',both:''};
+  if(DATA[currentGame]&&DATA[currentGame].characters){
+    Object.keys(DATA[currentGame].characters).forEach(function(c){
+      charTag[c]=' <span style="font-size:9px;font-family:monospace;opacity:.5">'+c.toUpperCase()+'</span>';
+    });
+  }
   var html='';
   types.forEach(function(tp){
     var group=filtered.filter(function(tr){return tr.type===tp.key;});
